@@ -22,5 +22,21 @@ module Rasbari
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+    
+    # ZIGVU BEGIN: Change default scaffold generation
+    config.generators do |g|
+      g.orm             :active_record
+      g.template_engine :erb
+      g.test_framework  :test_unit, fixture: false
+      g.helper          false
+      g.assets          false
+      g.view_specs      false
+      g.jbuilder        false
+    end
+    # ZIGVU END: Change default scaffold generation
+
+    # ZIGVU BEGIN: Load order of engines
+    # config.railties_order = [SampleEngine::Engine, :main_app, :all]
+    # ZIGVU END: Load order of engines
   end
 end
