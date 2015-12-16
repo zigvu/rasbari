@@ -25,6 +25,7 @@ module SampleEngine
       g.assets          false
       g.view_specs      false
       g.jbuilder        false
+      g.templates.unshift File::expand_path('../../templates', __FILE__)
     end
   end
 end

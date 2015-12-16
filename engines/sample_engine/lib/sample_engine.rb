@@ -1,3 +1,6 @@
+require "simple_form"
+require "draper"
+
 require "sample_engine/engine"
 
 module SampleEngine
