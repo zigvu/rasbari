@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+# ------------------------------------------------------------------------------
+# ZIGVU BEGIN: Original gems from rails new
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
@@ -46,6 +48,10 @@ group :development do
   gem 'spring'
 end
 
+# ZIGVU END: Original gems from rails new
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 # ZIGVU BEGIN: Additional gems
 
 # scaffold and view helpers
@@ -101,3 +107,12 @@ gem 'jquery-ui-rails', '~> 5.0.2' # JS UI assets
 gem 'jquery-turbolinks' # have turbolinks play nice with JS
 
 # ZIGVU END: Additional gems
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# ZIGVU BEGIN: Internal engines
+
+gem 'admin', path: "engines/admin"
+
+# ZIGVU END: Internal engines
+# ------------------------------------------------------------------------------
