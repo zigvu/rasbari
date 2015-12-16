@@ -12,7 +12,7 @@ module Admin
     # Load files after initialization
     initializer "admin", after: :load_config_initializers do |app|
       Admin.files_to_load.each { |file|
-        require_relative File.join("../..", file)
+        require_relative file
       }
     end
 

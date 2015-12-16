@@ -1,4 +1,4 @@
 Admin::Engine.routes.draw do
-  # TODO:
-  # root to: "controller#index"
+  resources :users
+  root to: "users#index"
 end

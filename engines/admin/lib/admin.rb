@@ -5,8 +5,9 @@ require "admin/engine"
 
 module Admin
   def self.files_to_load
-    templateFolders = ["app/assets", "app/controllers", "app/models", "app/views"]
-    nonTemplateFolders = Dir["{app}/*"] - templateFolders
+    app = File::expand_path('../../app', __FILE__)
+    templateFolders = ["#{app}/assets", "#{app}/controllers", "#{app}/models", "#{app}/views"]
+    nonTemplateFolders = Dir["#{app}/*"] - templateFolders
     nonTemplateFiles = []
     nonTemplateFolders.each do |ntf|
       # assume that all files are namespaced

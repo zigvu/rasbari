@@ -38,5 +38,9 @@ module Rasbari
     # ZIGVU BEGIN: Load order of engines
     config.railties_order = [Admin::Engine, :main_app, :all]
     # ZIGVU END: Load order of engines
+
+    # ZIGVU BEGIN: autoloadable modules
+    config.autoload_paths += Dir["#{config.root}/app/**/"]
+    # ZIGVU END: autoloadable modules
   end
 end

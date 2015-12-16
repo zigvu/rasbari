@@ -12,7 +12,7 @@ module SampleEngine
     # Load files after initialization
     initializer "sample_engine", after: :load_config_initializers do |app|
       SampleEngine.files_to_load.each { |file|
-        require_relative File.join("../..", file)
+        require_relative file
       }
     end
 
