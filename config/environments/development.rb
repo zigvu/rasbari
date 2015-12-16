@@ -38,4 +38,8 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # ZIGVU BEGIN: Add local IPs to use web console
+  config.web_console.whitelisted_ips = '10.0.0.0/16'
+  # ZIGVU END: Add local IPs to use web console
 end

@@ -12,6 +12,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
+# EVAN: not needed since we use node.js with lower memory footprint - so don't uncomment
 # gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
@@ -45,3 +46,58 @@ group :development do
   gem 'spring'
 end
 
+# ZIGVU BEGIN: Additional gems
+
+# scaffold and view helpers
+# NOT USING: gem 'bootstrap-glyphicons' # although using foundation, use icons from bootstrap
+gem 'foundation-rails' # CSS library
+gem 'foundation-icons-sass-rails' # icons from foundation
+# NOT USING: gem 'foundation_rails_helper' # formatting for alerts etc.
+gem 'gretel' # for breadrums
+# NOT USING: gem 'fancybox2-rails', '~> 0.2.8' # pop-up image in fancy box
+gem 'simple_form' # simple form with foundations configuration
+gem 'draper', '~> 1.3' # decorator
+
+# authentication and roles
+gem 'devise' # for authentication
+gem 'simple_token_authentication' # for API authentication using devise
+gem 'authority' # for authorization
+# NOT USING: gem 'rolify' # for role management
+
+# analytics
+gem 'd3-rails' # main JS charting library
+gem 'crossfilter-rails' # JS data filter library
+
+# misc.
+gem 'high_voltage', '~> 2.4.0' # serve static pages for test
+gem 'quiet_assets', group: :development # quits the asset prints in console
+# NOT USING: gem 'parallel' # multi-threading
+
+# delayed_job
+# NOT USING: gem 'delayed_job_active_record' # background jobs
+# NOT USING: gem 'delayed_job_web' # view background job status
+# NOT USING: gem 'daemons' # dependency for delayed job
+
+# memcached
+gem 'dalli' # gem for memcached
+# NOT USING: Now part of rails: gem 'cache_digests'    # to expire view partials
+gem 'kgio', '~> 2.10.0' # makes dalli 20-30% faster as per dalli github page
+gem 'connection_pool' # enable dalli to share pooled connections
+
+# document store
+gem 'mongoid', '~> 5.0.0' # driver for mongo
+
+# serving
+gem 'puma'
+
+# kheer specific - not in cellroti
+gem 'bunny' # for rabbitmq
+gem 'wicked' # campaign
+gem 'her' # Use Cellroti API as model objects
+
+# javascript libraries
+gem 'underscore-rails' # JS helper library
+gem 'jquery-ui-rails', '~> 5.0.2' # JS UI assets
+gem 'jquery-turbolinks' # have turbolinks play nice with JS
+
+# ZIGVU END: Additional gems

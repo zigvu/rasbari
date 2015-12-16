@@ -1,0 +1,22 @@
+<!-- BEGIN: Right navigation -->
+<ul class="right">
+
+  <% if user_signed_in? %>
+
+    <li class="has-dropdown">
+      <a href="#">Analysis</a>
+      <ul class="dropdown">
+        <li id="analysis_minings">
+          Link Here
+        </li>
+      </ul>
+    </li>
+
+  <% else %>
+
+    <li><%= link_to "Sign In", new_user_session_path %></li>
+
+  <% end %>
+
+</ul>
+<!-- END: Right navigation -->
