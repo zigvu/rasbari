@@ -12,9 +12,9 @@
   </head>
 
   <body class="<%= controller_path.gsub('/','_') -%> <%= action_name -%>">
-    <!-- <XXX%XXX= render :layout => 'layouts/full_layout' do %> -->
+    <%= render :layout => 'layouts/full_layout' do %>
       <%= yield %>
-    <!-- <XXX%XXX end %> -->
+    <% end %>
     <div id="spinner-overlay"></div>
     <div id="spinner-popup"></div>
     <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
