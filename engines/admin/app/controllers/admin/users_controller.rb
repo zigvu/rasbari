@@ -17,12 +17,12 @@ module Admin
     # GET /users/new
     def new
       @user = ::User.new
-      @rolesHash = Admin::Roles.new(nil).to_h
+      @rolesHash = Admin::UserRoles.new(nil).to_h
     end
 
     # GET /users/1/edit
     def edit
-      @rolesHash = Admin::Roles.new(nil).to_h
+      @rolesHash = Admin::UserRoles.new(nil).to_h
     end
 
     # POST /users

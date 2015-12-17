@@ -14,6 +14,6 @@ class User < ActiveRecord::Base
 
   # role
   def role
-    Admin::Roles.new(self)
+    Admin::UserRoles.new(self)
   end
 end

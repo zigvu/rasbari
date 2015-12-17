@@ -18,7 +18,7 @@ module BaseRole
       base.send(:define_method, "set#{methodName}") do
         setX(ss)
       end
-      # role heirarchy
+      # heirarchy
       base.send(:define_method, "isAtLeast#{methodName}?") do
         currentState = getX
         arr.index(currentState) >= arr.index(ss)
@@ -27,7 +27,7 @@ module BaseRole
         currentState = getX
         arr.index(currentState) < arr.index(ss)
       end
-      # state strings
+      # strings
       base.send(:define_method, "#{ss}") do
         return ss.to_s
       end
@@ -60,11 +60,11 @@ module BaseRole
     def setX(setValue)
       @tableObject.update({@columnName => setValue})
     end
-    # get humanized version of role
+    # get humanized version
     def to_s
       getX().split(/(?=[A-Z])/).map{ |w| w.capitalize }.join(" ")
     end
-    # see if role is valid
+    # see if is valid
     def valid?(r)
       @collArr.include?(r)
     end
