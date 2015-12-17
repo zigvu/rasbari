@@ -115,5 +115,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  video!
   sqlite3
+  video!

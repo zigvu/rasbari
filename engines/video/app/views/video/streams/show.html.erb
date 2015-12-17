@@ -1,0 +1,39 @@
+<h3><%= @stream.name %></h3>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td><%= @stream.name %></td>
+    </tr>
+    <tr>
+      <td>Url</td>
+      <td><%= @stream.url %></td>
+    </tr>
+    <tr>
+      <td>Machine</td>
+      <td><%= @stream.machine_id %></td>
+    </tr>
+    <tr>
+      <td>Type</td>
+      <td><%= @stream.stype %></td>
+    </tr>
+    <tr>
+      <td>State</td>
+      <td><%= @stream.sstate %></td>
+    </tr>
+    <tr>
+      <td>Last 10 clips</td>
+      <td>TODO</td>
+    </tr>
+  </tbody>
+</table>
+
+<%= link_to 'Back', streams_path, class: 'button' %>

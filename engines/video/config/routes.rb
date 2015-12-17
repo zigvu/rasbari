@@ -1,4 +1,4 @@
 Video::Engine.routes.draw do
-  # TODO:
-  # root to: "controller#index"
+  resources :streams
+  root to: "streams#index"
 end

@@ -1,0 +1,14 @@
+<%= simple_form_for(@stream) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+    <%= f.input :url %>
+    <%= f.input :stype, label: "Type" %>
+    <%= f.input :machine_id, collection: @machines, Label: "Machine" %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
