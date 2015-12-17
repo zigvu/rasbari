@@ -1,0 +1,11 @@
+<!-- BEGIN: Admin drop down -->
+<a href="#">Admin</a>
+<ul class="dropdown">
+  <li id="admin_users_index">
+    <%= link_to "Users", admin.users_path %>
+  </li>
+  <li id="admin_sign_out">
+    <%= link_to "Sign out", main_app.destroy_user_session_path, :method => :delete %>
+  </li>
+</ul>
+<!-- END: Admin drop down -->

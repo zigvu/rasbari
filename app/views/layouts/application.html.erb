@@ -11,7 +11,7 @@
     <%= csrf_meta_tags %>
   </head>
 
-  <body class="<%= controller_path.gsub('/','_') -%> <%= action_name -%>">
+  <body class="<%= controller_path.gsub('/','_') -%>_<%= action_name -%>">
     <%= render :layout => 'layouts/full_layout' do %>
       <%= yield %>
     <% end %>

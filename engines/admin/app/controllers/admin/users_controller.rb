@@ -2,6 +2,7 @@ require_dependency "admin/application_controller"
 
 module Admin
   class UsersController < ApplicationController
+    authorize_actions_for ::User
     before_action :set_user, only: [:show, :edit, :update, :destroy]
 
     # GET /users
@@ -26,14 +27,15 @@ module Admin
 
     # POST /users
     def create
-      user_params.merge!({password: "abcdefgh", password_confirmation: 'abcdefgh'})
-      @user = ::User.new(user_params)
-      redirect_to users_url
-      # if @user.save
-      #   redirect_to @user, notice: 'User was successfully created. Please change default password immediately.'
-      # else
-      #   render :new
-      # end
+      prm = user_params
+      prm.merge!({"password" => "abcdefgh", "password_confirmation" => "abcdefgh"})
+
+      @user = ::User.new(prm)
+      if @user.save
+        redirect_to @user, notice: 'User was successfully created. Please change default password immediately.'
+      else
+        render :new
+      end
     end
 
     # PATCH/PUT /users/1
@@ -59,7 +61,7 @@ module Admin
 
       # Only allow a trusted parameter "white list" through.
       def user_params
-        params.require(:user).permit(:first_name, :last_name, :email, :role)
+        params.require(:user).permit(:first_name, :last_name, :email, :srole)
       end
   end
 end

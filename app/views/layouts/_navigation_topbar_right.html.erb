@@ -4,12 +4,7 @@
   <% if user_signed_in? %>
 
     <li class="has-dropdown">
-      <a href="#">Analysis</a>
-      <ul class="dropdown">
-        <li id="analysis_minings">
-          Link Here
-        </li>
-      </ul>
+      <%= render partial: 'layouts/admin_drop_down' %>
     </li>
 
   <% else %>
