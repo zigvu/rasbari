@@ -11,3 +11,8 @@
 /log/*
 !/log/.keep
 /tmp
+
+# ZIGVU BEGIN: Add additional files
+/.ruby-beautify
+
+# ZIGVU END: Add additional files
