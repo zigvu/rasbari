@@ -2,6 +2,7 @@ require_dependency "video/application_controller"
 
 module Video
   class StreamsController < ApplicationController
+    authorize_actions_for Stream
     before_action :set_stream, only: [:show, :edit, :update, :destroy]
 
     # GET /streams
