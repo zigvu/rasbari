@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20151216043726) do
     t.string   "unlock_token",           limit: 255
     t.datetime "locked_at"
     t.string   "authentication_token",   limit: 255
-    t.string   "role",                   limit: 255
+    t.string   "srole",                  limit: 255
     t.string   "first_name",             limit: 255
     t.string   "last_name",              limit: 255
     t.datetime "created_at",                                      null: false

@@ -1,8 +1,13 @@
 module Admin
-  class Roles
+  class Roles < BaseRole::ArAccessor
 
-    def self.states
+    def self.roles
       ["guest", "trainee", "analyst", "manager", "admin", "superAdmin"]
+    end
+    zextend BaseRole, Admin::Roles.roles
+
+    def initialize(user)
+      super(Admin::Roles.roles, user, :srole)
     end
 
   end

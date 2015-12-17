@@ -1,7 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+
+# The first user is Super Admin
+zigvuAdmin = User.create(first_name: "Zigvu", last_name: "Admin", email: "zigvu_admin@zigvu.com", password: "abcdefgh", password_confirmation: 'abcdefgh', srole: "superAdmin")

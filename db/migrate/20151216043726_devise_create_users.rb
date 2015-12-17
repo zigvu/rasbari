@@ -32,7 +32,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
       # ZIGVU BEGIN: add additional fields
       t.string   :authentication_token
-      t.string   :role
+      t.string   :srole
       t.string   :first_name
       t.string   :last_name
       # ZIGVU BEGIN: add additional fields

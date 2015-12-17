@@ -6,7 +6,7 @@ module Admin
 
     # GET /users
     def index
-      @users = Admin::User.all
+      @users = ::User.all
     end
 
     # GET /users/1
@@ -15,22 +15,25 @@ module Admin
 
     # GET /users/new
     def new
-      @user = Admin::User.new
+      @user = ::User.new
+      @rolesHash = Admin::Roles.new(nil).to_h
     end
 
     # GET /users/1/edit
     def edit
+      @rolesHash = Admin::Roles.new(nil).to_h
     end
 
     # POST /users
     def create
-      @user = Admin::User.new(user_params)
-
-      if @user.save
-        redirect_to @user, notice: 'User was successfully created.'
-      else
-        render :new
-      end
+      user_params.merge!({password: "abcdefgh", password_confirmation: 'abcdefgh'})
+      @user = ::User.new(user_params)
+      redirect_to users_url
+      # if @user.save
+      #   redirect_to @user, notice: 'User was successfully created. Please change default password immediately.'
+      # else
+      #   render :new
+      # end
     end
 
     # PATCH/PUT /users/1
@@ -51,7 +54,7 @@ module Admin
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_user
-        @user = Admin::User.find(params[:id])
+        @user = ::User.find(params[:id])
       end
 
       # Only allow a trusted parameter "white list" through.

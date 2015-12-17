@@ -6,4 +6,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :timeoutable, :lockable
+
+  # role
+  def role
+    Admin::Roles.new(self)
+  end
 end
