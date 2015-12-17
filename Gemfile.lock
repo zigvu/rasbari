@@ -6,6 +6,14 @@ PATH
       rails (~> 4.2.5)
       simple_form
 
+PATH
+  remote: engines/video
+  specs:
+    video (0.0.1)
+      draper (~> 1.3)
+      rails (~> 4.2.5)
+      simple_form
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -259,5 +267,6 @@ DEPENDENCIES
   turbolinks
   uglifier (>= 1.3.0)
   underscore-rails
+  video!
   web-console (~> 2.0)
   wicked

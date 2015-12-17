@@ -113,6 +113,7 @@ gem 'jquery-turbolinks' # have turbolinks play nice with JS
 # ZIGVU BEGIN: Internal engines
 
 gem 'admin', path: "engines/admin"
+gem 'video', path: "engines/video"
 
 # ZIGVU END: Internal engines
 # ------------------------------------------------------------------------------
