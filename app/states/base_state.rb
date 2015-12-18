@@ -44,6 +44,10 @@ module BaseState
     base.send(:define_method, "to_h") do
       arr.map{ |a| [a.split(/(?=[A-Z])/).map{ |w| w.capitalize }.join(" "), a] }
     end
+    # get current
+    base.send(:define_method, "get") do
+      getX
+    end
   end
 
   module ClassMethods

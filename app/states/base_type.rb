@@ -1,7 +1,7 @@
 # Note: This relies in monkeypatching of module in
 # config/initializers/monkeypatch.rb
 
-module BaseRole
+module BaseType
   def self.zextended(base, arr, options = {})
     # include general class and instance methods
     base.extend ClassMethods
@@ -17,15 +17,6 @@ module BaseRole
       # setter method: Example setDownloadQueue
       base.send(:define_method, "set#{methodName}") do
         setX(ss)
-      end
-      # heirarchy
-      base.send(:define_method, "isAtLeast#{methodName}?") do
-        currentState = getX
-        arr.index(currentState) >= arr.index(ss)
-      end
-      base.send(:define_method, "isBelow#{methodName}?") do
-        currentState = getX
-        arr.index(currentState) < arr.index(ss)
       end
       # strings
       base.send(:define_method, "#{ss}") do

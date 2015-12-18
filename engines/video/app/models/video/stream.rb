@@ -7,5 +7,8 @@ module Video
     def state
       Video::StreamStates.new(self)
     end
+    def type
+      Video::StreamTypes.new(self)
+    end
   end
 end

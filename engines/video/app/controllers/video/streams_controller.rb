@@ -17,7 +17,8 @@ module Video
     # GET /streams/new
     def new
       @stream = Stream.new
-      @machines = [["Video Capture", 1]].to_h
+      @streamMachines = [["Video Capture", 1]].to_h
+      @streamTypes = Video::StreamTypes.new(nil).to_h
     end
 
     # GET /streams/1/edit
