@@ -4,6 +4,7 @@ class CreateVideoStreams < ActiveRecord::Migration
     create_table :video_streams do |t|
       t.string :stype
       t.string :sstate
+      t.string :spriority
       t.string :name
       t.string :url
       t.integer :machine_id

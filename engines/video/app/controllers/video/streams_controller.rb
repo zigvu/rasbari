@@ -30,6 +30,7 @@ module Video
       @stream = Stream.new(stream_params)
       if @stream.save
         @stream.state.setReady
+        @stream.priority.setNone
         redirect_to @stream, notice: 'Stream was successfully created.'
       else
         render :new

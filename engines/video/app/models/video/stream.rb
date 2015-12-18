@@ -10,5 +10,8 @@ module Video
     def type
       Video::StreamTypes.new(self)
     end
+    def priority
+      Video::StreamPriorities.new(self)
+    end
   end
 end

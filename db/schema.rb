@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151217210147) do
+ActiveRecord::Schema.define(version: 20151218031919) do
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20151217210147) do
   create_table "video_streams", force: :cascade do |t|
     t.string   "stype",      limit: 255
     t.string   "sstate",     limit: 255
+    t.string   "spriority",  limit: 255
     t.string   "name",       limit: 255
     t.string   "url",        limit: 255
     t.integer  "machine_id", limit: 4
