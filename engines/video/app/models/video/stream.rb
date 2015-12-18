@@ -3,5 +3,9 @@ module Video
     # authorizer: current_user.can_read?(resource)
     include Authority::Abilities
     self.authorizer_name = 'Video::StreamAuthorizer'
+
+    def state
+      Video::StreamStates.new(self)
+    end
   end
 end

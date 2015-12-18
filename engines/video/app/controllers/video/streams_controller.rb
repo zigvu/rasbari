@@ -27,9 +27,8 @@ module Video
     # POST /streams
     def create
       @stream = Stream.new(stream_params)
-      @stream.sstate = "new"
-
       if @stream.save
+        @stream.state.setReady
         redirect_to @stream, notice: 'Stream was successfully created.'
       else
         render :new
