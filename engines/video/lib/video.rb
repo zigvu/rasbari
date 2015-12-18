@@ -1,6 +1,3 @@
-require "simple_form"
-require "draper"
-
 require "video/engine"
 
 module Video
