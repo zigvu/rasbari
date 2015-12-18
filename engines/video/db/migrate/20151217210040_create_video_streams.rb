@@ -5,8 +5,8 @@ class CreateVideoStreams < ActiveRecord::Migration
       t.string :sstate
       t.string :spriority
       t.string :name
-      t.string :url
-      t.integer :machine_id
+      t.string :base_url
+      t.string :capture_url
 
       t.timestamps null: false
     end

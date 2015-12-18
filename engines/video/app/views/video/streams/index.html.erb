@@ -4,9 +4,8 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Url</th>
+      <th>Base Url</th>
       <th>Machine</th>
-      <th>Type</th>
       <th>State</th>
       <th>Priority</th>
       <th>Last Clip</th>
@@ -18,9 +17,8 @@
     <% @streams.each do |stream| %>
       <tr>
         <td><%= stream.name %></td>
-        <td><%= stream.url %></td>
-        <td><%= stream.machine_id %></td>
-        <td><%= stream.type %></td>
+        <td><%= stream.base_url %></td>
+        <td>TODO</td>
         <td><%= stream.state %></td>
         <td><%= stream.priority %></td>
         <td>TODO</td>

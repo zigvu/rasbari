@@ -4,6 +4,11 @@ module Video
     include Authority::Abilities
     self.authorizer_name = 'Video::StreamAuthorizer'
 
+    # Validations
+    validates :name, presence: true
+    validates :base_url, presence: true
+    validates :stype, presence: true
+
     def state
       Video::StreamStates.new(self)
     end

@@ -17,12 +17,12 @@ module Video
     # GET /streams/new
     def new
       @stream = Stream.new
-      @streamMachines = [["Video Capture", 1]].to_h
       @streamTypes = Video::StreamTypes.new(nil).to_h
     end
 
     # GET /streams/1/edit
     def edit
+      @streamTypes = Video::StreamTypes.new(nil).to_h
     end
 
     # POST /streams
@@ -60,7 +60,7 @@ module Video
 
       # Only allow a trusted parameter "white list" through.
       def stream_params
-        params.require(:stream).permit(:stype, :sstate, :name, :url, :machine_id)
+        params.require(:stream).permit(:stype, :sstate, :spriority, :name, :base_url, :capture_url, :machine_id)
       end
   end
 end

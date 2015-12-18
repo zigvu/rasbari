@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151218031919) do
+ActiveRecord::Schema.define(version: 20151218173340) do
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -40,14 +40,14 @@ ActiveRecord::Schema.define(version: 20151218031919) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "video_streams", force: :cascade do |t|
-    t.string   "stype",      limit: 255
-    t.string   "sstate",     limit: 255
-    t.string   "spriority",  limit: 255
-    t.string   "name",       limit: 255
-    t.string   "url",        limit: 255
-    t.integer  "machine_id", limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "stype",       limit: 255
+    t.string   "sstate",      limit: 255
+    t.string   "spriority",   limit: 255
+    t.string   "name",        limit: 255
+    t.string   "base_url",    limit: 255
+    t.string   "capture_url", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
 end
