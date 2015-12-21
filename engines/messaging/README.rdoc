@@ -1,3 +1,0 @@
-= Messaging
-
-Engine to communicate with RabbitMq.
