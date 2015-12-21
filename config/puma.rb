@@ -109,7 +109,7 @@ bind 'tcp://0.0.0.0:3000'
 # The default is "0".
 #
 # workers 2
-workers Integer(ENV['PUMA_WORKERS'] || 3)
+workers Integer(ENV['PUMA_WORKERS'] || 2)
 
 # Code to run when a worker boots to setup the process before booting
 # the app.
@@ -126,7 +126,7 @@ on_worker_boot do
   ActiveRecord::Base.connection.disconnect! rescue ActiveRecord::ConnectionNotEstablished
   ActiveRecord::Base.establish_connection
 
-  # $heatmap_client = BunnyConnections.heatmap_client
+  $bunny_connection = Messaging.connection
 end
 
 # Code to run when a worker boots to setup the process after booting
