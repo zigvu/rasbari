@@ -1,6 +1,8 @@
+require 'json'
+
 module Connections
   class RpcClient
-    attr_accessor :response, :correlationId
+    attr_accessor :response, :responseHeader, :correlationId
     attr_reader :lock, :condition
 
     def initialize(connection, exchangeName, responseRoutingKey)
@@ -20,25 +22,27 @@ module Connections
       replyQueue.subscribe(manual_ack: true) do |delivery_info, properties, payload|
         if properties[:correlation_id] == that.correlationId
           that.response = payload
+          that.responseHeader = Messages::Header.new(properties.headers)
           that.lock.synchronize{ that.condition.signal }
           channel.ack(delivery_info.delivery_tag)
         end
       end
     end
 
-    def call(publishRoutingKey, message)
+    def call(publishRoutingKey, header, message)
       self.correlationId = SecureRandom.uuid
       # send message
       @exchange.publish(
         message,
         routing_key: publishRoutingKey,
         correlation_id: self.correlationId,
-        reply_to: @responseRoutingKey
+        reply_to: @responseRoutingKey,
+        headers: header.to_json
       )
       # wait for reply
       lock.synchronize{ condition.wait(lock) }
       # return reply
-      response
+      return responseHeader, response
     end
 
   end

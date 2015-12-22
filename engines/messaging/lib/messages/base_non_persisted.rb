@@ -8,9 +8,9 @@ module BaseNonPersisted
     base.send :include, InstanceMethods
     # get prefix from options
     prefix = options[:prefix]
+    prefixName = prefix.capitalize
     # change array elements into methods
     arr.each do |ss|
-      prefixName = prefix.capitalize
       methodName = ss.slice(0,1).capitalize + ss.slice(1..-1)
       # query method: Example: isTypeState?
       base.send(:define_method, "is#{prefixName}#{methodName}?") do
@@ -20,6 +20,10 @@ module BaseNonPersisted
       base.send(:define_method, "#{ss}") do
         return ss.to_s
       end
+    end
+    # get string repr
+    base.send(:define_method, "to_s") do
+      self.send(prefix)
     end
     # formatted hash for form input
     base.send(:define_method, "to_h") do

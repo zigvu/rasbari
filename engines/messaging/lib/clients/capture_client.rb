@@ -15,8 +15,8 @@ module Clients
       end
     end
 
-    def call(message)
-      Messaging.video_capture_client.call(@machineRoutingKey, message)
+    def call(header, message)
+      Messaging.video_capture_client.call(@machineRoutingKey, header, message)
     end
   end
 end

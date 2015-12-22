@@ -1,3 +1,5 @@
+require 'json'
+
 module Connections
   class RpcServer
 
@@ -14,14 +16,19 @@ module Connections
     def start
       # need a non-blocking connection else rails won't load
       @serverQueue.subscribe(manual_ack: true) do |delivery_info, properties, payload|
-        responseHeaders, responseMessage = @rpcHandlerObj.call(properties.headers, payload)
-        # once message is handled, sending ack
+        responseHeaders, responseMessage = @rpcHandlerObj.call(
+          Messages::Header.new(properties.headers),
+          payload
+        )
+        # once message is handled, send ack
         @channel.ack(delivery_info.delivery_tag)
 
-        @exchange.publish(responseMessage,
+        @exchange.publish(
+        responseMessage,
           routing_key: properties.reply_to,
           correlation_id: properties.correlation_id,
-          headers: responseHeaders)
+          headers: responseHeaders.to_json
+        )
       end
     end
 

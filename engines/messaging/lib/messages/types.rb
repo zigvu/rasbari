@@ -5,9 +5,9 @@
 module Messages
   class Types
     def self.types
-      ["ping", "status", "state"]
+      ["ping", "status", "data"]
     end
-    zextend BaseNonPersisted, Messages::Types.types, {prefix: 'type'}
+    zextend BaseNonPersisted, Messages::Types.types, { prefix: 'type' }
 
     attr_reader :type
 
