@@ -9,6 +9,9 @@ module Messages
     def to_json
       { type: @type.to_s, state: @state.to_s }
     end
+    def to_s
+      to_json.to_s
+    end
 
     def self.ping
       jsonHeader = {

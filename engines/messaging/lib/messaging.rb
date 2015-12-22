@@ -1,21 +1,22 @@
 require "messaging/version"
+require "non_rails/ordered_options"
 
 # load files based on whether it is loaded as Rails engine or not
 if Module.const_defined?('Rails')
   require "messaging/engine"
 else
-  require "messaging/monkeypatch"
+  require "non_rails/monkeypatch"
 end
 
 module Messaging
   def self.files_to_load
     lib = File::expand_path('..', __FILE__)
-    templateFolders = ["#{lib}/messaging"]
+    templateFolders = ["#{lib}/messaging", "#{lib}/non_rails"]
     nonTemplateFolders = Dir["#{lib}/*"] - templateFolders
     nonTemplateFiles = []
     nonTemplateFolders.each do |ntf|
       # assume that all files are namespaced
-      Dir["#{ntf}/**"].each do |f|
+      Dir["#{ntf}/*.rb"].each do |f|
         nonTemplateFiles << File.join(File.dirname(f), File.basename(f, ".*"))
       end
     end
@@ -32,11 +33,13 @@ module Messaging
     Connections::BunnyConnection.new(nil).connection
   end
 
-  # TODO: move variables to config
-
-  # Config variable for queue names that can be filled in
-  mattr_accessor :video_capture_exchange
-  Messaging.video_capture_exchange = "development.video.capture"
+  mattr_accessor :_config
+  def self.config
+    Messaging._config ||= begin
+      yamlConfigFile = File::expand_path('../config/rabbit.yml', __FILE__)
+      Messaging._config = Config::Reader.new(yamlConfigFile).config
+    end
+  end
 
   # Memoize connection client objects
   mattr_accessor :video_capture_client

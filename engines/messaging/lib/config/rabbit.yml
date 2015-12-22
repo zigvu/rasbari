@@ -1,0 +1,22 @@
+# Rabbit configuration
+
+# default NOT USED CURRENTLY
+default: &default
+  amqp_url: localhost
+  amqp_username: guest
+  amqp_password: guest
+
+development:
+  <<: *default
+  video_capture:
+    exchange: development.video.capture
+    routing_keys:
+      rasbari:
+        client: development.video.capture.rasbari.client
+        server: development.video.capture.rasbari.server
+      nimki:
+        client: development.video.capture.nimki.client # IP will be appended
+        server: development.video.capture.nimki.server # IP will be appended
+
+production:
+  <<: *default
