@@ -3,26 +3,20 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'messaging/version'
 
-Gem::Specification.new do |spec|
-  spec.name          = "messaging"
-  spec.version       = Messaging::VERSION
-  spec.authors       = ["Evan Acharya"]
-  spec.email         = ["eacharya@gmail.com"]
+Gem::Specification.new do |s|
+  s.name          = "messaging"
+  s.version       = Messaging::VERSION
+  s.authors       = ["Zigvu Inc."]
+  s.summary       = "Engine to communicate with RabbitMq."
+  s.description   = "Engine to communicate with RabbitMq."
 
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com' to prevent pushes to rubygems.org, or delete to allow pushes to any server."
-  end
+  s.files         = Dir["{lib}/**/*", "Rakefile", "README.rdoc"]
+  s.executables   = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
-  spec.license       = "MIT"
+  s.require_paths = ["lib"]
 
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.require_paths = ["lib"]
+  s.add_dependency "bunny"
 
-  spec.add_development_dependency "bundler", "~> 1.8"
-  spec.add_development_dependency "rake", "~> 10.0"
+  s.add_development_dependency "bundler", "~> 1.8"
+  s.add_development_dependency "rake", "~> 10.0"
 end

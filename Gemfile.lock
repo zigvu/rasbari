@@ -5,6 +5,12 @@ PATH
       rails (~> 4.2.5)
 
 PATH
+  remote: engines/messaging
+  specs:
+    messaging (0.1.0)
+      bunny
+
+PATH
   remote: engines/video
   specs:
     video (0.0.1)
@@ -249,6 +255,7 @@ DEPENDENCIES
   jquery-turbolinks
   jquery-ui-rails (~> 5.0.2)
   kgio (~> 2.10.0)
+  messaging!
   mongoid (~> 5.0.0)
   mysql2 (>= 0.3.13, < 0.5)
   puma
