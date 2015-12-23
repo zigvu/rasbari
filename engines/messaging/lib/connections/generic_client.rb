@@ -12,15 +12,15 @@ module Connections
       @rpcClient = Connections::RpcClient.new(connection, @exchangeName, @responseRoutingKey)
     end
 
-    def call(header, message, timeout)
+    def call(header, message, timeout = nil)
       @rpcClient.call(@machineRoutingKey, header, message, timeout)
     end
 
     # Common methods
     def isRemoteAlive?
       # timeout after 30 second of ping call
-      rh, response = call(Messages::Header.ping, "", 30)
-      rh.type.isPing? && rh.state.isSuccess?
+      responseHeader, response = call(Messages::Header.pingRequest, "", 30)
+      responseHeader.isPingSuccess?
     end
 
 

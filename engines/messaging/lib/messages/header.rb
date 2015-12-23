@@ -1,3 +1,7 @@
+# needed for load order
+require_relative "header_types"
+require_relative "header_states"
+
 module Messages
   class Header
     attr_accessor :type, :state
@@ -13,26 +17,28 @@ module Messages
       to_json.to_s
     end
 
-    def self.ping
-      jsonHeader = {
-        'type' => Messages::HeaderTypes.new(nil).ping,
-        'state' => Messages::HeaderStates.new(nil).unknown
-      }
-      return Messages::Header.new(jsonHeader)
+    # define class methods
+    eigenclass.instance_eval do
+      Messages::HeaderTypes.types.each do |t|
+        Messages::HeaderStates.states.each do |s|
+          # self.pingSuccess
+    			define_method("#{t}#{s.capitalize}") do
+            return Messages::Header.new({ 'type' => t, 'state' => s })
+    			end
+        end
+      end
     end
-    def self.pingSuccess
-      jsonHeader = {
-        'type' => Messages::HeaderTypes.new(nil).ping,
-        'state' => Messages::HeaderStates.new(nil).success
-      }
-      return Messages::Header.new(jsonHeader)
+
+    # defin instance methods
+    Messages::HeaderTypes.types.each do |t|
+      Messages::HeaderStates.states.each do |s|
+        # self.isPingSuccess?
+        define_method("is#{t.capitalize}#{s.capitalize}?") do
+          return ("#{@type}" == "#{t}") && ("#{@state}" == "#{s}")
+        end
+      end
     end
-    def self.pingFail
-      jsonHeader = {
-        'type' => Messages::HeaderTypes.new(nil).ping,
-        'state' => Messages::HeaderStates.new(nil).failure
-      }
-      return Messages::Header.new(jsonHeader)
-    end
+
+
   end
 end

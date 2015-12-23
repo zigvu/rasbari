@@ -2,12 +2,12 @@
 # config/initializers/monkeypatch.rb (for Rails)
 # messaging/monkeypatch.rb (for non-Rails)
 
-module Messages
-  class HeaderStates
+module VideoCapture
+  class CaptureStates
     def self.states
-      ["request", "unknown", "success", "failure"]
+      ["unknown", "cleanUp", "boot", "ready", "capturing", "stopping", "stopped"]
     end
-    zextend BaseNonPersisted, Messages::HeaderStates.states, { prefix: 'state' }
+    zextend BaseNonPersisted, VideoCapture::CaptureStates.states, { prefix: 'state' }
 
     attr_reader :state
 

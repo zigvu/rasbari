@@ -33,7 +33,7 @@ module Connections
       # if we are expecting that request could time out, we need to
       # set responses to nil from previous calls
       if timeout
-        self.responseHeader = Messages::Header.pingFail
+        self.responseHeader = Messages::Header.pingFailure
         self.response = ""
       end
 

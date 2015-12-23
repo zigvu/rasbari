@@ -1,5 +1,7 @@
 require "logger"
 require "messaging/version"
+# extra files needed for load order
+require "messages/base_non_persisted"
 
 # load files based on whether it is loaded as Rails engine or not
 if Module.const_defined?('Rails')
@@ -46,7 +48,6 @@ module Messaging
       Messaging._config = Config::Reader.new(yamlConfigFile).config
     end
   end
-
 
   # Memoize connection objects
   mattr_accessor :_cache

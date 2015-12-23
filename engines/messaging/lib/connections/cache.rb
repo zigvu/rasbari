@@ -1,7 +1,8 @@
 module Connections
   class Cache
 
-    # VideoVideoCapture
+    # --------------------------------------------------------------------------
+    # VideoCapture
     def video_capture
       @video_capture ||= Connections::Cache::VCapture.new
     end
@@ -17,7 +18,7 @@ module Connections
         def server
           @server ||= false # TODO: fill
         end
-      end
+      end # END class Rasbari
 
       def nimki
         @nimki ||= Connections::Cache::VCapture::Nimki.new
@@ -29,7 +30,8 @@ module Connections
         def server(handler)
           @server ||= VideoCapture::NimkiServer.new(handler)
         end
-      end
-    end
-  end
+      end # END class Nimki
+    end # END class VCapture
+  end # END class Cache
+  # --------------------------------------------------------------------------
 end

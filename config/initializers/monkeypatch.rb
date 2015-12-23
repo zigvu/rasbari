@@ -2,6 +2,13 @@
 
 # Here be dragons! Tread carefully
 
+class Object
+  # Monkeypatch object to generate class methods
+  def eigenclass
+    class << self; self; end
+  end
+end
+
 class Module
   # Monkeypatch module to allow `extend` with more capability
   def zextend(mod, *args)
