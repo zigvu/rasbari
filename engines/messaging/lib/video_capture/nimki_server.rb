@@ -8,6 +8,7 @@ module VideoCapture
       exchangeName = "#{Messaging.config.video_capture.exchange}"
       listenRoutingKey = "#{Messaging.config.video_capture.routing_keys.nimki.server}.#{hostname}"
       super(exchangeName, listenRoutingKey, handler)
+      Messaging.logger.info("Start NimkiServer for hostname: #{hostname}")
     end
 
   end

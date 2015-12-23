@@ -1,3 +1,4 @@
+require "logger"
 require "messaging/version"
 
 # load files based on whether it is loaded as Rails engine or not
@@ -23,13 +24,18 @@ module Messaging
     nonTemplateFiles
   end
 
-  # If using in rails context: DO NOT call this directly
-  # instead use the global thread safe
-  # $bunny_connection variable we get from
-  # main_app/config/puma.rb
-  def self.connection
-    # currently assume default URL
-    Connections::BunnyConnection.new(nil).connection
+  mattr_accessor :_logger
+  def self.logger
+    Messaging._logger ||= begin
+      if Module.const_defined?('Rails')
+        Rails.logger
+      else
+        logger = Logger.new(STDOUT)
+        logger.level = Logger::DEBUG
+        logger.datetime_format = "%Y-%m-%d %H:%M:%S"
+        logger
+      end
+    end
   end
 
   # Memoize config
@@ -48,6 +54,15 @@ module Messaging
     Messaging._cache ||= begin
       Messaging._cache = Connections::Cache.new
     end
+  end
+
+  # If using in rails context: DO NOT call this directly
+  # instead use the global thread safe
+  # $bunny_connection variable we get from
+  # main_app/config/puma.rb
+  def self.connection
+    # currently assume default URL
+    Connections::BunnyConnection.new(nil).connection
   end
 end
 

@@ -6,6 +6,7 @@ module VideoCapture
       machineRoutingKey = "#{Messaging.config.video_capture.routing_keys.nimki.server}.#{hostname}"
 
       super(exchangeName, responseRoutingKey, machineRoutingKey)
+      Messaging.logger.info("Start RasbariClient for hostname: #{hostname}")
     end
 
   end
