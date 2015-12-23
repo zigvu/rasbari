@@ -2,6 +2,7 @@ require 'socket'
 
 module VideoCapture
   class NimkiServer < Connections::GenericServer
+
     def initialize(handler)
       hostname = Socket.gethostname
 
