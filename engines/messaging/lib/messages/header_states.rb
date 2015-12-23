@@ -3,11 +3,11 @@
 # messaging/monkeypatch.rb (for non-Rails)
 
 module Messages
-  class States
+  class HeaderStates
     def self.states
       ["unknown", "success", "failure"]
     end
-    zextend BaseNonPersisted, Messages::States.states, { prefix: 'state' }
+    zextend BaseNonPersisted, Messages::HeaderStates.states, { prefix: 'state' }
 
     attr_reader :state
 

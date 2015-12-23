@@ -7,7 +7,7 @@ module Connections
       returnMessage = nil
 
       # if ping, ping back OK
-      if header.type.isTypePing?
+      if header.type.isPing?
         handled = true
         returnHeader = Messages::Header.pingSuccess
         returnMessage = ""

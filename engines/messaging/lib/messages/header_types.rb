@@ -3,11 +3,11 @@
 # messaging/monkeypatch.rb (for non-Rails)
 
 module Messages
-  class Types
+  class HeaderTypes
     def self.types
       ["ping", "status", "data"]
     end
-    zextend BaseNonPersisted, Messages::Types.types, { prefix: 'type' }
+    zextend BaseNonPersisted, Messages::HeaderTypes.types, { prefix: 'type' }
 
     attr_reader :type
 

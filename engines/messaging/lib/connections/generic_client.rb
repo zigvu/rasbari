@@ -20,7 +20,7 @@ module Connections
     def isRemoteAlive?
       # timeout after 30 second of ping call
       rh, response = call(Messages::Header.ping, "", 30)
-      rh.type.isTypePing? && rh.state.isStateSuccess?
+      rh.type.isPing? && rh.state.isSuccess?
     end
 
 
