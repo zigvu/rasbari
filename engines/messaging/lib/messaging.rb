@@ -1,5 +1,4 @@
 require "messaging/version"
-require "non_rails/ordered_options"
 
 # load files based on whether it is loaded as Rails engine or not
 if Module.const_defined?('Rails')
@@ -33,6 +32,7 @@ module Messaging
     Connections::BunnyConnection.new(nil).connection
   end
 
+  # Memoize config
   mattr_accessor :_config
   def self.config
     Messaging._config ||= begin
@@ -41,8 +41,14 @@ module Messaging
     end
   end
 
-  # Memoize connection client objects
-  mattr_accessor :video_capture_client
+
+  # Memoize connection objects
+  mattr_accessor :_cache
+  def self.cache
+    Messaging._cache ||= begin
+      Messaging._cache = Connections::Cache.new
+    end
+  end
 end
 
 # load files if not used as engine

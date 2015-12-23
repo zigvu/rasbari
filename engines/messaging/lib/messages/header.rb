@@ -20,10 +20,17 @@ module Messages
       }
       return Messages::Header.new(jsonHeader)
     end
-    def self.pingOk
+    def self.pingSuccess
       jsonHeader = {
         'type' => Messages::Types.new(nil).ping,
         'state' => Messages::States.new(nil).success
+      }
+      return Messages::Header.new(jsonHeader)
+    end
+    def self.pingFail
+      jsonHeader = {
+        'type' => Messages::Types.new(nil).ping,
+        'state' => Messages::States.new(nil).failure
       }
       return Messages::Header.new(jsonHeader)
     end

@@ -29,7 +29,14 @@ module Connections
       end
     end
 
-    def call(publishRoutingKey, header, message)
+    def call(publishRoutingKey, header, message, timeout = nil)
+      # if we are expecting that request could time out, we need to
+      # set responses to nil from previous calls
+      if timeout
+        self.responseHeader = Messages::Header.pingFail
+        self.response = ""
+      end
+
       self.correlationId = SecureRandom.uuid
       # send message
       @exchange.publish(
@@ -40,7 +47,11 @@ module Connections
         headers: header.to_json
       )
       # wait for reply
-      lock.synchronize{ condition.wait(lock) }
+      if timeout
+        lock.synchronize{ condition.wait(lock, timeout) }
+      else
+        lock.synchronize{ condition.wait(lock) }
+      end
       # return reply
       return responseHeader, response
     end

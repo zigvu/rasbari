@@ -9,14 +9,14 @@ default: &default
 development:
   <<: *default
   video_capture:
-    exchange: development.video.capture
+    exchange: development.video_capture
     routing_keys:
       rasbari:
-        client: development.video.capture.rasbari.client
-        server: development.video.capture.rasbari.server
+        client: development.video_capture.rasbari.client
+        server: development.video_capture.rasbari.server
       nimki:
-        client: development.video.capture.nimki.client # IP will be appended
-        server: development.video.capture.nimki.server # IP will be appended
+        client: development.video_capture.nimki.client # IP will be appended
+        server: development.video_capture.nimki.server # IP will be appended
 
 production:
   <<: *default

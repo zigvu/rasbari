@@ -18,21 +18,9 @@ module Config
         all_config = YAML.load_file(yamlConfigFile) || {}
         env_config = all_config[env]
 
-        config = deepSymbolize(env_config, Messaging::OrderedOptions.new) if env_config
+        config = Messaging::DeepSymbolize.convert(env_config) if env_config
         config
       end
-    end
-
-    def deepSymbolize(h, newH)
-      h.each do |k, v|
-        if v.is_a?(Hash)
-          newV = deepSymbolize(v, Messaging::OrderedOptions.new)
-        else
-          newV = v
-        end
-        newH.merge!({k => newV}.symbolize_keys)
-      end
-      newH
     end
   end
 end

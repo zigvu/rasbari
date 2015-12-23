@@ -1,5 +1,5 @@
-module Handlers
-  class RpcHandler
+module Connections
+  class GenericHandler
 
     def handleGeneric(header)
       handled = false
@@ -9,7 +9,7 @@ module Handlers
       # if ping, ping back OK
       if header.type.isTypePing?
         handled = true
-        returnHeader = Messages::Header.pingOk
+        returnHeader = Messages::Header.pingSuccess
         returnMessage = ""
       end
 
