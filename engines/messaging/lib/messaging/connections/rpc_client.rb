@@ -1,7 +1,5 @@
-# Note: Headers are exchanged as JSON objects but converted to Header object
-# during API call to this file
-# Messages are always shared as RAW data so need to be marshalled/unmarshalled
-# outside of API call to this file
+# Note: Headers and mesages are exchanged as JSON data but are converted to
+# corresponding objects during API call to this file
 
 module Messaging
   module Connections
@@ -25,7 +23,7 @@ module Messaging
         # in a separate thread listen for reply messages
         replyQueue.subscribe(manual_ack: true) do |delivery_info, properties, payload|
           if properties[:correlation_id] == that.correlationId
-            that.response = payload
+            that.response = Messaging::Messages::MessageFactory.getMessage(payload)
             that.responseHeader = Messaging::Messages::Header.new(properties.headers)
             that.lock.synchronize{ that.condition.signal }
             channel.ack(delivery_info.delivery_tag)
@@ -44,7 +42,7 @@ module Messaging
         self.correlationId = SecureRandom.uuid
         # send message
         @exchange.publish(
-          message,
+          message.to_json,
           routing_key: publishRoutingKey,
           correlation_id: self.correlationId,
           reply_to: @responseRoutingKey,

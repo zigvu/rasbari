@@ -1,7 +1,5 @@
-# Note: Headers are exchanged as JSON objects but converted to Header object
-# during API call to this file
-# Messages are always shared as RAW data so need to be marshalled/unmarshalled
-# outside of API call to this file
+# Note: Headers and mesages are exchanged as JSON data but are converted to
+# corresponding objects during API call to this file
 
 module Messaging
   module Connections
@@ -22,13 +20,13 @@ module Messaging
         @serverQueue.subscribe(manual_ack: true) do |delivery_info, properties, payload|
           responseHeaders, responseMessage = @rpcHandlerObj.call(
             Messaging::Messages::Header.new(properties.headers),
-            payload
+            Messaging::Messages::MessageFactory.getMessage(payload)
           )
           # once message is handled, send ack
           @channel.ack(delivery_info.delivery_tag)
 
           @exchange.publish(
-          responseMessage,
+            responseMessage.to_json,
             routing_key: properties.reply_to,
             correlation_id: properties.correlation_id,
             headers: responseHeaders.to_json
