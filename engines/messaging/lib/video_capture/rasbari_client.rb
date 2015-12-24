@@ -10,5 +10,30 @@ module VideoCapture
       Messaging.logger.info("Start RasbariClient for hostname: #{hostname}")
     end
 
+    def isStateReady?
+      # prepare packets
+      header = Messages::Header.statusRequest
+      message = VideoCapture::Messages::StateQuery.new(nil)
+      # send message
+      responseHeader, response = call(header, message.to_json)
+      # parse response
+      responseMessage = Connections::MessageFactory.getMessage(response)
+      captureState = responseMessage.getState
+      # check condition
+      responseHeader.isStatusSuccess? && captureState.isReady?
+    end
+    def setStateReady
+    end
+
+    def isStateCapturing?
+    end
+    def setStateCapturing
+    end
+
+    def isStateStopped?
+    end
+    def setStateStopped
+    end
+
   end
 end

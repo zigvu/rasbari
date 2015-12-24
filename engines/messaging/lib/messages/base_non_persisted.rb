@@ -13,11 +13,7 @@ module BaseNonPersisted
       methodName = ss.slice(0,1).capitalize + ss.slice(1..-1)
       # query method: Example: isState?
       base.send(:define_method, "is#{methodName}?") do
-        self.send(ss) == self.send(prefix)
-      end
-      # strings
-      base.send(:define_method, "#{ss}") do
-        return ss.to_s
+        ss.to_s == self.send(prefix)
       end
     end
     # get string repr
@@ -27,6 +23,14 @@ module BaseNonPersisted
     # formatted hash for form input
     base.send(:define_method, "to_h") do
       arr.map{ |a| [a.split(/(?=[A-Z])/).map{ |w| w.capitalize }.join(" "), a] }
+    end
+    # create class methods
+    base.eigenclass.instance_eval do
+      arr.each do |ss|
+        define_method("#{ss}") do
+          return base.new(ss)
+        end
+      end
     end
   end
 

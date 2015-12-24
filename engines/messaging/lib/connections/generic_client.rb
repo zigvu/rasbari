@@ -18,8 +18,11 @@ module Connections
 
     # Common methods
     def isRemoteAlive?
+      header = Messages::Header.pingRequest
+      message = Connections::MessageFactory.getNilMessage
       # timeout after 30 second of ping call
-      responseHeader, response = call(Messages::Header.pingRequest, "", 30)
+      timeout = 30
+      responseHeader, response = call(header, message.to_json, timeout)
       responseHeader.isPingSuccess?
     end
 

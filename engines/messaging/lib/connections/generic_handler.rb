@@ -3,14 +3,13 @@ module Connections
 
     def handleGeneric(header)
       handled = false
-      returnHeader = nil
-      returnMessage = nil
+      returnHeader = Messages::Header.pingFailure
+      returnMessage = Connections::MessageFactory.getNilMessage
 
       # if ping, ping back OK
       if header.type.isPing?
         handled = true
         returnHeader = Messages::Header.pingSuccess
-        returnMessage = ""
       end
 
       return handled, returnHeader, returnMessage

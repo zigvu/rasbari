@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.summary       = "Engine to communicate with RabbitMq."
   s.description   = "Engine to communicate with RabbitMq."
 
-  s.files         = Dir["{lib}/**/*", "Rakefile", "README.rdoc"]
+  s.files         = Dir["{lib}/**/*", "{lib}/**/**/*", "Rakefile", "README.rdoc"]
   s.executables   = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
 
   s.require_paths = ["lib"]

@@ -21,6 +21,9 @@ module Messaging
       Dir["#{ntf}/*.rb"].each do |f|
         nonTemplateFiles << File.join(File.dirname(f), File.basename(f, ".*"))
       end
+      Dir["#{ntf}/**/*.rb"].each do |f|
+        nonTemplateFiles << File.join(File.dirname(f), File.basename(f, ".*"))
+      end
     end
 
     nonTemplateFiles

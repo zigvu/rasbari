@@ -5,7 +5,7 @@
 module VideoCapture
   class CaptureStates
     def self.states
-      ["unknown", "cleanUp", "boot", "ready", "capturing", "stopping", "stopped"]
+      ["unknown", "ready", "capturing", "stopped"]
     end
     zextend BaseNonPersisted, VideoCapture::CaptureStates.states, { prefix: 'state' }
 

@@ -1,4 +1,7 @@
-require 'json'
+# Note: Headers are exchanged as JSON objects but converted to Header object
+# during API call to this file
+# Messages are always shared as RAW data so need to be marshalled/unmarshalled
+# outside of API call to this file
 
 module Connections
   class RpcServer
