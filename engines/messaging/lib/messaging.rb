@@ -1,20 +1,20 @@
 require "logger"
 require "messaging/version"
-# extra files needed for load order
-require "messages/base_non_persisted"
+# # extra files needed for load order
+require "messaging/messages/base_non_persisted"
 
 # load files based on whether it is loaded as Rails engine or not
 if Module.const_defined?('Rails')
   require "messaging/engine"
 else
-  require "non_rails/monkeypatch"
+  require "messaging/non_rails/monkeypatch"
 end
 
 module Messaging
   def self.files_to_load
     lib = File::expand_path('..', __FILE__)
-    templateFolders = ["#{lib}/messaging", "#{lib}/non_rails"]
-    nonTemplateFolders = Dir["#{lib}/*"] - templateFolders
+    templateFolders = ["#{lib}/messaging/non_rails"]
+    nonTemplateFolders = Dir["#{lib}/messaging/*"] - templateFolders
     nonTemplateFiles = []
     nonTemplateFolders.each do |ntf|
       # assume that all files are namespaced
@@ -47,8 +47,8 @@ module Messaging
   mattr_accessor :_config
   def self.config
     Messaging._config ||= begin
-      yamlConfigFile = File::expand_path('../config/rabbit.yml', __FILE__)
-      Messaging._config = Config::Reader.new(yamlConfigFile).config
+      yamlConfigFile = File::expand_path('../messaging/config/rabbit.yml', __FILE__)
+      Messaging._config = Messaging::Config::Reader.new(yamlConfigFile).config
     end
   end
 
@@ -66,7 +66,7 @@ module Messaging
   # main_app/config/puma.rb
   def self.connection
     # currently assume default URL
-    Connections::BunnyConnection.new(nil).connection
+    Messaging::Connections::BunnyConnection.new(nil).connection
   end
 end
 
