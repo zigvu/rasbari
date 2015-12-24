@@ -1,13 +1,15 @@
+require_relative 'base_message'
+
 module Messaging
-  module VideoCapture
-    module Messages
-      class StateQuery < Messaging::VideoCapture::Messages::BaseMessage
+  module Messages
+    module VideoCapture
+      class StateQuery < Messaging::Messages::VideoCapture::BaseMessage
         NAME = 'state_query'
 
         def initialize(message = nil)
           @message = message || Messaging::BaseLibs::DeepSymbolize.convert({
-            category: Messaging::VideoCapture::Messages::BaseMessage::CATEGORY,
-            name: Messaging::VideoCapture::Messages::StateQuery::NAME,
+            category: Messaging::Messages::VideoCapture::BaseMessage::CATEGORY,
+            name: Messaging::Messages::VideoCapture::StateQuery::NAME,
             state: nil
           })
         end

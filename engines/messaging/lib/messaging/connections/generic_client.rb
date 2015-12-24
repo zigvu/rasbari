@@ -24,7 +24,7 @@ module Messaging
       # Common methods
       def isRemoteAlive?
         header = Messaging::Messages::Header.pingRequest
-        message = Messaging::Messages::MessageFactory.getNilMessage
+        message = Messaging::Messages::MessageFactory.getNoneMessage
         # timeout after 30 second of ping call
         timeout = 30
         responseHeader, response = call(header, message, timeout)

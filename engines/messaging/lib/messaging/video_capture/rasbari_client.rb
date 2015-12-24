@@ -14,7 +14,7 @@ module Messaging
       def isStateReady?
         # prepare packets and send message
         header = Messaging::Messages::Header.statusRequest
-        message = Messaging::VideoCapture::Messages::StateQuery.new(nil)
+        message = Messaging::Messages::VideoCapture::StateQuery.new(nil)
         responseHeader, response = call(header, message)
         # check condition
         responseHeader.isStatusSuccess? && response.getState.isReady?

@@ -3,25 +3,34 @@ require 'json'
 module Messaging
   module Messages
     class MessageFactory
+      def self.categoriesNames
+        # structure:
+        # {category: [names], }
+        {
+          general: [:none, :error],
+          video_capture: [:state_query]
+        }
+      end
 
       def self.getMessage(jsonMessage)
         message = Messaging::BaseLibs::DeepSymbolize.convert(JSON.parse(jsonMessage))
 
-        # Video Capture
-        if message.category == Messaging::VideoCapture::Messages::BaseMessage::CATEGORY
-          if message.name == Messaging::VideoCapture::Messages::StateQuery::NAME
-            return Messaging::VideoCapture::Messages::StateQuery.new(message)
-          end
-        elsif message.category == "none"
-          return Messaging::Messages::MessageFactory.getNilMessage
+        # check if we have corresponding message
+        cn = Messaging::Messages::MessageFactory.categoriesNames
+        categorySym = message.category.to_sym
+        nameSym = message.name.to_sym
+        if !(cn[categorySym] && cn[categorySym].include?(nameSym))
+          Messaging.logger.error("MessageFactory: Couldn't find message: categorySym: #{categorySym}, nameSym: #{nameSym}")
+          raise "MessageFactory: Couldn't find message class for jsonMessage: #{jsonMessage}"
         end
 
-        # we should never reach here
-        raise "Couldn't parse message"
+        categorySym = message.category.split("_").map{ |s| s.capitalize }.join("")
+        nameSym = message.name.split("_").map{ |s| s.capitalize }.join("")
+        return Object.const_get("Messaging::Messages::#{categorySym}::#{nameSym}").new(message)
       end
 
-      def self.getNilMessage
-        Messaging::BaseLibs::DeepSymbolize.convert({ category: "none", name: "none" })
+      def self.getNoneMessage
+        Messaging::Messages::General::None.new(nil)
       end
 
     end

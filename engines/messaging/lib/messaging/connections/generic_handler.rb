@@ -5,7 +5,7 @@ module Messaging
       def handleGeneric(header)
         handled = false
         returnHeader = Messaging::Messages::Header.pingFailure
-        returnMessage = Messaging::Messages::MessageFactory.getNilMessage
+        returnMessage = Messaging::Messages::MessageFactory.getNoneMessage
 
         # if ping, ping back OK
         if header.type.isPing?
