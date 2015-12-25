@@ -1,26 +1,27 @@
-require_relative 'base_message'
-
 module Messaging
   module Messages
     module VideoCapture
-      class StateQuery < Messaging::Messages::VideoCapture::BaseMessage
-        NAME = 'state_query'
+
+      class StateQuery < BaseMessage::Common
+        CATEGORY = "video_capture"
+        NAME = "state_query"
+
+        def self.attributes
+          ["category", "name", "state"]
+        end
+        zextend BaseMessage, StateQuery.attributes
 
         def initialize(message = nil)
-          @message = message || Messaging::BaseLibs::DeepSymbolize.convert({
-            category: Messaging::Messages::VideoCapture::BaseMessage::CATEGORY,
-            name: Messaging::Messages::VideoCapture::StateQuery::NAME,
-            state: nil
-          })
+          cat = Object.const_get("#{self.class}")::CATEGORY
+          nam = Object.const_get("#{self.class}")::NAME
+          super(cat, nam, message)
         end
 
-        def getState
-          Messaging::VideoCapture::CaptureStates.new(@message.state)
-        end
-        def setState(newState)
-          @message.state = newState.to_s
+        def getVideoCaptureState
+          Messaging::VideoCapture::CaptureStates.new(@state)
         end
       end
+
     end
   end
 end

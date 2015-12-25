@@ -17,10 +17,7 @@ module Messaging
     nonTemplateFolders = Dir["#{lib}/messaging/*"] - templateFolders
     nonTemplateFiles = []
     nonTemplateFolders.each do |ntf|
-      # assume that all files are namespaced
-      Dir["#{ntf}/*.rb"].each do |f|
-        nonTemplateFiles << File.join(File.dirname(f), File.basename(f, ".*"))
-      end
+      # # assume that all files are namespaced
       Dir["#{ntf}/**/*.rb"].each do |f|
         nonTemplateFiles << File.join(File.dirname(f), File.basename(f, ".*"))
       end

@@ -17,7 +17,7 @@ module Messaging
         message = Messaging::Messages::VideoCapture::StateQuery.new(nil)
         responseHeader, response = call(header, message)
         # check condition
-        responseHeader.isStatusSuccess? && response.getState.isReady?
+        responseHeader.isStatusSuccess? && response.getVideoCaptureState.isReady?
       end
       def setStateReady
       end

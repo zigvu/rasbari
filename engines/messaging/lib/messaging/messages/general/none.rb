@@ -1,18 +1,23 @@
-require_relative 'base_message'
-
 module Messaging
   module Messages
     module General
-      class None < Messaging::Messages::General::BaseMessage
-        NAME = 'none'
+
+      class None < BaseMessage::Common
+        CATEGORY = "general"
+        NAME = "none"
+
+        def self.attributes
+          ["category", "name"]
+        end
+        zextend BaseMessage, None.attributes
 
         def initialize(message = nil)
-          @message = message || Messaging::BaseLibs::DeepSymbolize.convert({
-            category: Messaging::Messages::General::BaseMessage::CATEGORY,
-            name: Messaging::Messages::General::None::NAME
-          })
+          cat = Object.const_get("#{self.class}")::CATEGORY
+          nam = Object.const_get("#{self.class}")::NAME
+          super(cat, nam, message)
         end
       end
+
     end
   end
 end
