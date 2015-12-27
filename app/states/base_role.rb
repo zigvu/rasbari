@@ -11,8 +11,7 @@ module BaseRole
       methodName = ss.slice(0,1).capitalize + ss.slice(1..-1)
       # query method: Example: isDownloadQueue?
       base.send(:define_method, "is#{methodName}?") do
-        currentState = getX
-        self.send(ss) == currentState
+        ss.to_s == getX()
       end
       # setter method: Example setDownloadQueue
       base.send(:define_method, "set#{methodName}") do
@@ -20,25 +19,32 @@ module BaseRole
       end
       # heirarchy
       base.send(:define_method, "isAtLeast#{methodName}?") do
-        currentState = getX
-        arr.index(currentState) >= arr.index(ss)
+        arr.index(getX()) >= arr.index(ss)
       end
       base.send(:define_method, "isBelow#{methodName}?") do
-        currentState = getX
-        arr.index(currentState) < arr.index(ss)
+        arr.index(getX()) < arr.index(ss)
       end
-      # strings
-      base.send(:define_method, "#{ss}") do
-        return ss.to_s
-      end
-    end
-    # formatted hash for form input
-    base.send(:define_method, "to_h") do
-      arr.map{ |a| [a.split(/(?=[A-Z])/).map{ |w| w.capitalize }.join(" "), a] }
     end
     # get current
     base.send(:define_method, "get") do
-      getX
+      getX()
+    end
+    # make array accessible to instance methods
+    base.send(:define_method, "attributeArr") do
+      arr
+    end
+    # create class methods
+    base.eigenclass.instance_eval do
+      # individual element as method
+      arr.each do |ss|
+        define_method("#{ss}") do
+          ss.to_s
+        end
+      end
+      # formatted hash for form input
+      define_method("to_h") do
+        arr.map{ |a| [a.split(/(?=[A-Z])/).map{ |w| w.capitalize }.join(" "), a] }
+      end
     end
   end
 
@@ -49,28 +55,4 @@ module BaseRole
     # activated instance methods
   end
 
-  # this is inherited from implementing classes
-  class ArAccessor
-    def initialize(collArr, tableObject, columnName)
-      @collArr = collArr
-      @tableObject = tableObject
-      @columnName = columnName
-    end
-
-    # methods for sub classes
-    def getX
-      @tableObject.send(@columnName)
-    end
-    def setX(setValue)
-      @tableObject.update({@columnName => setValue})
-    end
-    # get humanized version
-    def to_s
-      getX().split(/(?=[A-Z])/).map{ |w| w.capitalize }.join(" ")
-    end
-    # see if is valid
-    def valid?(r)
-      @collArr.include?(r)
-    end
-  end
 end

@@ -1,5 +1,5 @@
 module Video
-  class StreamPriorities < BaseRole::ArAccessor
+  class StreamPriorities < BaseAr::ArAccessor
 
     def self.priorities
       ["none", "low", "medium", "high", "immediate"]
@@ -7,7 +7,7 @@ module Video
     zextend BaseRole, Video::StreamPriorities.priorities
 
     def initialize(stream)
-      super(Video::StreamPriorities.priorities, stream, :spriority)
+      super(stream, :spriority)
     end
 
   end

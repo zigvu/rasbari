@@ -17,12 +17,12 @@ module Video
     # GET /streams/new
     def new
       @stream = Stream.new
-      @streamTypes = Video::StreamTypes.new(nil).to_h
+      @streamTypes = Video::StreamTypes.to_h
     end
 
     # GET /streams/1/edit
     def edit
-      @streamTypes = Video::StreamTypes.new(nil).to_h
+      @streamTypes = Video::StreamTypes.to_h
     end
 
     # POST /streams

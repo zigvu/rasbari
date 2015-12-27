@@ -1,5 +1,5 @@
 module Video
-  class StreamStates < BaseState::ArAccessor
+  class StreamStates < BaseAr::ArAccessor
 
     def self.states
       ["ready", "settingUp", "capturing", "failed", "stopped"]
@@ -7,7 +7,7 @@ module Video
     zextend BaseState, Video::StreamStates.states
 
     def initialize(stream)
-      super(Video::StreamStates.states, stream, :sstate)
+      super(stream, :sstate)
     end
 
   end

@@ -1,5 +1,5 @@
 module Admin
-  class UserRoles < BaseRole::ArAccessor
+  class UserRoles < BaseAr::ArAccessor
 
     def self.roles
       ["guest", "trainee", "analyst", "manager", "admin", "superAdmin"]
@@ -7,7 +7,7 @@ module Admin
     zextend BaseRole, Admin::UserRoles.roles
 
     def initialize(user)
-      super(Admin::UserRoles.roles, user, :srole)
+      super(user, :srole)
     end
 
   end

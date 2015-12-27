@@ -1,5 +1,5 @@
 module Video
-  class StreamTypes < BaseType::ArAccessor
+  class StreamTypes < BaseAr::ArAccessor
 
     def self.types
       ["youtube", "webBroadcast", "tvBroadcast", "oneOff", "other"]
@@ -7,7 +7,7 @@ module Video
     zextend BaseType, Video::StreamTypes.types
 
     def initialize(stream)
-      super(Video::StreamTypes.types, stream, :stype)
+      super(stream, :stype)
     end
 
   end
