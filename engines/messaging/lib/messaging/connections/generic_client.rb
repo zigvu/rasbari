@@ -18,6 +18,8 @@ module Messaging
       end
 
       def call(header, message, timeout = nil)
+        # wait no more than 30 minute
+        timeout ||= 30 * 60
         @rpcClient.call(@machineRoutingKey, header, message, timeout)
       end
 

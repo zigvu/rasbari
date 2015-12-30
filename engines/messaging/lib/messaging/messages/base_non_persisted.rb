@@ -20,6 +20,10 @@ module BaseNonPersisted
     base.send(:define_method, "to_s") do
       self.send(prefix)
     end
+    # equality
+    base.send(:define_method, "==") do |another|
+      self.send(prefix) == another.send(prefix)
+    end
     # formatted hash for form input
     base.send(:define_method, "to_h") do
       arr.map{ |a| [a.split(/(?=[A-Z])/).map{ |w| w.capitalize }.join(" "), a] }
