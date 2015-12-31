@@ -82,7 +82,7 @@ gem 'quiet_assets', group: :development # quits the asset prints in console
 # delayed_job
 # NOT USING: gem 'delayed_job_active_record' # background jobs
 # NOT USING: gem 'delayed_job_web' # view background job status
-# NOT USING: gem 'daemons' # dependency for delayed job
+gem 'daemons', '~> 1.2.3' # run daemon processes
 
 # memcached
 gem 'dalli' # gem for memcached

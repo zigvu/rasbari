@@ -17,8 +17,8 @@ module Messaging
             @client ||= {}
             @client[hostname] ||= Messaging::VideoCapture::RasbariClient.new(hostname)
           end
-          def server
-            @server ||= false # TODO: fill
+          def server(handler)
+            @server ||= Messaging::VideoCapture::RasbariServer.new(handler)
           end
         end # END class Rasbari
 
@@ -27,7 +27,7 @@ module Messaging
         end
         class Nimki
           def client
-            @client ||= false # TODO: fill
+            @client ||= Messaging::VideoCapture::NimkiClient.new
           end
           def server(handler)
             @server ||= Messaging::VideoCapture::NimkiServer.new(handler)

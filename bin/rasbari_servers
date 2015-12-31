@@ -1,0 +1,53 @@
+#!/usr/bin/env ruby
+
+# @author: Evan
+
+require 'rubygems'
+require 'daemons'
+
+class RasbariServers
+
+  def initialize
+    $bunny_connection = Messaging.connection
+
+    # start servers
+    startCaptureServer
+
+    # sleep - otherwise this will exit
+    loop { sleep 1000 }
+  rescue => e
+    STDERR.puts e.message
+    STDERR.puts e.backtrace
+    Rails.logger.fatal(e)
+  end
+
+  def startCaptureServer
+    Rails.logger.debug("Starting capture server")
+  end
+end
+
+dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+daemon_options = {
+  :multiple   => false,
+  :dir_mode   => :normal,
+  :dir        => File.join(dir, 'tmp', 'pids'),
+  :backtrace  => true
+}
+
+Daemons.run_proc('rasbari_servers', daemon_options) do
+  if ARGV.include?('--')
+    ARGV.slice! 0..ARGV.index('--')
+  else
+    ARGV.clear
+  end
+
+  Dir.chdir dir
+
+  require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'environment'))
+  # server_logger = Logger.new(File.join(Rails.root, "log", "rasbari_servers.log"))
+  server_logger = Logger.new(STDOUT)
+  Rails.logger = server_logger
+  ActiveRecord::Base.logger = server_logger
+
+  RasbariServers.new
+end
