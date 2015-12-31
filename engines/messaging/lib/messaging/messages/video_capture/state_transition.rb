@@ -18,7 +18,7 @@ module Messaging
         end
 
         def getVideoCaptureState
-          Messaging::VideoCapture::CaptureStates.new(@state)
+          Messaging::States::VideoCapture::CaptureStates.new(@state)
         end
       end
 

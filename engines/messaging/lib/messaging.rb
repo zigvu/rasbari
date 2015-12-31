@@ -50,10 +50,11 @@ module Messaging
   end
 
   # Memoize connection objects
-  mattr_accessor :_cache
-  def self.cache
-    Messaging._cache ||= begin
-      Messaging._cache = Connections::Cache.new
+  mattr_accessor :_rasbari_cache
+  def self.rasbari_cache
+    Messaging._rasbari_cache ||= begin
+      raise "Cannot initilize rasbari cache in non rails environment" if !Module.const_defined?('Rails')
+      Messaging._rasbari_cache = Messaging::Connections::RasbariCache.new
     end
   end
 

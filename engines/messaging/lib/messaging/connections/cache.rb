@@ -1,40 +1,24 @@
 # Class to enable memoization of client/servers
 module Messaging
   module Connections
-    class Cache
+    class RasbariCache
 
       # --------------------------------------------------------------------------
       # VideoCapture
       def video_capture
-        @video_capture ||= Messaging::Connections::Cache::VCapture.new
+        @video_capture ||= Messaging::Connections::RasbariCache::VideoCapture.new
       end
-      class VCapture
-        def rasbari
-          @rasbari ||= Messaging::Connections::Cache::VCapture::Rasbari.new
+      class VideoCapture
+        def client(hostname)
+          @clients ||= {}
+          @clients[hostname] ||= Video::RasbariClient.new(hostname)
         end
-        class Rasbari
-          def client(hostname)
-            @client ||= {}
-            @client[hostname] ||= Messaging::VideoCapture::RasbariClient.new(hostname)
-          end
-          def server(handler)
-            @server ||= Messaging::VideoCapture::RasbariServer.new(handler)
-          end
-        end # END class Rasbari
+        def server(handler)
+          @server ||= Video::RasbariServer.new(handler)
+        end
+      end # END class VideoCapture
+      # --------------------------------------------------------------------------
 
-        def nimki
-          @nimki ||= Messaging::Connections::Cache::VCapture::Nimki.new
-        end
-        class Nimki
-          def client
-            @client ||= Messaging::VideoCapture::NimkiClient.new
-          end
-          def server(handler)
-            @server ||= Messaging::VideoCapture::NimkiServer.new(handler)
-          end
-        end # END class Nimki
-      end # END class VCapture
-    end # END class Cache
-    # --------------------------------------------------------------------------
+    end # END class RasbariCache
   end
 end
