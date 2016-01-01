@@ -44,7 +44,7 @@ module Video
     def sendCaptureDetails(captureDetailsMessage)
       header = Messaging::Messages::Header.dataRequest
       message = captureDetailsMessage
-      responseHeader, response = call(header, message)
+      responseHeader, _ = call(header, message)
       responseHeader.isDataSuccess?
     end
 
@@ -52,7 +52,7 @@ module Video
     def startVncServer
       header = Messaging::Messages::Header.statusRequest
       message = Messaging::Messages::VideoCapture::VncServerStart.new(nil)
-      responseHeader, response = call(header, message)
+      responseHeader, _ = call(header, message)
       responseHeader.isStatusSuccess?
     end
 

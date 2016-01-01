@@ -23,6 +23,8 @@ class RasbariServers
 
   def startCaptureServer
     Rails.logger.debug("Starting capture server")
+    captureHandler = Video::MainHandler.new
+    Messaging.rasbari_cache.video_capture.server(captureHandler)
   end
 end
 

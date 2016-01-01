@@ -29,7 +29,7 @@ module Messaging
         message = Messaging::Messages::MessageFactory.getNoneMessage
         # timeout after 30 second of ping call
         timeout = 30
-        responseHeader, response = call(header, message, timeout)
+        responseHeader, _ = call(header, message, timeout)
         responseHeader.isPingSuccess?
       end
 

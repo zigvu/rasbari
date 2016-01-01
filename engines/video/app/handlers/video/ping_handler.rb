@@ -1,9 +1,8 @@
 module Video
   class PingHandler
-    def initialize(header, message, captureState)
+    def initialize(header, message)
       @header = header
       @message = message
-      @captureState = captureState
     end
 
     def handle
