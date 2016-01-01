@@ -1,5 +1,4 @@
 Setting::Engine.routes.draw do
   resources :machines
-  # TODO:
-  # root to: "controller#index"
+  root to: "machines#index"
 end

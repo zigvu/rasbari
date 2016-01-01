@@ -20,7 +20,7 @@ module Setting
 
     test "should create machine" do
       assert_difference('Machine.count') do
-        post :create, machine: { cloud: @machine.cloud, hostname: @machine.hostname, ip: @machine.ip, zdetails: @machine.zdetails, zstate: @machine.zstate, ztype: @machine.ztype }
+        post :create, machine: { zcloud: @machine.zcloud, hostname: @machine.hostname, ip: @machine.ip, zdetails: @machine.zdetails, zstate: @machine.zstate, ztype: @machine.ztype }
       end
 
       assert_redirected_to machine_path(assigns(:machine))
@@ -37,7 +37,7 @@ module Setting
     end
 
     test "should update machine" do
-      patch :update, id: @machine, machine: { cloud: @machine.cloud, hostname: @machine.hostname, ip: @machine.ip, zdetails: @machine.zdetails, zstate: @machine.zstate, ztype: @machine.ztype }
+      patch :update, id: @machine, machine: { zcloud: @machine.zcloud, hostname: @machine.hostname, ip: @machine.ip, zdetails: @machine.zdetails, zstate: @machine.zstate, ztype: @machine.ztype }
       assert_redirected_to machine_path(assigns(:machine))
     end
 

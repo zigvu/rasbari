@@ -1,3 +1,4 @@
+# This migration comes from setting (originally 20160101031406)
 class CreateSettingMachines < ActiveRecord::Migration
   def change
     create_table :setting_machines do |t|

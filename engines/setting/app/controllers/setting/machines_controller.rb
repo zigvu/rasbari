@@ -2,6 +2,7 @@ require_dependency "setting/application_controller"
 
 module Setting
   class MachinesController < ApplicationController
+    authorize_actions_for Machine
     before_action :set_machine, only: [:show, :edit, :update, :destroy]
 
     # GET /machines
@@ -16,10 +17,16 @@ module Setting
     # GET /machines/new
     def new
       @machine = Machine.new
+      @machineStates = Setting::MachineStates.to_h
+      @machineTypes = Setting::MachineTypes.to_h
+      @cloudTypes = Setting::CloudTypes.to_h
     end
 
     # GET /machines/1/edit
     def edit
+      @machineStates = Setting::MachineStates.to_h
+      @machineTypes = Setting::MachineTypes.to_h
+      @cloudTypes = Setting::CloudTypes.to_h
     end
 
     # POST /machines
@@ -56,7 +63,7 @@ module Setting
 
       # Only allow a trusted parameter "white list" through.
       def machine_params
-        params.require(:machine).permit(:ztype, :zstate, :cloud, :hostname, :ip, :zdetails)
+        params.require(:machine).permit(:ztype, :zstate, :zcloud, :zdetails, :hostname, :ip)
       end
   end
 end
