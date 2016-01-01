@@ -1,0 +1,16 @@
+<%= simple_form_for(@machine) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :ztype %>
+    <%= f.input :zstate %>
+    <%= f.input :cloud %>
+    <%= f.input :hostname %>
+    <%= f.input :ip %>
+    <%= f.input :zdetails %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
