@@ -20,7 +20,7 @@ module Video
 
     test "should create stream" do
       assert_difference('Stream.count') do
-        post :create, stream: { machine_id: @stream.machine_id, name: @stream.name, sstate: @stream.sstate, stype: @stream.stype, url: @stream.url }
+        post :create, stream: { machine_id: @stream.machine_id, name: @stream.name, zstate: @stream.zstate, ztype: @stream.ztype, url: @stream.url }
       end
 
       assert_redirected_to stream_path(assigns(:stream))
@@ -37,7 +37,7 @@ module Video
     end
 
     test "should update stream" do
-      patch :update, id: @stream, stream: { machine_id: @stream.machine_id, name: @stream.name, sstate: @stream.sstate, stype: @stream.stype, url: @stream.url }
+      patch :update, id: @stream, stream: { machine_id: @stream.machine_id, name: @stream.name, zstate: @stream.zstate, ztype: @stream.ztype, url: @stream.url }
       assert_redirected_to stream_path(assigns(:stream))
     end
 

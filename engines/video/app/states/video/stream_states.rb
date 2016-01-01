@@ -7,7 +7,7 @@ module Video
     zextend BaseState, Video::StreamStates.states
 
     def initialize(stream)
-      super(stream, :sstate)
+      super(stream, :zstate)
     end
 
   end

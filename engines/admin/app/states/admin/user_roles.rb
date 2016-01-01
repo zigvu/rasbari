@@ -7,7 +7,7 @@ module Admin
     zextend BaseRole, Admin::UserRoles.roles
 
     def initialize(user)
-      super(user, :srole)
+      super(user, :zrole)
     end
 
   end

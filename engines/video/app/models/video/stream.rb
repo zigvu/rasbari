@@ -7,7 +7,7 @@ module Video
     # Validations
     validates :name, presence: true
     validates :base_url, presence: true
-    validates :stype, presence: true
+    validates :ztype, presence: true
 
     def state
       Video::StreamStates.new(self)

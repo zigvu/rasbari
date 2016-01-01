@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20151218173340) do
     t.string   "unlock_token",           limit: 255
     t.datetime "locked_at"
     t.string   "authentication_token",   limit: 255
-    t.string   "srole",                  limit: 255
+    t.string   "zrole",                  limit: 255
     t.string   "first_name",             limit: 255
     t.string   "last_name",              limit: 255
     t.datetime "created_at",                                      null: false
@@ -40,9 +40,9 @@ ActiveRecord::Schema.define(version: 20151218173340) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "video_streams", force: :cascade do |t|
-    t.string   "stype",       limit: 255
-    t.string   "sstate",      limit: 255
-    t.string   "spriority",   limit: 255
+    t.string   "ztype",       limit: 255
+    t.string   "zstate",      limit: 255
+    t.string   "zpriority",   limit: 255
     t.string   "name",        limit: 255
     t.string   "base_url",    limit: 255
     t.string   "capture_url", limit: 255

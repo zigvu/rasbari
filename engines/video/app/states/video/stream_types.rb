@@ -7,7 +7,7 @@ module Video
     zextend BaseType, Video::StreamTypes.types
 
     def initialize(stream)
-      super(stream, :stype)
+      super(stream, :ztype)
     end
 
   end

@@ -7,7 +7,7 @@ module Video
     zextend BaseRole, Video::StreamPriorities.priorities
 
     def initialize(stream)
-      super(stream, :spriority)
+      super(stream, :zpriority)
     end
 
   end
