@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160101034658) do
+ActiveRecord::Schema.define(version: 20160102035609) do
 
   create_table "setting_machines", force: :cascade do |t|
     t.string   "ztype",      limit: 255
@@ -51,14 +51,13 @@ ActiveRecord::Schema.define(version: 20160101034658) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "video_streams", force: :cascade do |t|
-    t.string   "ztype",       limit: 255
-    t.string   "zstate",      limit: 255
-    t.string   "zpriority",   limit: 255
-    t.string   "name",        limit: 255
-    t.string   "base_url",    limit: 255
-    t.string   "capture_url", limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.string   "ztype",      limit: 255
+    t.string   "zstate",     limit: 255
+    t.string   "zpriority",  limit: 255
+    t.string   "name",       limit: 255
+    t.string   "base_url",   limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
 end

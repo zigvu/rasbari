@@ -60,7 +60,7 @@ module Video
 
       # Only allow a trusted parameter "white list" through.
       def stream_params
-        params.require(:stream).permit(:ztype, :zstate, :zpriority, :name, :base_url, :capture_url, :machine_id)
+        params.require(:stream).permit(:ztype, :zstate, :zpriority, :name, :base_url)
       end
   end
 end
