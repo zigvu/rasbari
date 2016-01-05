@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160105174306) do
+ActiveRecord::Schema.define(version: 20160105231013) do
 
   create_table "setting_machines", force: :cascade do |t|
     t.string   "ztype",      limit: 255
@@ -70,6 +70,18 @@ ActiveRecord::Schema.define(version: 20160105174306) do
   add_index "video_captures", ["capture_machine_id"], name: "index_video_captures_on_capture_machine_id", using: :btree
   add_index "video_captures", ["storage_machine_id"], name: "index_video_captures_on_storage_machine_id", using: :btree
   add_index "video_captures", ["stream_id"], name: "index_video_captures_on_stream_id", using: :btree
+
+  create_table "video_clips", force: :cascade do |t|
+    t.integer  "capture_id",         limit: 4
+    t.string   "zstate",             limit: 255
+    t.integer  "length",             limit: 4
+    t.integer  "frame_number_start", limit: 4
+    t.integer  "frame_number_end",   limit: 4
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "video_clips", ["capture_id"], name: "index_video_clips_on_capture_id", using: :btree
 
   create_table "video_streams", force: :cascade do |t|
     t.string   "ztype",      limit: 255

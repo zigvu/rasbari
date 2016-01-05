@@ -7,7 +7,10 @@ module Messaging
         NAME = "capture_details"
 
         def self.attributes
-          ["category", "name", "captureId", "captureUrl", "width", "height", "playbackFrameRate"]
+          [
+            "category", "name", "captureId", "captureUrl", "width", "height",
+            "playbackFrameRate", "storageHostname"
+          ]
         end
         zextend BaseMessage, CaptureDetails.attributes
 

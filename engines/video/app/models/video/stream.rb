@@ -20,5 +20,6 @@ module Video
     end
 
     has_many :captures, dependent: :destroy
+    has_many :clips, through: :captures
   end
 end

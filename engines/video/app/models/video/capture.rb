@@ -24,10 +24,12 @@ module Video
         captureId: self.id,
         captureUrl: self.capture_url,
         playbackFrameRate: self.playback_frame_rate,
+        storageHostname: self.storageMachine.hostname,
       })
       Messaging::Messages::VideoCapture::CaptureDetails.new(ar)
     end
 
     belongs_to :stream
+    has_many :clips, dependent: :destroy
   end
 end

@@ -7,9 +7,12 @@ module Video
 
     def handle
       returnHeader = Messaging::Messages::Header.dataSuccess
-      # TODO: change. for now, send dummy paths
-      @message.clipId = 0
-      @message.storageUrl = "/tmp/capture/rasbari_#{@message.ffmpegName}"
+      capture = Video::Capture.find(@message.captureId)
+      clip = capture.clips.create
+      clip.state.setCreated
+
+      @message.clipId = clip.id
+      @message.storageUrl = clip.path
       returnMessage = @message
       return returnHeader, returnMessage
     end
