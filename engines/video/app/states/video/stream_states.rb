@@ -2,7 +2,9 @@ module Video
   class StreamStates < BaseAr::ArAccessor
 
     def self.states
-      ["ready", "settingUp", "capturing", "failed", "stopped"]
+      # Also related:
+      # Messaging::States::VideoCapture::CaptureStates.states
+      ["configuring", "configured", "ready", "capturing", "failed", "stopped"]
     end
     zextend BaseState, Video::StreamStates.states
 

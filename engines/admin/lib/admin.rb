@@ -9,6 +9,7 @@ module Admin
     nonTemplateFolders.each do |ntf|
       # assume that all files are namespaced
       Dir["#{ntf}/*/**"].each do |f|
+        next if File.directory?(f)
         nonTemplateFiles << File.join(File.dirname(f), File.basename(f, ".*"))
       end
     end

@@ -18,5 +18,7 @@ module Video
     def priority
       Video::StreamPriorities.new(self)
     end
+
+    has_many :captures, dependent: :destroy
   end
 end

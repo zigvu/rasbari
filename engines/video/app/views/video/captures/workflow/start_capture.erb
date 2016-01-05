@@ -1,0 +1,34 @@
+<!-- BEGIN: Layout -->
+<%= render :layout => 'outershell' do %>
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="filter-panel">
+        <div class="filter-title clearfix">
+          <div class="text left">Start Capture</div>
+        </div>
+        <div class="filter-content">
+
+<!-- BEGIN: Content -->
+<%= simple_form_for @capture, :url => wizard_path, :method => :put do |f| %>
+
+<p>VNC Server has been started in remote machine. Please use following command to open a VNC Client locally and verify that the intended video is loaded and ready to play in "maximized" state.</p>
+<table>
+  <tr><td>
+    [local_machine] cd ~/nimki/servers/capture
+  </td></tr>
+  <tr><td>
+    [local_machine] ./capture_client.rb -r <%= "#{@capture.captureMachine.hostname}" %>
+  </td></tr>
+</table>
+<p>Note: Hitting next will start the capture process. You will be able to view the latest thumbnail in the <%= link_to "Stream page", stream_path(@capture.stream) %>.</p>
+
+<%= render 'common_buttons', :form_obj => f %>
+<% end %>
+<!-- END: Content -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!-- END: Layout -->

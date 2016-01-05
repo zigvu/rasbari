@@ -1,0 +1,25 @@
+<!-- BEGIN: Layout -->
+<%= render :layout => 'outershell' do %>
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="filter-panel">
+        <div class="filter-title clearfix">
+          <div class="text left">Set Capture Ready</div>
+        </div>
+        <div class="filter-content">
+
+<!-- BEGIN: Content -->
+<%= simple_form_for @capture, :url => wizard_path, :method => :put do |f| %>
+
+<p>Click next to ready capture machine. If this step is not passed within 10 minutes, please inform administrator.</p>
+
+<%= render 'common_buttons', :form_obj => f %>
+<% end %>
+<!-- END: Content -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!-- END: Layout -->

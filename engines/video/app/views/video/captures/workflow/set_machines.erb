@@ -1,0 +1,28 @@
+<!-- BEGIN: Layout -->
+<%= render :layout => 'outershell' do %>
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="filter-panel">
+        <div class="filter-title clearfix">
+          <div class="text left">Set Machines</div>
+        </div>
+        <div class="filter-content">
+
+<!-- BEGIN: Content -->
+<%= simple_form_for @capture, :url => wizard_path, :method => :put do |f| %>
+
+<div class="form-inputs">
+  <%= f.input :storage_machine_id, collection: @workflowObj.storageMachines, label: "Storage Machine" %>
+  <%= f.input :capture_machine_id, collection: @workflowObj.captureMachines, label: "Capture Machine" %>
+</div>
+
+<%= render 'common_buttons', :form_obj => f %>
+<% end %>
+<!-- END: Content -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!-- END: Layout -->

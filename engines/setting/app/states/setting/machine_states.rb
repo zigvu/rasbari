@@ -2,7 +2,7 @@ module Setting
   class MachineStates < BaseAr::ArAccessor
 
     def self.states
-      ["unknown", "provisioning", "ready", "working"]
+      ["unknown", "provisioning", "ready", "contracted", "working"]
     end
     zextend BaseState, Setting::MachineStates.states
 

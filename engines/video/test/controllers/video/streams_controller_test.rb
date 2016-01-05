@@ -20,7 +20,7 @@ module Video
 
     test "should create stream" do
       assert_difference('Stream.count') do
-        post :create, stream: { machine_id: @stream.machine_id, name: @stream.name, zstate: @stream.zstate, ztype: @stream.ztype, url: @stream.url }
+        post :create, stream: { machine_id: @stream.machine_id, name: @stream.name, zstate: @stream.zstate, ztype: @stream.ztype, base_url: @stream.base_url }
       end
 
       assert_redirected_to stream_path(assigns(:stream))

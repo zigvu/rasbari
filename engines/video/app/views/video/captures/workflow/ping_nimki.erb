@@ -1,0 +1,36 @@
+<!-- BEGIN: Layout -->
+<%= render :layout => 'outershell' do %>
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="filter-panel">
+        <div class="filter-title clearfix">
+          <div class="text left">Ping Machines</div>
+        </div>
+        <div class="filter-content">
+
+<!-- BEGIN: Content -->
+<%= simple_form_for @capture, :url => wizard_path, :method => :put do |f| %>
+
+<p>Note: Ensure that rasbari background server is running in a screen:</p>
+<table>
+  <tr><td>
+    [rasbari_machine] cd ~/rasbari
+  </td></tr>
+  <tr><td>
+    [rasbari_machine] ./bin/rasbari_servers run
+  </td></tr>
+</table>
+<p>Note: The current ping to machines is only valid for a few minutes. Hence, it is expected that once ping is successfull, this workflow is run until capture process has started.</p>
+
+<p>Click next to ping capture and storage machines. If they do not reply within 30 seconds, ping will fail. If this is the case, please inform administrator.</p>
+
+<%= render 'common_buttons', :form_obj => f %>
+<% end %>
+<!-- END: Content -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!-- END: Layout -->

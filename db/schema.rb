@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160102035609) do
+ActiveRecord::Schema.define(version: 20160105174306) do
 
   create_table "setting_machines", force: :cascade do |t|
     t.string   "ztype",      limit: 255
@@ -49,6 +49,27 @@ ActiveRecord::Schema.define(version: 20160102035609) do
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "video_captures", force: :cascade do |t|
+    t.integer  "stream_id",           limit: 4
+    t.integer  "storage_machine_id",  limit: 4
+    t.integer  "capture_machine_id",  limit: 4
+    t.string   "capture_url",         limit: 255
+    t.text     "comment",             limit: 65535
+    t.integer  "width",               limit: 4
+    t.integer  "height",              limit: 4
+    t.float    "playback_frame_rate", limit: 24
+    t.integer  "started_by",          limit: 4
+    t.integer  "stopped_by",          limit: 4
+    t.datetime "started_at"
+    t.datetime "stopped_at"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "video_captures", ["capture_machine_id"], name: "index_video_captures_on_capture_machine_id", using: :btree
+  add_index "video_captures", ["storage_machine_id"], name: "index_video_captures_on_storage_machine_id", using: :btree
+  add_index "video_captures", ["stream_id"], name: "index_video_captures_on_stream_id", using: :btree
 
   create_table "video_streams", force: :cascade do |t|
     t.string   "ztype",      limit: 255

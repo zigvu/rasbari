@@ -12,6 +12,7 @@ module Video
 
     # GET /streams/1
     def show
+      @capture = @stream.captures.last
     end
 
     # GET /streams/new
@@ -29,7 +30,7 @@ module Video
     def create
       @stream = Stream.new(stream_params)
       if @stream.save
-        @stream.state.setReady
+        @stream.state.setStopped
         @stream.priority.setNone
         redirect_to @stream, notice: 'Stream was successfully created.'
       else

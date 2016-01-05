@@ -1,0 +1,31 @@
+<!-- BEGIN: Layout -->
+<%= render :layout => 'outershell' do %>
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="filter-panel">
+        <div class="filter-title clearfix">
+          <div class="text left">Set Details</div>
+        </div>
+        <div class="filter-content">
+
+<!-- BEGIN: Content -->
+<%= simple_form_for @capture, :url => wizard_path, :method => :put do |f| %>
+
+<div class="form-inputs">
+  <%= f.input :capture_url %>
+  <%= f.input :comment %>
+  <%= f.input :width, input_html: {value: f.object.width || '1280'} %>
+  <%= f.input :height, input_html: {value: f.object.height || '720'} %>
+  <%= f.input :playback_frame_rate, input_html: {value: f.object.playback_frame_rate || '25.0'} %>
+</div>
+
+<%= render 'common_buttons', :form_obj => f %>
+<% end %>
+<!-- END: Content -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!-- END: Layout -->

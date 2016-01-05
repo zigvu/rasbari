@@ -18,8 +18,14 @@
       <td><%= @stream.base_url %></td>
     </tr>
     <tr>
-      <td>Capture Url</td>
-      <td>TODO</td>
+      <td>Capture State</td>
+      <td>
+        <% if @stream.state.isBeforeStopped? %>
+          <%= link_to 'Show Capture', capture_workflow_path(Wicked::FIRST_STEP, capture_id: @capture.id), class: 'button' %>
+        <% else %>
+          <%= link_to 'Start New Capture', new_capture_path(stream_id: @stream.id), class: 'button' %>
+        <% end %>
+      </td>
     </tr>
     <tr>
       <td>Machine</td>

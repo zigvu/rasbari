@@ -39,8 +39,8 @@ module BaseMessage
         message.each do |k, v|
           if(instance_variable_defined?("@#{k}"))
             instance_variable_set("@#{k}", v)
-          else
-            Messaging.logger.warn("Instance variable @#{k} not set")
+          # else
+          #   Messaging.logger.warn("Instance variable @#{k} not set")
           end
         end
       end
