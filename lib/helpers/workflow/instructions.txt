@@ -1,0 +1,68 @@
+# ------------------------------------------------------------------------------
+This instruction is to create new workflow. For working example, look at commit:
+
+https://github.com/zigvu/rasbari/commit/4245917255b744d69fdef07ce93383d120e15c03
+
+(replace tracker with model name and parent with model name of parent)
+
+# ------------------------------------------------------------------------------
+#### Create model associated with tracking the workflow state:
+
+cd engines/engine_name
+rails g model tracker parent_id:integer:index tracker_url
+cd ../..
+rake engine_name:install:migrations
+rake db:migrate
+
+# ------------------------------------------------------------------------------
+#### Create object relationships
+
+> engines/engine_name/app/models/engine_name/tracker.rb:
+belongs_to :parent
+
+> engines/engine_name/app/models/engine_name/parent.rb:
+has_many :trackers, dependent: :destroy
+
+# ------------------------------------------------------------------------------
+#### Create controller associated with tracking workflow state:
+
+>>> START rake engine:workflow <<<
+
+(done with rake if doesn't already exists)
+
+# ------------------------------------------------------------------------------
+#### Create workflow controller
+
+(done with rake if doesn't already exists)
+
+# ------------------------------------------------------------------------------
+#### Add routes
+
+> engines/engine_name/config/routes.rb
+
+resources :trackers do
+  resources :workflow, only: [:show, :update], controller: 'trackers/workflow'
+end
+
+# ------------------------------------------------------------------------------
+#### Add views
+
+(done with rake if doesn't already exists)
+
+# ------------------------------------------------------------------------------
+#### Add workflow handlers
+
+(done with rake if doesn't already exists)
+
+# ------------------------------------------------------------------------------
+#### Add view forms
+
+# Non model form objects in views
+<div class="form-inputs">
+  <%= simple_fields_for :other do |o| %>
+    <%= o.input :storage_machine_id, collection: @workflowObj.storageMachines, label: 'Storage machine' %>
+    <%= o.input :tracker_machine_id, collection: @workflowObj.trackerMachines, label: 'Capture machine' %>
+  <% end %>
+</div>
+# Non model form objects in controller
+prms = params[:other].slice(:storage_machine_id, :tracker_machine_id)

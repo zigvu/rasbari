@@ -5,7 +5,7 @@ class EngineCreator
   attr_accessor :engineFileName, :engineName
 
   def initialize(name)
-    raise "Name should be in camel case" if name == name.camelize
+    raise "Name should be in underscore" if name == name.camelize
 
     @engineFileName = name
     @engineName = name.classify
