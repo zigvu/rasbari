@@ -87,5 +87,6 @@ class EngineCreator
     puts ""
     puts "Gemfile"
     puts "config/application.rb"
+    puts "app/assets/stylesheets/_engines.scss"
   end
 end

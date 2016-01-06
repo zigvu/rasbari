@@ -1,0 +1,33 @@
+
+<h4><%= captures_table_title %></h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Capture URL</th>
+      <th>Started At</th>
+      <th>Stopped At</th>
+      <th># Clips</th>
+      <th>Last Clip</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% captures_obj.each do |capture| %>
+      <tr>
+        <td><%= capture.id %></td>
+        <td><%= capture.capture_url %></td>
+        <td><%= capture.started_at %></td>
+        <td><%= capture.stopped_at %></td>
+        <td><%= capture.clips.count %></td>
+        <td>
+          <% if capture.clips.last %>
+            <%= link_to image_tag(capture.clips.last.thumbnailPath, class: "small-thumbnail"), capture_path(capture) %>
+          <% end %>
+        </td>
+        <td><%= link_to "Show", capture_path(capture) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

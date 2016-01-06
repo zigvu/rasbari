@@ -8,6 +8,7 @@ module Video
 
     # GET /captures/1
     def show
+      @clips = @capture.clips.limit(8)
     end
 
     # GET /captures/new

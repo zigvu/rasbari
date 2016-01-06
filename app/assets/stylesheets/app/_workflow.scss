@@ -1,0 +1,47 @@
+$workflow-panel-rounded-corner-radius: $global-radius;
+
+$workflow-panel-border-color: $zigvu-footer-background-color;
+$workflow-panel-border-color-light: $panel-border-color;
+
+$workflow-panel-legend-box-color: scale-color($workflow-panel-border-color-light, $lightness: 85%);
+
+
+.workflow-panel {
+  border: 1px solid $workflow-panel-border-color;
+  margin-bottom: 1.25rem;
+
+  -webkit-border-radius: $workflow-panel-rounded-corner-radius;
+  -moz-border-radius: $workflow-panel-rounded-corner-radius;
+  border-radius: $workflow-panel-rounded-corner-radius;
+
+  .workflow-title {
+    padding: 1px 3px 1px 1px;
+    border-bottom: 4px solid $workflow-panel-border-color-light;
+    -webkit-border-top-left-radius: $workflow-panel-rounded-corner-radius;
+    -webkit-border-top-right-radius: $workflow-panel-rounded-corner-radius;
+    -moz-border-radius-topleft: $workflow-panel-rounded-corner-radius;
+    -moz-border-radius-topright: $workflow-panel-rounded-corner-radius;
+    border-top-left-radius: $workflow-panel-rounded-corner-radius;
+    border-top-right-radius: $workflow-panel-rounded-corner-radius;
+
+    .text {
+      padding: 0.25rem;
+      font-weight: 600;
+      font-variant: small-caps;
+    }
+
+    .help {
+      font-size: rem-calc(16);
+      font-weight: 600;
+
+      .title-button {
+        margin: 0;
+        padding: 0.4rem 1rem 0.4rem 1rem;
+      }
+    }
+  }
+
+  .workflow-content {
+    padding: 1.25rem 1.25rem 0 1.25rem;
+  }
+}

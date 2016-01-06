@@ -1,0 +1,105 @@
+<h3>Capture details for stream: <%= @stream.name %></h3>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Id</td>
+      <td><%= @capture.id %></td>
+    </tr>
+    <tr>
+      <td>Storage Machine</td>
+      <td><%= link_to "#{@capture.storageMachine.hostname}", setting.machine_path(@capture.storageMachine)  if @capture.storageMachine %></td>
+    </tr>
+    <tr>
+      <td>Capture Machine</td>
+      <td><%= link_to "#{@capture.captureMachine.hostname}", setting.machine_path(@capture.captureMachine) if @capture.captureMachine %></td>
+    </tr>
+    <tr>
+      <td>Capture Url</td>
+      <td><%= @capture.capture_url %></td>
+    </tr>
+    <tr>
+      <td>Comment</td>
+      <td><%= @capture.comment %></td>
+    </tr>
+    <tr>
+      <td>Width</td>
+      <td><%= @capture.width %></td>
+    </tr>
+    <tr>
+      <td>Height</td>
+      <td><%= @capture.height %></td>
+    </tr>
+    <tr>
+      <td>Playback Frame Rate</td>
+      <td><%= @capture.playback_frame_rate %></td>
+    </tr>
+    <tr>
+      <td>Started By</td>
+      <td><%= @capture.startedByUser.email if @capture.startedByUser %></td>
+    </tr>
+    <tr>
+      <td>Started At</td>
+      <td><%= @capture.started_at %></td>
+    </tr>
+    <tr>
+      <td>Stopped By</td>
+      <td><%= @capture.stoppedByUser.email if @capture.stoppedByUser %></td>
+    </tr>
+    <tr>
+      <td>Stopped At</td>
+      <td><%= @capture.stopped_at %></td>
+    </tr>
+  </tbody>
+</table>
+
+<%= link_to 'Show Capture Worfklow', capture_workflow_path(Wicked::FIRST_STEP, capture_id: @capture.id), class: 'button' if !@capture.isStopped? %>
+
+
+<!-- BEGIN: Thumbnails -->
+<h4>Last few clips</h4>
+<div id="capture-thumbnails">
+  <ul class="small-block-grid-4">
+    <% @clips.each_with_index do |clip, i| %>
+      <li data-reveal-id=<%= "thumbnail_li_#{i}_reveal" %> >
+        <a class="th" href="#">
+          <img src=<%= clip.thumbnailPath %> >
+        </a>
+        <div class="thumbnail-description">
+          <div class="row">
+            <div class="small-12 columns"><b>Time: </b><%= clip.created_at %></div>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
+<!-- END: Thumbnails -->
+
+<!-- BEGIN: Thumbnail pop-ups -->
+<div id="capture-thumbnails-reveals">
+  <% @clips.each_with_index do |clip, i| %>
+    <div id=<%= "thumbnail_li_#{i}_reveal" %> class="reveal-modal large" data-reveal>
+      <div class="thumbnail-container">
+        <img class="thumbnail-image-reveal" src=<%= clip.thumbnailPath %> >
+      </div>
+
+      <div class="thumbnail-description">
+        <div class="row">
+          <div class="small-12 columns"><b>Time: </b><%= clip.created_at %></div>
+        </div>
+      </div>
+      <a class="close-reveal-modal">&#215;</a>
+    </div>
+  <% end %>
+</div>
+<!-- END: Thumbnail pop-ups -->
+
+<%= link_to 'Back', stream_path(@stream), class: 'button' %>

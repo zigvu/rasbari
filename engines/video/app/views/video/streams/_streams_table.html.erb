@@ -1,0 +1,35 @@
+<h3><%= streams_table_title %></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Base Url</th>
+      <th># Captures</th>
+      <th>State</th>
+      <th># Clips</th>
+      <th>Last Clip</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% streams_obj.each do |stream| %>
+      <tr>
+        <td><%= stream.name %></td>
+        <td><%= stream.base_url %></td>
+        <td><%= stream.captures.count %></td>
+        <td><%= stream.state %></td>
+        <td><%= stream.clips.count %></td>
+        <td>
+          <% if stream.clips.last %>
+            <%= link_to image_tag(stream.clips.last.thumbnailPath, class: "small-thumbnail"), capture_path(stream.clips.last.capture) %>
+          <% end %>
+        </td>
+        <td><%= link_to 'Show', stream %></td>
+        <td><%= link_to 'Edit', edit_stream_path(stream) %></td>
+        <td><%= link_to 'Destroy', stream, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

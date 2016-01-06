@@ -1,34 +1,10 @@
-<h3>Listing Streams</h3>
+<!-- BEGIN: Active Streams -->
+<%= render partial: 'streams_table', locals: {streams_table_title: 'Active Streams', streams_obj: @activeStreams} %>
+<!-- END: Active Streams -->
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Base Url</th>
-      <th>Machine</th>
-      <th>State</th>
-      <th>Priority</th>
-      <th>Last Clip</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @streams.each do |stream| %>
-      <tr>
-        <td><%= stream.name %></td>
-        <td><%= stream.base_url %></td>
-        <td>TODO</td>
-        <td><%= stream.state %></td>
-        <td><%= stream.priority %></td>
-        <td>TODO</td>
-        <td><%= link_to 'Show', stream %></td>
-        <td><%= link_to 'Edit', edit_stream_path(stream) %></td>
-        <td><%= link_to 'Destroy', stream, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<!-- BEGIN: Inactive Streams -->
+<%= render partial: 'streams_table', locals: {streams_table_title: 'Inactive Streams', streams_obj: @inactiveStreams} %>
+<!-- END: Inactive Streams -->
 
 <br>
 

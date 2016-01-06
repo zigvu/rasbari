@@ -14,5 +14,6 @@
 
 # ZIGVU BEGIN: Add additional files
 /.ruby-beautify
+/public/data/*
 
 # ZIGVU END: Add additional files

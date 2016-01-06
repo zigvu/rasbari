@@ -10,26 +10,16 @@
   </thead>
   <tbody>
     <tr>
+      <td>Id</td>
+      <td><%= @stream.id %></td>
+    </tr>
+    <tr>
       <td>Name</td>
       <td><%= @stream.name %></td>
     </tr>
     <tr>
       <td>Base Url</td>
       <td><%= @stream.base_url %></td>
-    </tr>
-    <tr>
-      <td>Capture State</td>
-      <td>
-        <% if @stream.state.isBeforeStopped? %>
-          <%= link_to 'Show Capture', capture_workflow_path(Wicked::FIRST_STEP, capture_id: @capture.id), class: 'button' %>
-        <% else %>
-          <%= link_to 'Start New Capture', new_capture_path(stream_id: @stream.id), class: 'button' %>
-        <% end %>
-      </td>
-    </tr>
-    <tr>
-      <td>Machine</td>
-      <td>TODO</td>
     </tr>
     <tr>
       <td>Type</td>
@@ -43,11 +33,23 @@
       <td>Priority</td>
       <td><%= @stream.priority %></td>
     </tr>
-    <tr>
-      <td>Last 10 clips</td>
-      <td>TODO</td>
-    </tr>
   </tbody>
 </table>
+
+<!-- BEGIN: Active captures -->
+<%= render partial: 'video/captures/captures_table', locals: {captures_table_title: 'Active Stream Captures', captures_obj: @activeCaptures} %>
+<!-- END: Active captures -->
+
+<!-- BEGIN: Workflow state -->
+<% if @stream.state.isBeforeStopped? %>
+  <%= link_to 'Show Capture Worfklow', capture_workflow_path(Wicked::FIRST_STEP, capture_id: @capture.id), class: 'button' %>
+<% else %>
+  <%= link_to 'Start New Capture', new_capture_path(stream_id: @stream.id), class: 'button' %>
+<% end %>
+<!-- END: Workflow state -->
+
+<!-- BEGIN: Completed captures -->
+<%= render partial: 'video/captures/captures_table', locals: {captures_table_title: 'Completed Stream Captures', captures_obj: @stoppedCaptures} %>
+<!-- END: Completed captures -->
 
 <%= link_to 'Back', streams_path, class: 'button' %>

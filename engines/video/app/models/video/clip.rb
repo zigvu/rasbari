@@ -10,10 +10,10 @@ module Video
       "#{self.capture.stream.id}/#{self.capture.id}/#{self.id}"
     end
     def clipPath
-      "#{self.path}/#{self.id}.mkv"
+      "/data/#{self.capture.storageMachine.hostname}/#{self.path}/#{self.id}.mkv"
     end
     def thumbnailPath
-      "#{self.path}/#{self.id}.jpg"
+      "/data/#{self.capture.storageMachine.hostname}/#{self.path}/#{self.id}.jpg"
     end
 
     belongs_to :capture

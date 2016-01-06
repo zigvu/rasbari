@@ -7,12 +7,15 @@ module Video
 
     # GET /streams
     def index
-      @streams = Stream.all
+      @activeStreams = Stream.where.not(zstate: Video::StreamStates.stopped)
+      @inactiveStreams = Stream.where(zstate: Video::StreamStates.stopped)
     end
 
     # GET /streams/1
     def show
       @capture = @stream.captures.last
+      @activeCaptures = @stream.captures.where(stopped_at: nil).order(created_at: :desc)
+      @stoppedCaptures = @stream.captures.where.not(stopped_at: nil).order(stopped_at: :desc)
     end
 
     # GET /streams/new
