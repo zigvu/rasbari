@@ -15,8 +15,17 @@ development:
         client: development.video_capture.rasbari.client
         server: development.video_capture.rasbari.server
       nimki:
-        client: development.video_capture.nimki.client # IP will be appended
-        server: development.video_capture.nimki.server # IP will be appended
+        client: development.video_capture.nimki.client # hostname will be appended
+        server: development.video_capture.nimki.server # hostname will be appended
+  storage:
+    exchange: development.storage
+    routing_keys:
+      rasbari:
+        client: development.storage.rasbari.client
+        # no need for server
+      nimki:
+        client: development.storage.nimki.client # hostname will be appended
+        server: development.storage.nimki.server # hostname will be appended
 
 production:
   <<: *default
