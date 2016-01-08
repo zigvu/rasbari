@@ -7,7 +7,10 @@ module Messaging
         NAME = "clip_details"
 
         def self.attributes
-          ["category", "name", "captureId", "ffmpegName", "clipId", "storageUrl"]
+          [
+            "category", "name", "captureId", "ffmpegName", "clipId",
+            "storageClipPath", "storageThumbnailPath"
+          ]
         end
         zextend BaseMessage, ClipDetails.attributes
 

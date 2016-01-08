@@ -11,13 +11,27 @@
 <!-- BEGIN: Content -->
 <%= simple_form_for @capture, :url => wizard_path, :method => :put do |f| %>
 
-<p>Note: Ensure that rasbari background server is running in a screen:</p>
+<p>Note: Ensure that background servers are running in screens:</p>
 <table>
   <tr><td>
     [rasbari_machine] cd ~/rasbari
   </td></tr>
   <tr><td>
     [rasbari_machine] ./bin/rasbari_servers run
+  </td></tr>
+  <tr><td></td></tr>
+  <tr><td>
+    [storage_machine] cd ~/nimki/servers/storage
+  </td></tr>
+  <tr><td>
+    [storage_machine] ./storage_server.rb
+  </td></tr>
+  <tr><td></td></tr>
+  <tr><td>
+    [capture_machine] cd ~/nimki/servers/capture
+  </td></tr>
+  <tr><td>
+    [capture_machine] ./capture_server.rb
   </td></tr>
 </table>
 <p>Note: The current ping to machines is only valid for a few minutes. Hence, it is expected that once ping is successfull, this workflow is run until capture process has started.</p>

@@ -17,7 +17,7 @@
     [local_machine] cd ~/nimki/servers/capture
   </td></tr>
   <tr><td>
-    [local_machine] ./capture_client.rb -r <%= "#{@capture.captureMachine.hostname}" %>
+    [local_machine] ./start_vnc.rb -r <%= "#{@capture.captureMachine.hostname}" %>
   </td></tr>
 </table>
 <p>Note: Hitting next will start the capture process. You will be able to view the latest thumbnail in the <%= link_to "Stream page", stream_path(@capture.stream) %>.</p>

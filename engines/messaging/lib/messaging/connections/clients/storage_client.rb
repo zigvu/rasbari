@@ -16,17 +16,13 @@ module Messaging
           Messaging.logger.info("Start StorageClient for hostname: #{@hostname}")
         end
 
-        def setHostname(clientHostName)
-          @hostname = clientHostName
-        end
-
         def setClientDetails
           header = Messaging::Messages::Header.dataRequest
           message = Messaging::Messages::Storage::ClientDetails.new(nil)
           message.type = Messaging::States::Storage::ClientTypes.capture
           message.hostname = @hostname
-          _, response = call(header, message)
-          response
+          responseHeader, _ = call(header, message)
+          responseHeader.isDataSuccess?
         end
 
         def saveFile(clientFilePath, serverFilePath)
@@ -39,9 +35,14 @@ module Messaging
           commonFileOps(clientFilePath, serverFilePath, opType)
         end
 
-        def delete(serverFilePath, clientFilePath = nil)
+        def delete(serverFilePath)
           opType = Messaging::States::Storage::FileOperationTypes.delete
-          commonFileOps(clientFilePath, serverFilePath, opType)
+          commonFileOps(nil, serverFilePath, opType)
+        end
+
+        def closeConnection
+          opType = Messaging::States::Storage::FileOperationTypes.closeConnection
+          commonFileOps(nil, nil, opType)
         end
 
         def commonFileOps(clientFilePath, serverFilePath, opType)
@@ -51,8 +52,8 @@ module Messaging
           message.type = opType
           message.clientFilePath = clientFilePath
           message.serverFilePath = serverFilePath
-          _, response = call(header, message)
-          response
+          responseHeader, _ = call(header, message)
+          responseHeader.isDataSuccess?
         end
 
       end # StorageClient

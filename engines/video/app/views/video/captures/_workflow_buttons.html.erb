@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="small-4 columns">
+    <%= link_to 'Show Capture Worfklow', capture_workflow_path(Wicked::FIRST_STEP, capture_id: @capture.id), class: 'button' %>
+  </div>
+  <div class="small-4 columns">
+    <%= link_to 'Start VNC Server', capture_path(@capture.id, workflow_action: 'start_vnc'), class: 'button info' %>
+  </div>
+  <div class="small-4 columns">
+    <%= link_to 'Stop Capture Workflow', capture_path(@capture.id, workflow_action: 'force_stop'), data: { confirm: 'Are you sure?' }, class: 'button alert' %>
+  </div>
+</div>

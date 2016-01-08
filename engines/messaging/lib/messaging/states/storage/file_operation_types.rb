@@ -8,7 +8,7 @@ module Messaging
 
       class FileOperationTypes
         def self.types
-          ["put", "get", "delete"]
+          ["put", "get", "delete", "closeConnection"]
         end
         zextend BaseNonPersisted, Messaging::States::Storage::FileOperationTypes.types, { prefix: 'type' }
 

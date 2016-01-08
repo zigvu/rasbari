@@ -10,8 +10,8 @@ module Video
     end
 
     def storageClient
-      # TODO: get client
-      nil
+      raise "No storage machine specified yet" if self.storage_machine_id == nil
+      Messaging.rasbari_cache.storage.client(storageMachine.hostname)
     end
 
     def captureClient

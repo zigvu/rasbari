@@ -12,7 +12,8 @@ module Video
       clip.state.setCreated
 
       @message.clipId = clip.id
-      @message.storageUrl = clip.path
+      @message.storageClipPath = clip.clipPath
+      @message.storageThumbnailPath = clip.thumbnailPath
       returnMessage = @message
       return returnHeader, returnMessage
     end

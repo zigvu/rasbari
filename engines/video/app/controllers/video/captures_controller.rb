@@ -8,6 +8,15 @@ module Video
 
     # GET /captures/1
     def show
+      if !@capture.isStopped?
+        if params[:workflow_action] == "start_vnc"
+          Video::CaptureWorkflow::StartVncServer.new(@capture).handle({})
+        elsif params[:workflow_action] == "force_stop"
+          Video::CaptureWorkflow::StopCapture.new(@capture).handle({
+            current_user_id: current_user.id
+          })
+        end
+      end
       @clips = @capture.clips.limit(8)
     end
 

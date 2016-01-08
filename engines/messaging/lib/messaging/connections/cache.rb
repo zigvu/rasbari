@@ -19,6 +19,19 @@ module Messaging
       end # END class VideoCapture
       # --------------------------------------------------------------------------
 
+      # --------------------------------------------------------------------------
+      # Storage
+      def storage
+        @storage ||= Messaging::Connections::RasbariCache::Storage.new
+      end
+      class Storage
+        def client(hostname)
+          @clients ||= {}
+          @clients[hostname] ||= Messaging::Connections::Clients::StorageClient.new(hostname)
+        end
+      end # END class Storage
+      # --------------------------------------------------------------------------
+
     end # END class RasbariCache
   end
 end

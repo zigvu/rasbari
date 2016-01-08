@@ -41,9 +41,7 @@
 <!-- END: Active captures -->
 
 <!-- BEGIN: Workflow state -->
-<% if @stream.state.isBeforeStopped? %>
-  <%= link_to 'Show Capture Worfklow', capture_workflow_path(Wicked::FIRST_STEP, capture_id: @capture.id), class: 'button' %>
-<% else %>
+<% if !@stream.state.isBeforeStopped? %>
   <%= link_to 'Start New Capture', new_capture_path(stream_id: @stream.id), class: 'button' %>
 <% end %>
 <!-- END: Workflow state -->

@@ -18,8 +18,6 @@ module Video
         status = false
         message = "Couldn't ping machines"
 
-        # TODO: add storage client alive
-        # if @capture.captureClient.isRemoteAlive? && @capture.storageClient.isRemoteAlive?
         if @capture.captureClient.isRemoteAlive?
           message = "Capture remote is alive but couldn't set capture details"
           # set remote capture details

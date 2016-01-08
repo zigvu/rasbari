@@ -60,7 +60,9 @@
   </tbody>
 </table>
 
-<%= link_to 'Show Capture Worfklow', capture_workflow_path(Wicked::FIRST_STEP, capture_id: @capture.id), class: 'button' if !@capture.isStopped? %>
+<% if !@capture.isStopped? %>
+  <%= render 'workflow_buttons' %>
+<% end %>
 
 
 <!-- BEGIN: Thumbnails -->
