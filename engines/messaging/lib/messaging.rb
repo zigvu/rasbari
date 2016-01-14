@@ -32,10 +32,7 @@ module Messaging
       if Module.const_defined?('Rails')
         Rails.logger
       else
-        logger = Logger.new(STDOUT)
-        logger.level = Logger::DEBUG
-        logger.datetime_format = "%Y-%m-%d %H:%M:%S"
-        logger
+        Messaging::BaseLibs::Mlogger.new
       end
     end
   end
