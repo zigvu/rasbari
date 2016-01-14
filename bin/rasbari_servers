@@ -15,14 +15,15 @@ class RasbariServers
 
     # sleep - otherwise this will exit
     loop { sleep 1000 }
-  rescue => e
+  rescue SystemExit, Interrupt
+    Rails.logger.info("Exiting application")
+  rescue Exception => e
     STDERR.puts e.message
     STDERR.puts e.backtrace
     Rails.logger.fatal(e)
   end
 
   def startCaptureServer
-    Rails.logger.debug("Starting capture server")
     captureHandler = Video::MainHandler.new
     Messaging.rasbari_cache.video_capture.server(captureHandler)
   end

@@ -6,7 +6,7 @@ module Video
       listenRoutingKey = "#{Messaging.config.video_capture.routing_keys.rasbari.server}"
 
       super(exchangeName, listenRoutingKey, handler)
-      Rails.logger.info("Start RasbariServer")
+      Rails.logger.info("Start Video RasbariServer")
     end
 
   end

@@ -3,9 +3,13 @@
     <%= link_to 'Show Capture Worfklow', capture_workflow_path(Wicked::FIRST_STEP, capture_id: @capture.id), class: 'button' %>
   </div>
   <div class="small-4 columns">
-    <%= link_to 'Start VNC Server', capture_path(@capture.id, workflow_action: 'start_vnc'), class: 'button info' %>
+    <%= link_to 'Start VNC Server',  start_vnc_capture_path(@capture), class: 'button info' %>
   </div>
   <div class="small-4 columns">
-    <%= link_to 'Stop Capture Workflow', capture_path(@capture.id, workflow_action: 'force_stop'), data: { confirm: 'Are you sure?' }, class: 'button alert' %>
+    <% if @capture.decorate.canDelete? %>
+      <%= link_to 'Destroy Capture', @capture, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button alert' %>
+    <% else %>
+      <%= link_to 'Stop Capture Workflow', force_stop_capture_path(@capture), data: { confirm: 'Are you sure?' }, class: 'button alert' %>
+    <% end %>
   </div>
 </div>

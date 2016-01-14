@@ -22,8 +22,9 @@
         <td><%= stream.state %></td>
         <td><%= stream.clips.count %></td>
         <td>
-          <% if stream.clips.last %>
-            <%= link_to image_tag(stream.clips.last.thumbnailPath, class: "small-thumbnail"), capture_path(stream.clips.last.capture) %>
+          <% lastClip = stream.decorate.lastClip %>
+          <% if lastClip %>
+            <%= link_to image_tag(lastClip.thumbnailPath, class: "small-thumbnail"), capture_path(lastClip.capture) %>
           <% end %>
         </td>
         <td><%= link_to 'Show', stream %></td>

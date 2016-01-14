@@ -4,20 +4,30 @@ module Video
   class CapturesController < ApplicationController
     # Same permission model as for stream
     authorize_actions_for Stream
-    before_action :set_capture, only: [:show, :destroy]
+    authority_actions :start_vnc => :read
+    authority_actions :force_stop => :read
+
+    before_action :set_capture, only: [:show, :destroy, :start_vnc, :force_stop]
+
+    # GET /captures/1/start_vnc
+    def start_vnc
+      status, message = Video::CaptureWorkflow::StartVncServer.new(@capture).handle({})
+      notice = status ? :notice : :alert
+      redirect_to capture_path(@capture), notice => message
+    end
+
+    # GET /captures/1/force_stop
+    def force_stop
+      status, message = Video::CaptureWorkflow::StopCapture.new(@capture).handle({
+        current_user_id: current_user.id
+      })
+      notice = status ? :notice : :alert
+      redirect_to capture_path(@capture), notice => message
+    end
 
     # GET /captures/1
     def show
-      if !@capture.isStopped?
-        if params[:workflow_action] == "start_vnc"
-          Video::CaptureWorkflow::StartVncServer.new(@capture).handle({})
-        elsif params[:workflow_action] == "force_stop"
-          Video::CaptureWorkflow::StopCapture.new(@capture).handle({
-            current_user_id: current_user.id
-          })
-        end
-      end
-      @clips = @capture.clips.limit(8)
+      @clips = @capture.clips.order(id: :desc).limit(8)
     end
 
     # GET /captures/new
@@ -30,6 +40,10 @@ module Video
 
     # DELETE /captures/1
     def destroy
+      # clean up any pending workflow steps
+      Video::CaptureWorkflow::StopCapture.new(@capture).handle({
+        current_user_id: current_user.id
+      })
       @capture.destroy
       redirect_to stream_path(@stream), notice: 'Capture was successfully destroyed.'
     end

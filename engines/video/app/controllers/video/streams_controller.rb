@@ -13,7 +13,6 @@ module Video
 
     # GET /streams/1
     def show
-      @capture = @stream.captures.last
       @activeCaptures = @stream.captures.where(stopped_at: nil).order(created_at: :desc)
       @stoppedCaptures = @stream.captures.where.not(stopped_at: nil).order(stopped_at: :desc)
     end
