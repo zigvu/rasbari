@@ -4,7 +4,7 @@
 module Messaging
   module Connections
     class RpcClient
-      attr_accessor :response, :responseHeader, :correlationId
+      attr_accessor :responseMessage, :responseHeader, :correlationId
       attr_reader :lock, :condition
 
       def initialize(connection, exchangeName, responseRoutingKey)
@@ -23,10 +23,10 @@ module Messaging
         # in a separate thread listen for reply messages
         replyQueue.subscribe(manual_ack: true) do |delivery_info, properties, payload|
           if properties[:correlation_id] == that.correlationId
-            that.response = Messaging::Messages::MessageFactory.getMessage(payload)
+            that.responseMessage = Messaging::Messages::MessageFactory.getMessage(payload)
             that.responseHeader = Messaging::Messages::Header.new(properties.headers)
-            that.lock.synchronize{ that.condition.signal }
             channel.ack(delivery_info.delivery_tag)
+            that.lock.synchronize{ that.condition.signal }
           end
         end
       end
@@ -36,7 +36,8 @@ module Messaging
         # set responses to nil from previous calls
         if timeout
           self.responseHeader = Messaging::Messages::Header.pingFailure
-          self.response = ""
+          self.responseMessage = Messaging::Messages::MessageFactory.getNoneMessage
+          self.responseMessage.trace = "Ping failure - timed out"
         end
 
         self.correlationId = SecureRandom.uuid
@@ -55,7 +56,7 @@ module Messaging
           lock.synchronize{ condition.wait(lock) }
         end
         # return reply
-        return responseHeader, response
+        return responseHeader, responseMessage
       end
 
     end

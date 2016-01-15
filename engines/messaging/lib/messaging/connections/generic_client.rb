@@ -18,7 +18,7 @@ module Messaging
       end
 
       def call(header, message, timeout = nil)
-        # wait no more than 30 minute
+        # wait no more than 30 minutes
         timeout ||= 30 * 60
         @rpcClient.call(@machineRoutingKey, header, message, timeout)
       end
@@ -27,8 +27,8 @@ module Messaging
       def isRemoteAlive?
         header = Messaging::Messages::Header.pingRequest
         message = Messaging::Messages::MessageFactory.getNoneMessage
-        # timeout after 30 second of ping call
-        timeout = 30
+        # timeout after 2 minutes of ping call
+        timeout = 120
         responseHeader, _ = call(header, message, timeout)
         status = responseHeader.isPingSuccess?
         trace = status ? "Ping successful" : "Couldn't ping remote"

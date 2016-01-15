@@ -5,11 +5,11 @@ module Video
     def initialize(hostname)
       @hostname = hostname
       exchangeName = "#{Messaging.config.video_capture.exchange}"
-      responseRoutingKey = "#{Messaging.config.video_capture.routing_keys.rasbari.client}"
+      responseRoutingKey = "#{Messaging.config.video_capture.routing_keys.rasbari.client}.#{Process.pid}"
       machineRoutingKey = "#{Messaging.config.video_capture.routing_keys.nimki.server}.#{hostname}"
 
       super(exchangeName, responseRoutingKey, machineRoutingKey)
-      Rails.logger.info("Start RasbariClient for hostname: #{hostname}")
+      Rails.logger.info("Start RasbariClient for hostname: #{hostname}.#{Process.pid}")
     end
 
     # States
