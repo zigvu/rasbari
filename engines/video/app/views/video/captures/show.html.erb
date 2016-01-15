@@ -9,6 +9,12 @@
     </tr>
   </thead>
   <tbody>
+    <% if @capture.decorate.hasError? %>
+      <tr class="error">
+        <td></td>
+        <td>No clip in last 10 minutes - please check for errors</td>
+      </tr>
+    <% end %>
     <tr>
       <td>Id</td>
       <td><%= @capture.id %></td>

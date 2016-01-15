@@ -15,7 +15,7 @@
 
   <tbody>
     <% streams_obj.each do |stream| %>
-      <tr>
+      <tr class="<%= 'error' if stream.decorate.hasError? %>" >
         <td><%= stream.name %></td>
         <td><%= stream.base_url %></td>
         <td><%= stream.captures.count %></td>

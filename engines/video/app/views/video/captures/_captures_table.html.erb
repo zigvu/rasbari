@@ -15,7 +15,7 @@
   </thead>
   <tbody>
     <% captures_obj.each do |capture| %>
-      <tr>
+      <tr class="<%= 'error' if capture.decorate.hasError? %>" >
         <td><%= capture.id %></td>
         <td><%= capture.capture_url %></td>
         <td><%= capture.started_at %></td>
