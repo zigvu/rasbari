@@ -16,7 +16,7 @@ module SampleEngine
 
     def update
       status = false
-      message = "Could not complete step - please check for mistakes"
+      trace = "Could not complete step - unknown workflow step"
 
       case step XXX_REPLACE_UPDATE_STEPS_XXX
       end
@@ -30,7 +30,7 @@ module SampleEngine
         end
       else
         # re-render the current step
-        flash.now[:alert] = message
+        flash.now[:alert] = trace
         render_wizard
       end
     end

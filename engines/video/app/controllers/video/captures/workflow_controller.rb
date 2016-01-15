@@ -35,26 +35,26 @@ module Video
 
     def update
       status = false
-      message = "Could not complete step - please check for mistakes"
+      trace = "Could not complete step - unknown workflow step"
 
       case step
       when :set_details
         prms = params.require(:capture)
           .permit(:capture_url, :comment, :width, :height, :playback_frame_rate)
-        status, message = Video::CaptureWorkflow::SetDetails.new(@capture).handle(prms)
+        status, trace = Video::CaptureWorkflow::SetDetails.new(@capture).handle(prms)
       when :set_machines
         prms = params.require(:capture).permit(:storage_machine_id, :capture_machine_id)
-        status, message = Video::CaptureWorkflow::SetMachines.new(@capture).handle(prms)
+        status, trace = Video::CaptureWorkflow::SetMachines.new(@capture).handle(prms)
       when :ping_nimki
-        status, message = Video::CaptureWorkflow::PingNimki.new(@capture).handle(params)
+        status, trace = Video::CaptureWorkflow::PingNimki.new(@capture).handle(params)
       when :set_remote_ready
-        status, message = Video::CaptureWorkflow::SetRemoteReady.new(@capture).handle(params)
+        status, trace = Video::CaptureWorkflow::SetRemoteReady.new(@capture).handle(params)
       when :start_capture
         params.merge!({current_user_id: current_user.id})
-        status, message = Video::CaptureWorkflow::StartCapture.new(@capture).handle(params)
+        status, trace = Video::CaptureWorkflow::StartCapture.new(@capture).handle(params)
       when :stop_capture
         params.merge!({current_user_id: current_user.id})
-        status, message = Video::CaptureWorkflow::StopCapture.new(@capture).handle(params)
+        status, trace = Video::CaptureWorkflow::StopCapture.new(@capture).handle(params)
       end
 
       # next step based on current step result
@@ -67,7 +67,7 @@ module Video
         end
       else
         # re-render the current step
-        flash.now[:alert] = message
+        flash.now[:alert] = trace
         render_wizard
       end
     end

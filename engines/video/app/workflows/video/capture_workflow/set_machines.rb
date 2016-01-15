@@ -23,20 +23,18 @@ module Video
       end
 
       def handle(params)
-        status = false
-        message = "Couldn't set machine roles - check if machines still in ready state"
-
         # prevent race condition when another user already assigned machine to another stream
         captureMachine = Setting::Machine.find(params[:capture_machine_id])
-        if captureMachine.state.isReady? && @capture.update(params)
+        status, trace = captureMachine.state.isReady?
+
+        if status
+          @capture.update(params)
           captureMachine.state.setContracted
           @capture.stream.state.setConfigured
-
-          status = true
-          message = "Saved machine states"
+          trace = "Saved machine states"
         end
 
-        return status, message
+        return status, trace
       end
 
     end

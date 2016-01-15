@@ -30,7 +30,9 @@ module Messaging
         # timeout after 30 second of ping call
         timeout = 30
         responseHeader, _ = call(header, message, timeout)
-        responseHeader.isPingSuccess?
+        status = responseHeader.isPingSuccess?
+        trace = status ? "Ping successful" : "Couldn't ping remote"
+        return status, trace
       end
 
 

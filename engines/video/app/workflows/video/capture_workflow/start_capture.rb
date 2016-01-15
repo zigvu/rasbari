@@ -15,22 +15,18 @@ module Video
       end
 
       def handle(params)
-        status = false
-        message = "Couldn't start capture"
+        status, trace = @capture.captureClient.setStateCapturing
 
-        if @capture.captureClient.setStateCapturing
+        if status
           @capture.stream.state.setCapturing
           @capture.update(started_by: params[:current_user_id])
           @capture.update(started_at: Time.now)
           @capture.captureMachine.state.setWorking
-
-          status = true
-          message = "Capture started"
         else
           @capture.stream.state.setFailed
         end
 
-        return status, message
+        return status, trace
       end
 
     end

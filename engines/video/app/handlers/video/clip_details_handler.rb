@@ -1,5 +1,5 @@
 module Video
-  class ClipCaptureHandler
+  class ClipDetailsHandler
     def initialize(header, message)
       @header = header
       @message = message
@@ -7,14 +7,17 @@ module Video
 
     def handle
       returnHeader = Messaging::Messages::Header.dataSuccess
+      returnMessage = @message
+      returnMessage.trace = "Clip created"
+
       capture = Video::Capture.find(@message.captureId)
       clip = capture.clips.create
       clip.state.setCreated
 
-      @message.clipId = clip.id
-      @message.storageClipPath = clip.clipPath
-      @message.storageThumbnailPath = clip.thumbnailPath
-      returnMessage = @message
+      returnMessage.clipId = clip.id
+      returnMessage.storageClipPath = clip.clipPath
+      returnMessage.storageThumbnailPath = clip.thumbnailPath
+
       return returnHeader, returnMessage
     end
 

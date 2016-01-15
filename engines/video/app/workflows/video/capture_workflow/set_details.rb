@@ -16,14 +16,14 @@ module Video
 
       def handle(params)
         status = false
-        message = "Couldn't save capture details to database"
+        trace = "Couldn't save capture details to database"
 
         if @capture.update(params)
           status = true
-          message = "Saved capture details to database"
+          trace = "Saved capture details to database"
         end
 
-        return status, message
+        return status, trace
       end
     end
   end

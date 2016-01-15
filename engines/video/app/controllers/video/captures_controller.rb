@@ -11,18 +11,18 @@ module Video
 
     # GET /captures/1/start_vnc
     def start_vnc
-      status, message = Video::CaptureWorkflow::StartVncServer.new(@capture).handle({})
+      status, trace = Video::CaptureWorkflow::StartVncServer.new(@capture).handle({})
       notice = status ? :notice : :alert
-      redirect_to capture_path(@capture), notice => message
+      redirect_to capture_path(@capture), notice => trace
     end
 
     # GET /captures/1/force_stop
     def force_stop
-      status, message = Video::CaptureWorkflow::StopCapture.new(@capture).handle({
+      status, trace = Video::CaptureWorkflow::StopCapture.new(@capture).handle({
         current_user_id: current_user.id
       })
       notice = status ? :notice : :alert
-      redirect_to capture_path(@capture), notice => message
+      redirect_to capture_path(@capture), notice => trace
     end
 
     # GET /captures/1

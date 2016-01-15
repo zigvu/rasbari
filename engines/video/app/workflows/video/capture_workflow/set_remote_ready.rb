@@ -15,21 +15,17 @@ module Video
       end
 
       def handle(params)
-        status = false
-        message = "Couldn't start all remote capture processes"
+        status, trace = @capture.captureClient.setStateReady
 
-        if @capture.captureClient.setStateReady
-          message = "Remote capture processes started but couldn't start VNC server"
-
-          if @capture.captureClient.startVncServer
+        if status
+          status, trace = @capture.captureClient.startVncServer
+          if status
             @capture.stream.state.setReady
-
-            status = true
-            message = "Started all remote capture processes including VNC server"
+            trace = "Started all remote capture processes including VNC server"
           end
         end
 
-        return status, message
+        return status, trace
       end
 
     end

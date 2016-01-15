@@ -15,19 +15,14 @@ module Video
       end
 
       def handle(params)
-        status = false
-        message = "Couldn't ping machines"
-
-        if @capture.captureClient.isRemoteAlive?
-          message = "Capture remote is alive but couldn't set capture details"
+        status, trace = @capture.captureClient.isRemoteAlive?
+        if status
           # set remote capture details
-          if @capture.captureClient.sendCaptureDetails(@capture.toMessage)
-            status = true
-            message = "Remote is alive and able to set capture details"
-          end
+          status, trace = @capture.captureClient.sendCaptureDetails(@capture.toMessage)
+          trace = "Capture remote is alive but couldn't set capture details" if !status
         end
 
-        return status, message
+        return status, trace
       end
 
     end

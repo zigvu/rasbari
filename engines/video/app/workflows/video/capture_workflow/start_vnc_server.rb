@@ -16,14 +16,13 @@ module Video
 
       def handle(params)
         status = false
-        message = "Couldn't start VNC Server"
+        trace = "Couldn't start VNC Server: Ensure remote is reachable"
 
-        if @capture.stream.state.isAtOrAfterReady? && @capture.captureClient.startVncServer
-          status = true
-          message = "Started VNC Server"
+        if @capture.stream.state.isAtOrAfterReady?
+          status, trace = @capture.captureClient.startVncServer
         end
 
-        return status, message
+        return status, trace
       end
 
     end

@@ -3,7 +3,7 @@ module Messaging
     module Storage
 
       class FileOperations < BaseMessage::Common
-        ATTR = ["traceback", "hostname", "type", "clientFilePath", "serverFilePath"]
+        ATTR = ["hostname", "type", "clientFilePath", "serverFilePath"]
         zextend BaseMessage, ATTR
 
         def initialize(message = nil)

@@ -14,46 +14,54 @@ module Video
 
     # States
     def isStateReady?
-      responseHeader, response = getState()
-      responseHeader.isStatusSuccess? && response.getVideoCaptureState.isReady?
+      responseHeader, responseMessage = getState()
+      status = responseHeader.isStatusSuccess? && responseMessage.getVideoCaptureState.isReady?
+      return status, responseMessage.trace
     end
     def setStateReady
-      responseHeader, response = setState(Messaging::States::VideoCapture::CaptureStates.ready)
-      responseHeader.isDataSuccess? && response.getVideoCaptureState.isReady?
+      responseHeader, responseMessage = setState(Messaging::States::VideoCapture::CaptureStates.ready)
+      status = responseHeader.isDataSuccess? && responseMessage.getVideoCaptureState.isReady?
+      return status, responseMessage.trace
     end
 
     def isStateCapturing?
-      responseHeader, response = getState()
-      responseHeader.isStatusSuccess? && response.getVideoCaptureState.isCapturing?
+      responseHeader, responseMessage = getState()
+      status = responseHeader.isStatusSuccess? && responseMessage.getVideoCaptureState.isCapturing?
+      return status, responseMessage.trace
     end
     def setStateCapturing
-      responseHeader, response = setState(Messaging::States::VideoCapture::CaptureStates.capturing)
-      responseHeader.isDataSuccess? && response.getVideoCaptureState.isCapturing?
+      responseHeader, responseMessage = setState(Messaging::States::VideoCapture::CaptureStates.capturing)
+      status = responseHeader.isDataSuccess? && responseMessage.getVideoCaptureState.isCapturing?
+      return status, responseMessage.trace
     end
 
     def isStateStopped?
-      responseHeader, response = getState()
-      responseHeader.isStatusSuccess? && response.getVideoCaptureState.isStopped?
+      responseHeader, responseMessage = getState()
+      status = responseHeader.isStatusSuccess? && responseMessage.getVideoCaptureState.isStopped?
+      return status, responseMessage.trace
     end
     def setStateStopped
-      responseHeader, response = setState(Messaging::States::VideoCapture::CaptureStates.stopped)
-      responseHeader.isDataSuccess? && response.getVideoCaptureState.isStopped?
+      responseHeader, responseMessage = setState(Messaging::States::VideoCapture::CaptureStates.stopped)
+      status = responseHeader.isDataSuccess? && responseMessage.getVideoCaptureState.isStopped?
+      return status, responseMessage.trace
     end
 
     # Video details
     def sendCaptureDetails(captureDetailsMessage)
       header = Messaging::Messages::Header.dataRequest
       message = captureDetailsMessage
-      responseHeader, _ = call(header, message)
-      responseHeader.isDataSuccess?
+      responseHeader, responseMessage = call(header, message)
+      status = responseHeader.isDataSuccess?
+      return status, responseMessage.trace
     end
 
     # VNC server start
     def startVncServer
       header = Messaging::Messages::Header.statusRequest
       message = Messaging::Messages::VideoCapture::VncServerStart.new(nil)
-      responseHeader, _ = call(header, message)
-      responseHeader.isStatusSuccess?
+      responseHeader, responseMessage = call(header, message)
+      status = responseHeader.isStatusSuccess?
+      return status, responseMessage.trace
     end
 
     private

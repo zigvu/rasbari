@@ -21,8 +21,10 @@ module Messaging
           message = Messaging::Messages::Storage::ClientDetails.new(nil)
           message.type = Messaging::States::Storage::ClientTypes.capture
           message.hostname = @hostname
-          responseHeader, _ = call(header, message)
-          responseHeader.isDataSuccess?
+          responseHeader, responseMessage = call(header, message)
+
+          status = responseHeader.isDataSuccess?
+          return status, responseMessage.trace
         end
 
         def saveFile(clientFilePath, serverFilePath)
@@ -52,8 +54,10 @@ module Messaging
           message.type = opType
           message.clientFilePath = clientFilePath
           message.serverFilePath = serverFilePath
-          responseHeader, _ = call(header, message)
-          responseHeader.isDataSuccess?
+          responseHeader, responseMessage = call(header, message)
+
+          status = responseHeader.isDataSuccess?
+          return status, responseMessage.trace
         end
 
       end # StorageClient
