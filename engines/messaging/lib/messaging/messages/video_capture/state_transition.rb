@@ -3,23 +3,25 @@ module Messaging
     module VideoCapture
 
       class StateTransition < BaseMessage::Common
-        CATEGORY = "video_capture"
-        NAME = "state_transition"
-
-        def self.attributes
-          ["category", "name", "state"]
-        end
-        zextend BaseMessage, StateTransition.attributes
+        ATTR = ["state"]
+        zextend BaseMessage, ATTR
 
         def initialize(message = nil)
-          cat = Object.const_get("#{self.class}")::CATEGORY
-          nam = Object.const_get("#{self.class}")::NAME
-          super(cat, nam, message)
+          super(_category, _name, message)
         end
 
         def getVideoCaptureState
           Messaging::States::VideoCapture::CaptureStates.new(@state)
         end
+
+        private
+          def _category
+            __FILE__.split("/")[-2]
+          end
+          def _name
+            File.basename(__FILE__, ".*")
+          end
+        # end private
       end
 
     end

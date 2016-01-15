@@ -3,26 +3,25 @@ module Messaging
     module Storage
 
       class FileOperations < BaseMessage::Common
-        CATEGORY = "storage"
-        NAME = "file_operations"
-
-        def self.attributes
-          [
-            "category", "name", "traceback", "hostname", "type",
-            "clientFilePath", "serverFilePath"
-          ]
-        end
-        zextend BaseMessage, FileOperations.attributes
+        ATTR = ["traceback", "hostname", "type", "clientFilePath", "serverFilePath"]
+        zextend BaseMessage, ATTR
 
         def initialize(message = nil)
-          cat = Object.const_get("#{self.class}")::CATEGORY
-          nam = Object.const_get("#{self.class}")::NAME
-          super(cat, nam, message)
+          super(_category, _name, message)
         end
 
         def getFileOperationType
           Messaging::States::Storage::FileOperationTypes.new(@type)
         end
+
+        private
+          def _category
+            __FILE__.split("/")[-2]
+          end
+          def _name
+            File.basename(__FILE__, ".*")
+          end
+        # end private
       end
 
     end

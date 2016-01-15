@@ -6,6 +6,8 @@ module BaseMessage
     # include general class and instance methods
     base.extend ClassMethods
     base.send :include, InstanceMethods
+    # expand attr array
+     arr += ["category", "name", "trace"]
 
     # change array elements into methods
     arr.each do |ss|

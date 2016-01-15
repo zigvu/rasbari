@@ -30,7 +30,7 @@ module Messaging
         end
       end
 
-      # defin instance methods
+      # define instance methods
       Messaging::Messages::HeaderTypes.types.each do |t|
         Messaging::Messages::HeaderStates.states.each do |s|
           # self.isPingSuccess?

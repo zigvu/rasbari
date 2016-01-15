@@ -3,20 +3,21 @@ module Messaging
     module VideoCapture
 
       class VncServerStart < BaseMessage::Common
-        CATEGORY = "video_capture"
-        NAME = "vnc_server_start"
-
-        def self.attributes
-          ["category", "name"]
-        end
-        zextend BaseMessage, VncServerStart.attributes
+        ATTR = []
+        zextend BaseMessage, ATTR
 
         def initialize(message = nil)
-          cat = Object.const_get("#{self.class}")::CATEGORY
-          nam = Object.const_get("#{self.class}")::NAME
-          super(cat, nam, message)
+          super(_category, _name, message)
         end
 
+        private
+          def _category
+            __FILE__.split("/")[-2]
+          end
+          def _name
+            File.basename(__FILE__, ".*")
+          end
+        # end private
       end
 
     end

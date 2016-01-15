@@ -3,23 +3,21 @@ module Messaging
     module VideoCapture
 
       class ClipDetails < BaseMessage::Common
-        CATEGORY = "video_capture"
-        NAME = "clip_details"
-
-        def self.attributes
-          [
-            "category", "name", "captureId", "ffmpegName", "clipId",
-            "storageClipPath", "storageThumbnailPath"
-          ]
-        end
-        zextend BaseMessage, ClipDetails.attributes
+        ATTR = ["captureId", "ffmpegName", "clipId", "storageClipPath", "storageThumbnailPath"]
+        zextend BaseMessage, ATTR
 
         def initialize(message = nil)
-          cat = Object.const_get("#{self.class}")::CATEGORY
-          nam = Object.const_get("#{self.class}")::NAME
-          super(cat, nam, message)
+          super(_category, _name, message)
         end
 
+        private
+          def _category
+            __FILE__.split("/")[-2]
+          end
+          def _name
+            File.basename(__FILE__, ".*")
+          end
+        # end private
       end
 
     end

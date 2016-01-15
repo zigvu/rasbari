@@ -3,19 +3,21 @@ module Messaging
     module General
 
       class None < BaseMessage::Common
-        CATEGORY = "general"
-        NAME = "none"
-
-        def self.attributes
-          ["category", "name"]
-        end
-        zextend BaseMessage, None.attributes
+        ATTR = []
+        zextend BaseMessage, ATTR
 
         def initialize(message = nil)
-          cat = Object.const_get("#{self.class}")::CATEGORY
-          nam = Object.const_get("#{self.class}")::NAME
-          super(cat, nam, message)
+          super(_category, _name, message)
         end
+
+        private
+          def _category
+            __FILE__.split("/")[-2]
+          end
+          def _name
+            File.basename(__FILE__, ".*")
+          end
+        # end private
       end
 
     end
