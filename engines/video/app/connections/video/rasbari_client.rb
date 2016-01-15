@@ -20,7 +20,7 @@ module Video
     end
     def setStateReady
       responseHeader, responseMessage = setState(Messaging::States::VideoCapture::CaptureStates.ready)
-      status = responseHeader.isDataSuccess? && responseMessage.getVideoCaptureState.isReady?
+      status = responseHeader.isStatusSuccess? && responseMessage.getVideoCaptureState.isReady?
       return status, responseMessage.trace
     end
 
@@ -31,7 +31,7 @@ module Video
     end
     def setStateCapturing
       responseHeader, responseMessage = setState(Messaging::States::VideoCapture::CaptureStates.capturing)
-      status = responseHeader.isDataSuccess? && responseMessage.getVideoCaptureState.isCapturing?
+      status = responseHeader.isStatusSuccess? && responseMessage.getVideoCaptureState.isCapturing?
       return status, responseMessage.trace
     end
 
@@ -42,7 +42,7 @@ module Video
     end
     def setStateStopped
       responseHeader, responseMessage = setState(Messaging::States::VideoCapture::CaptureStates.stopped)
-      status = responseHeader.isDataSuccess? && responseMessage.getVideoCaptureState.isStopped?
+      status = responseHeader.isStatusSuccess? && responseMessage.getVideoCaptureState.isStopped?
       return status, responseMessage.trace
     end
 
@@ -73,7 +73,7 @@ module Video
       end
       def setState(newState)
         # prepare packets and send message
-        header = Messaging::Messages::Header.dataRequest
+        header = Messaging::Messages::Header.statusRequest
         message = Messaging::Messages::VideoCapture::StateTransition.new(nil)
         message.state = newState
         return call(header, message)

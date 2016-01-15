@@ -5,6 +5,10 @@
 module Messaging
   module Messages
     class HeaderTypes
+      # Note on types:
+      # ping  : to check if remote is alive
+      # status: to get and set remote status/state
+      # data  : to get and supply data attributes
       def self.types
         ["ping", "status", "data"]
       end
