@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160105231013) do
+ActiveRecord::Schema.define(version: 20160223185503) do
+
+  create_table "kheer_detectables", force: :cascade do |t|
+    t.string   "name",        limit: 255
+    t.string   "pretty_name", limit: 255
+    t.string   "description", limit: 255
+    t.string   "ztype",       limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
   create_table "setting_machines", force: :cascade do |t|
     t.string   "ztype",      limit: 255
