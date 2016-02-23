@@ -40,7 +40,7 @@ module Rasbari
     # subclassing of messaging classes in other engines
     config.railties_order = [
       Setting::Engine, Admin::Engine, Video::Engine, Messaging::Engine,
-      :main_app, :all
+      Kheer::Engine, :main_app, :all
     ]
     # ZIGVU END: Load order of engines
 

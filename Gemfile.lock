@@ -5,6 +5,12 @@ PATH
       rails (~> 4.2.5)
 
 PATH
+  remote: engines/kheer
+  specs:
+    kheer (0.0.1)
+      rails (~> 4.2.5)
+
+PATH
   remote: engines/messaging
   specs:
     messaging (0.1.0)
@@ -263,6 +269,7 @@ DEPENDENCIES
   jquery-turbolinks
   jquery-ui-rails (~> 5.0.2)
   kgio (~> 2.10.0)
+  kheer!
   messaging!
   mongoid (~> 5.0.0)
   mysql2 (>= 0.3.13, < 0.5)
