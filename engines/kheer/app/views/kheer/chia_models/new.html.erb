@@ -2,8 +2,4 @@
 
 <%= render 'form' %>
 
-<% if @chia_model.isMajor? %>
-  <%= link_to 'Back', chia_models_path, class: 'button' %>
-<% else %>
-  <%= link_to 'Back', @chia_model.majorParent, class: 'button' %>
-<% end %>
+<%= render 'back_links' %>

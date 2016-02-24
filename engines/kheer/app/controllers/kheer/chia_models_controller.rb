@@ -15,8 +15,8 @@ module Kheer
     # GET /chia_models/1
     def show
       @curSelDets = Detectable.where(id: @chia_model.detectable_ids)
-      if @curSelDets.count == 0 && @chia_model.minorParent != nil
-        @curSelDets = Detectable.where(id: @chia_model.minorParent.detectable_ids)
+      if @curSelDets.count == 0 && @chia_model.decorate.minorParent != nil
+        @curSelDets = Detectable.where(id: @chia_model.decorate.minorParent.detectable_ids)
       end
       @othDets = Detectable.all - @curSelDets
     end

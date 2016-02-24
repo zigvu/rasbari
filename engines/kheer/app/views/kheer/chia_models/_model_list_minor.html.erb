@@ -10,11 +10,11 @@
   </thead>
 
   <tbody>
-    <% @chia_model.minorChildren.each do |chia_model| %>
+    <% @chia_model.decorate.minorChildren.each do |chia_model| %>
       <tr>
         <td><%= chia_model.major_id %>.<%= chia_model.minor_id %></td>
         <td><%= chia_model.name %></td>
-        <td>TODO</td>
+        <td><%= chia_model.decorate.annotationCount %></td>
         <td>
           <%= chia_model.detectable_ids.count %> |
           <%= link_to 'Show', chia_model %>

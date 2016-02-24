@@ -11,18 +11,5 @@ module Kheer
       Kheer::ChiaModelStates.new(self)
     end
 
-    def isMajor?
-      self.minor_id == 0
-    end
-    def majorParent
-      ChiaModel.where(major_id: self.major_id).where(minor_id: 0).first
-    end
-    def minorParent
-      ChiaModel.where(major_id: self.major_id).where(minor_id: (self.minor_id - 1)).first
-    end
-    def minorChildren
-      ChiaModel.where(major_id: self.major_id).order(minor_id: :asc) - [self]
-    end
-
   end
 end

@@ -14,9 +14,9 @@
       <tr>
         <td><%= chia_model.major_id %>.<%= chia_model.minor_id %></td>
         <td><%= chia_model.name %></td>
-        <td>TODO</td>
+        <td><%= chia_model.decorate.annotationCount %></td>
         <td>
-          <%= chia_model.minorChildren.count %> |
+          <%= chia_model.decorate.minorChildren.count %> |
           <%= link_to 'Show', chia_model %>
         </td>
         <td>
