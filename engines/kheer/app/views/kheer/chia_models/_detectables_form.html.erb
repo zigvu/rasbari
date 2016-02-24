@@ -1,0 +1,51 @@
+<%= form_for(@chia_model, class: "simple_form") do |f| %>
+
+    <h4>Current detectables</h4>
+    <table>
+      <thead>
+        <tr>
+          <td>Id</td>
+          <td>Name</td>
+          <td>Pretty Name</td>
+          <td>Selected?</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% @curSelDets.each do |detectable| %>
+          <tr>
+            <td><%= detectable.id %></td>
+            <td><%= detectable.name %></td>
+            <td><%= detectable.pretty_name %></td>
+            <td><%= check_box_tag 'chia_model[detectable_ids][]', detectable.id, true %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <h4>Other detectables</h4>
+    <table>
+      <thead>
+        <tr>
+          <td>Id</td>
+          <td>Name</td>
+          <td>Pretty Name</td>
+          <td>Selected?</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% @othDets.each do |detectable| %>
+          <% isChecked = @chia_model.detectable_ids.include?(detectable.id) %>
+          <tr>
+            <td><%= detectable.id %></td>
+            <td><%= detectable.name %></td>
+            <td><%= detectable.pretty_name %></td>
+            <td><%= check_box_tag 'chia_model[detectable_ids][]', detectable.id, isChecked %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  <div class="form-actions">
+    <%= submit_tag "Submit", class: "button" %>
+  </div>
+<% end %>

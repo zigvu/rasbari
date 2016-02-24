@@ -1,0 +1,16 @@
+<%= render 'model_description' %>
+
+<% if @chia_model.isMajor? %>
+
+  <%= render 'model_list_minor' %>
+  <br>
+
+  <%= link_to 'New Minor Chia model', new_chia_model_path(major_id: @chia_model.major_id), class: 'button' %>
+  <%= link_to 'Back', chia_models_path, class: 'button' %>
+
+<% else %>
+
+  <%= render 'detectables_form' %>
+  <%= link_to 'Back', @chia_model.majorParent, class: 'button' %>
+
+<% end %>
