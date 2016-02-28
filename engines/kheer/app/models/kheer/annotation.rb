@@ -1,17 +1,18 @@
 module Kheer
   class Annotation
     include Mongoid::Document
+    include Mongoid::Timestamps::Created
 
     # meta data for indexing
     # -------------------------------------------
-    field :cl, as: :clip_id, type: Integer
     field :ci, as: :chia_model_id, type: Integer
 
+    field :cl, as: :clip_id, type: Integer
     field :fn, as: :frame_number, type: Integer
 
     field :at, as: :active, type: Boolean, default: true
-    field :sct, as: :source_type, type: String # user/chiaModel
-    field :sci, as: :source_id, type: String # userId/chiaModelId
+    field :sct, as: :source_type, type: String # user or chiaModel
+    field :sci, as: :source_id, type: String # userId or chiaModelId
 
     # annotation data
     # -------------------------------------------
