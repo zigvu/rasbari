@@ -1,0 +1,40 @@
+<!-- BEGIN: Mine details -->
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td><%= @mining.name %></td>
+    </tr>
+    <tr>
+      <td>Description</td>
+      <td><%= @mining.description %></td>
+    </tr>
+    <tr>
+      <td>User</td>
+      <td><%= @mining.user.email %></td>
+    </tr>
+    <tr>
+      <td>State</td>
+      <td><%= @mining.state %></td>
+    </tr>
+    <tr>
+      <td>Type</td>
+      <td><%= @mining.type %></td>
+    </tr>
+    <tr>
+      <td>Localization chia model</td>
+      <td><%= @mining.decorate.chiaModelLoc %></td>
+    </tr>
+    <tr>
+      <td>Annotation chia model</td>
+      <td><%= @mining.decorate.chiaModelAnno %></td>
+    </tr>
+  </tbody>
+</table>
+<!-- END: Mine details -->

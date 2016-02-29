@@ -1,4 +1,4 @@
 Analysis::Engine.routes.draw do
-  # TODO:
-  # root to: "controller#index"
+  resources :minings
+  root to: "minings#index"
 end

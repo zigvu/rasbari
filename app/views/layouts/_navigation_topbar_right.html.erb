@@ -4,6 +4,9 @@
   <% if user_signed_in? %>
 
     <li class="has-dropdown">
+      <%= render partial: 'layouts/analysis_drop_down' %>
+    </li>
+    <li class="has-dropdown">
       <%= render partial: 'layouts/kheer_drop_down' %>
     </li>
     <li class="has-dropdown">
