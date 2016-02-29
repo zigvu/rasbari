@@ -10,23 +10,4 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require jquery.turbolinks
-//= require jquery_ujs
-//= require jquery-ui
-//= require foundation
-//= require d3
-//= require colorbrewer
-//= require crossfilter
-//= require jquery-readyselector
-//= require jquery-spinner
-//= require q
-//= require underscore
-//= require analysis/application
-//= require turbolinks
 //= require_tree .
-
-$(function(){
-	$(document).foundation();
-	$(document).ready(decorateNavigationList);
-});

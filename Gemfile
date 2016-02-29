@@ -117,6 +117,7 @@ gem 'setting', path: 'engines/setting'
 gem 'admin', path: 'engines/admin'
 gem 'video', path: 'engines/video'
 gem 'kheer', path: 'engines/kheer'
+gem 'analysis', path: 'engines/analysis'
 
 # ZIGVU END: Internal engines
 # ------------------------------------------------------------------------------
