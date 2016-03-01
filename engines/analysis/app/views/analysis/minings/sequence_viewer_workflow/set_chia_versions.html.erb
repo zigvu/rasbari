@@ -1,0 +1,27 @@
+<!-- BEGIN: Layout -->
+<%= render :layout => 'outershell' do %>
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="workflow-panel">
+        <div class="workflow-title clearfix">
+          <div class="text left">Set Chia Versions</div>
+        </div>
+        <div class="workflow-content">
+
+<!-- BEGIN: Content -->
+<%= simple_form_for @mining, :url => wizard_path, :method => :put do |f| %>
+
+<%= render 'chia_model_table', tableTitle: 'For Localization', radioTagName: 'chia_model_id_loc', chiaModels: @workflowObj.chiaModels, selectedChiaModelId: @mining.chia_model_id_loc %>
+
+<%= render 'chia_model_table', tableTitle: 'For Annotation', radioTagName: 'chia_model_id_anno', chiaModels: @workflowObj.chiaModels, selectedChiaModelId: @mining.chia_model_id_anno %>
+
+<%= render 'common_buttons', :form_obj => f %>
+<% end %>
+<!-- END: Content -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!-- END: Layout -->

@@ -1,0 +1,52 @@
+<!-- BEGIN: Layout -->
+<%= render :layout => 'outershell' do %>
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="workflow-panel">
+        <div class="workflow-title clearfix">
+          <div class="text left">Set Clips</div>
+        </div>
+        <div class="workflow-content">
+
+<!-- BEGIN: Content -->
+<%= simple_form_for @mining, :url => wizard_path, :method => :put do |f| %>
+
+# TODO: change once we have better way of handling continuous run clips
+
+<!-- BEGIN: Table -->
+<table>
+  <thead>
+    <tr>
+      <th>Stream Id</th>
+      <th>Name</th>
+      <th>Base URL</th>
+      <th># Clips</th>
+      <th>Select</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <% @workflowObj.streams.each do |stream| %>
+        <tr>
+          <td><%= stream.id %></td>
+          <td><%= stream.name %></td>
+          <td><%= stream.base_url %></td>
+          <td><%= stream.clips.count %></td>
+          <% isButChecked = @workflowObj.selectedStreamIds.include?(stream.id) %>
+          <td><%= check_box_tag 'stream_ids[]', stream.id, checked = isButChecked %></td>
+        </tr>
+      <% end %>
+  </tbody>
+</table>
+<!-- END: Table -->
+
+<%= render 'common_buttons', :form_obj => f %>
+<% end %>
+<!-- END: Content -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!-- END: Layout -->

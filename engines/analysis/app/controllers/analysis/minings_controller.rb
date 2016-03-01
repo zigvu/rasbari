@@ -11,6 +11,11 @@ module Analysis
 
     # GET /minings/1
     def show
+      if @mining.state.isBeforeCompleteSetup?
+        if @mining.type.isSequenceViewer?
+          redirect_to mining_sequence_viewer_workflow_path(Wicked::FIRST_STEP, mining_id: @mining.id)
+        end
+      end
     end
 
     # GET /minings/new
@@ -28,9 +33,8 @@ module Analysis
     def create
       @mining = Mining.new(mining_params)
       @mining.user_id = current_user.id
-      @mining.clip_sets_progress = {}
       if @mining.save
-        @mining.state.setNew
+        @mining.state.setStartSetup
         redirect_to @mining, notice: 'Mining was successfully created.'
       else
         render :new
