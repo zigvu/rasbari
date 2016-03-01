@@ -1,5 +1,10 @@
 Analysis::Engine.routes.draw do
   resources :minings do
+    member do
+      get 'set/:set_id' => 'minings#mine', as: :mine
+      get 'progress/:set_id' => 'minings#progress', as: :progress
+    end
+    
     resources :sequence_viewer_workflow, only: [:show, :update], controller: 'minings/sequence_viewer_workflow'
   end
 

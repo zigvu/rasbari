@@ -2,7 +2,22 @@ require_dependency "analysis/application_controller"
 
 module Analysis
   class MiningsController < ApplicationController
-    before_action :set_mining, only: [:show, :edit, :update, :destroy]
+    before_action :set_mining, only: [:show, :edit, :update, :destroy,
+      :mine, :progress]
+
+    # GET /minings/:id/mine/:set_id
+    def mine
+      @miningId = @mining.id
+    end
+
+    def progress
+      done = params['done'] == "true"
+
+      clipSetsProgress = @mining.clip_sets_progress
+      clipSetsProgress[@setId.to_s] = done
+      @mining.update(clip_sets_progress: clipSetsProgress)
+      redirect_to @mining, notice: "Set #{@setId}: done marked as #{done}."
+    end
 
     # GET /minings
     def index
@@ -15,6 +30,9 @@ module Analysis
         if @mining.type.isSequenceViewer?
           redirect_to mining_sequence_viewer_workflow_path(Wicked::FIRST_STEP, mining_id: @mining.id)
         end
+      else
+        @clipSets = @mining.clip_sets
+        @clipSetsProgress = @mining.clip_sets_progress
       end
     end
 
@@ -60,6 +78,7 @@ module Analysis
       # Use callbacks to share common setup or constraints between actions.
       def set_mining
         @mining = Mining.find(params[:id])
+        @setId = params['set_id'].to_i if params['set_id']
       end
 
       # Only allow a trusted parameter "white list" through.

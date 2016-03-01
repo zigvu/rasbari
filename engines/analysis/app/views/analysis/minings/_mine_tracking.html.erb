@@ -1,0 +1,41 @@
+<!-- BEGIN: Mine tracking -->
+<table>
+  <thead>
+    <tr>
+      <th>Set #</th>
+      <th width="40%">Streams</th>
+      <th># Clips</th>
+      <th># Localizations</th>
+      <th># Frames</th>
+      <th>Progress</th>
+      <th>Mine</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @clipSets.each do |idx, clipSet| %>
+      <tr>
+        <td><%= idx %></td>
+        <td>
+          <ul>
+            <% clipSet.map{ |c| c[:clip_id] }.uniq.each do |clipId| %>
+              <li><%= Video::Clip.find(clipId).capture.stream.name %></li>
+            <% end %>
+          </ul>
+        </td>
+        <td><%= clipSet.count %></td>
+        <td><%= clipSet.map{ |c| c[:loc_count] }.sum %></td>
+        <td><%= clipSet.map{ |c| c[:fn_count] }.sum %></td>
+        <td>
+          <% if @clipSetsProgress[idx] == nil || @clipSetsProgress[idx] == false %>
+            <%= link_to 'Mark as done', progress_mining_path(id: @mining.id, set_id: idx, done: true), class: "button small" %>
+          <% else %>
+            <%= link_to 'Undo done', progress_mining_path(id: @mining.id, set_id: idx, done: false), class: "button small secondary" %>
+          <% end %>
+        </td>
+        <td><%= link_to 'Load', mine_mining_path(id: @mining.id, set_id: idx), target: "_blank" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<!-- END: Mine tracking -->
