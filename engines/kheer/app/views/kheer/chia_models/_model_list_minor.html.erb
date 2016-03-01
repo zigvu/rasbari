@@ -12,7 +12,7 @@
   <tbody>
     <% @chia_model.decorate.minorChildren.each do |chia_model| %>
       <tr>
-        <td><%= chia_model.major_id %>.<%= chia_model.minor_id %></td>
+        <td><%= chia_model.decorate.version %></td>
         <td><%= chia_model.name %></td>
         <td><%= chia_model.decorate.annotationCount %></td>
         <td>

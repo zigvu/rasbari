@@ -13,7 +13,7 @@
   <tbody>
       <% chiaModels.each do |chiaModel| %>
         <tr>
-          <td><%= "#{chiaModel.major_id}.#{chiaModel.minor_id}" %></td>
+          <td><%= chiaModels.decorate.version %></td>
           <td><%= chiaModel.name %></td>
           <td><%= chiaModel.description %></td>
           <% isButChecked = (selectedChiaModelId == chiaModel.id) %>

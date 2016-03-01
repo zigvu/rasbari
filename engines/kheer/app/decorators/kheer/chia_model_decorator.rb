@@ -14,6 +14,9 @@ module Kheer
     def minorChildren
       ChiaModel.where(major_id: object.major_id).order(minor_id: :asc) - [object]
     end
+    def version
+      "#{object.major_id}.#{object.minor_id}"
+    end
 
     def annotationCount
       chmIds = [object.id]

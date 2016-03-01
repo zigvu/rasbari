@@ -2,16 +2,16 @@ module Analysis
   class MiningDecorator < Draper::Decorator
     delegate_all
 
-    def chiaModelLoc
-      return "" if self.chia_model_id_loc == nil
-      cm = Kheer::ChiaModel.find(self.chia_model_id_loc)
-      return "#{cm.id} (#{cm.name})"
+    def chiaModelVersionLoc
+      cmVersion(self.chia_model_id_loc)
     end
-
-    def chiaModelAnno
-      return "" if self.chia_model_id_loc == nil
-      cm = Kheer::ChiaModel.find(self.chia_model_id_anno)
-      return "#{cm.id} (#{cm.name})"
+    def chiaModelVersionAnno
+      cmVersion(self.chia_model_id_anno)
+    end
+    def cmVersion(cmId)
+      return "" if cmId == nil
+      cm = Kheer::ChiaModel.find(cmId)
+      return "#{cm.decorate.version} (#{cm.name})"
     end
 
 
