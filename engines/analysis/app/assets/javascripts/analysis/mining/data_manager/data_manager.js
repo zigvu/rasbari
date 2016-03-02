@@ -124,11 +124,8 @@ Mining.DataManager.DataManager = function() {
     return self.localizationDataAccessor.getClipDetailsMap();
   };
 
-  this.getData_cellMap = function(){
-    return self.localizationDataAccessor.getCellMap();
-  };
   this.getData_colorMap = function(){
-    return self.localizationDataAccessor.getColorMap();
+    return self.dataStore.colorCreator.heatmapColors;
   };
 
   this.getData_localizationDetails = function(detId){

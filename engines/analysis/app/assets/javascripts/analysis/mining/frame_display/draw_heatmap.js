@@ -28,21 +28,22 @@ Mining.FrameDisplay.DrawHeatmap = function() {
     self.clear();
     self.dataManager.heatmap_getHeatmapDataPromise(clipId, clipFN)
       .then(function(heatmapData){
-        scores = heatmapData.scores;
-        if(scores.length > 0){
-        var cellMap = self.dataManager.getData_cellMap();
-        var colorMap = self.dataManager.getData_colorMap();
-
-          _.each(cellMap, function(cell, idx, list){
-            var color = colorMap[scores[parseInt(idx)]];
-          heatCell.draw(self.ctx, cell, color);
-        });
-        heatmapDrawn = true;
+        if(heatmapData.length > 0){
+          var colorMap = self.dataManager.getData_colorMap();
+          // draw background
+          bkgrndCell = {x: 0, y: 0, w: self.canvas.width, h: self.canvas.height};
+          heatCell.draw(self.ctx, bkgrndCell, colorMap[0]);
+          // draw boxes
+          _.each(heatmapData, function(cell, idx, list){
+            var color = colorMap[parseInt(cell.prob_score * 100)];
+            heatCell.draw(self.ctx, cell, color);
+          });
+          heatmapDrawn = true;
         } else {
           console.log("Heatmap data not available");
         }
       })
-      .catch(function (errorReason) { self.err(errorReason); }); 
+      .catch(function (errorReason) { self.err(errorReason); });
   };
 
   this.clear = function(){

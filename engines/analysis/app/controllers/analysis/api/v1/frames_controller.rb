@@ -20,5 +20,13 @@ module Analysis
       render json: formatted.to_json
     end
 
+    # GET api/v1/frames/heatmap_data
+    def heatmap_data
+      heatmapParams = Analysis::HeatmapJsonifier::ParamsParser.new(params[:heatmap])
+      formatted = Analysis::HeatmapJsonifier::ServeHeatmap.new(heatmapParams).formatted()
+
+      render json: formatted.to_json
+    end
+
   end
 end

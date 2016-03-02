@@ -14,13 +14,7 @@ Mining.FrameDisplay.Shapes.HeatCell = function() {
   var self = this;
 
   this.draw = function(ctx, cell, fillColor){
-    var x = cell.x0, 
-        y = cell.y0, 
-        w = cell.x3 - cell.x0, 
-        h = cell.y3 - cell.y0;
-    
     ctx.fillStyle = fillColor;
-    ctx.fillRect(x, y, w, h);
+    ctx.fillRect(cell.x, cell.y, cell.w, cell.h);
   };
 };
-
