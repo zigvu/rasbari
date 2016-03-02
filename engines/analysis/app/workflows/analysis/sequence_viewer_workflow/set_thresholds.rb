@@ -12,14 +12,18 @@ module Analysis
       end
 
       def serve
+        threshold = @mining.md_sequence_viewer.threshold
+        detectableIds = @mining.md_sequence_viewer.detectable_ids
+
         @thresholds = []
-        (0..10).map{ |i| (i * 0.1).round(1) }.each do |thresh|
-          locs = Kheer::Localization.gte(prob_score: thresh)
+        (0..10).map{ |i| (i * 0.1).round(1) }.each do |th|
+          locs = Kheer::Localization.gte(prob_score: th)
               .where(chia_model_id: @mining.chia_model_id_loc)
+              .in(detectable_id: detectableIds)
               .in(clip_id: @mining.clip_ids).count
-          @thresholds << {thresh: thresh, locs: locs}
+          @thresholds << {thresh: th, locs: locs}
         end
-        @selectedThreshold = @mining.md_sequence_viewer.threshold.round(1)
+        @selectedThreshold = threshold.round(1) if threshold
       end
 
       def handle(params)

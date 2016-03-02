@@ -1,6 +1,6 @@
 module Analysis
   module SequenceViewerWorkflow
-    class SetChiaVersions
+    class SetChiaModels
       attr_reader :chiaModels
 
       def initialize(mining)

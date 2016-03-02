@@ -4,7 +4,7 @@
     <div class="small-12 columns">
       <div class="workflow-panel">
         <div class="workflow-title clearfix">
-          <div class="text left">Set minimum prob score threshold</div>
+          <div class="text left">Set Detectables</div>
         </div>
         <div class="workflow-content">
 
@@ -15,27 +15,30 @@
 <table>
   <thead>
     <tr>
-      <th>Score</th>
-      <th># Locs</th>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Pretty Name</th>
+      <th>Type</th>
       <th>Select</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @workflowObj.thresholds.each do |th| %>
-      <tr>
-        <th><%= th[:thresh] %></th>
-        <th><%= th[:locs] %></th>
-        <% isButChecked = (@workflowObj.selectedThreshold == th[:thresh]) %>
-        <td><%= radio_button_tag 'threshold', th[:thresh], checked = isButChecked %></td>
-      </tr>
-    <% end %>
+      <% @workflowObj.detectables.each do |detectable| %>
+        <tr>
+          <td><%= detectable.id %></td>
+          <td><%= detectable.name %></td>
+          <td><%= detectable.pretty_name %></td>
+          <td><%= detectable.type %></td>
+          <% isButChecked = @workflowObj.selectedDetectableIds.include?(detectable.id) %>
+          <td><%= check_box_tag 'detectable_ids[]', detectable.id, checked = isButChecked %></td>
+        </tr>
+      <% end %>
   </tbody>
 </table>
 <!-- END: Table -->
 
 <%= render 'common_buttons', :form_obj => f %>
-
 <% end %>
 <!-- END: Content -->
 

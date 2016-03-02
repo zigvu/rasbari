@@ -11,7 +11,7 @@ module Analysis
         @chiaModelAnno = Kheer::ChiaModel.find(@chiaModelIdAnno)
 
         if @mining.type.isSequenceViewer?
-          @selectedDetIds = [@chiaModelAnno.detectable_ids.first]
+          @selectedDetIds = @mining.md_sequence_viewer.detectable_ids
           @smartFilter = {spatial_intersection_thresh: 1.0}
         end
       end

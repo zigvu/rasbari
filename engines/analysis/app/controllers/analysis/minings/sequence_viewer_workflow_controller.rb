@@ -10,11 +10,14 @@ module Analysis
 
     def show
       case step
-      when :set_chia_versions
-        @workflowObj = Analysis::SequenceViewerWorkflow::SetChiaVersions.new(@mining)
+      when :set_chia_models
+        @workflowObj = Analysis::SequenceViewerWorkflow::SetChiaModels.new(@mining)
         @workflowObj.canSkip ? skip_step : @workflowObj.serve
       when :set_clips
         @workflowObj = Analysis::SequenceViewerWorkflow::SetClips.new(@mining)
+        @workflowObj.canSkip ? skip_step : @workflowObj.serve
+      when :set_detectables
+        @workflowObj = Analysis::SequenceViewerWorkflow::SetDetectables.new(@mining)
         @workflowObj.canSkip ? skip_step : @workflowObj.serve
       when :set_thresholds
         @workflowObj = Analysis::SequenceViewerWorkflow::SetThresholds.new(@mining)
@@ -32,10 +35,12 @@ module Analysis
       trace = "Could not complete step - unknown workflow step"
 
       case step
-      when :set_chia_versions
-        status, trace = Analysis::SequenceViewerWorkflow::SetChiaVersions.new(@mining).handle(params)
+      when :set_chia_models
+        status, trace = Analysis::SequenceViewerWorkflow::SetChiaModels.new(@mining).handle(params)
       when :set_clips
         status, trace = Analysis::SequenceViewerWorkflow::SetClips.new(@mining).handle(params)
+      when :set_detectables
+        status, trace = Analysis::SequenceViewerWorkflow::SetDetectables.new(@mining).handle(params)
       when :set_thresholds
         status, trace = Analysis::SequenceViewerWorkflow::SetThresholds.new(@mining).handle(params)
       when :create_sets
@@ -68,7 +73,7 @@ module Analysis
         @mining = Mining.find(params[:mining_id])
 
         self.steps = [
-          :set_chia_versions, :set_clips, :set_thresholds, :create_sets
+          :set_chia_models, :set_clips, :set_detectables, :set_thresholds, :create_sets
         ]
       end
 
