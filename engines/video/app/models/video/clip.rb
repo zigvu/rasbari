@@ -10,7 +10,7 @@ module Video
       "#{self.capture.stream.id}/#{self.capture.id}/#{self.id}"
     end
     def clipPath
-      "/data/#{self.capture.storageMachine.hostname}/#{self.path}/#{self.id}.mkv"
+      "/data/#{self.capture.storageMachine.hostname}/#{self.path}/#{self.id}.mp4"
     end
     def thumbnailPath
       "/data/#{self.capture.storageMachine.hostname}/#{self.path}/#{self.id}.jpg"

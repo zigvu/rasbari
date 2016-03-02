@@ -57,7 +57,7 @@ module Analysis
 
       def getClipsFormatted(clipSet)
         # <clip>: {clip_id:, clip_url:, clip_fn_start:, clip_fn_end:, length:,
-        # playback_frame_rate:}
+        # playback_frame_rate:, detection_frame_rate:}
         clips = []
         clipSet.map{ |cls| cls["clip_id"]}.uniq.each do |cId|
           clip = Video::Clip.find(cId)
@@ -67,7 +67,8 @@ module Analysis
             clip_fn_start: clip.frame_number_start,
             clip_fn_end: clip.frame_number_end,
             length: clip.length,
-            playback_frame_rate: clip.capture.playback_frame_rate
+            playback_frame_rate: clip.capture.playback_frame_rate,
+            detection_frame_rate: clip.capture.detection_frame_rate
           }
         end
         clips
