@@ -1,0 +1,139 @@
+<script type="text/javascript">
+  window.miningId = '<%= "#{@mining.id}" %>';
+  window.isInConfusionPage = true;
+</script>
+
+<div class="row">
+  <div class="small-12 columns">
+    <h3>Mining Setup: <%= @mining.name %></h3>
+  </div>
+</div>
+
+<!-- BEGIN: Selection -->
+<div class="row">
+  <div class="small-12 columns">
+    <div class="filter-panel">
+      <div class="filter-title clearfix">
+        <div class="text left">Filter Selection</div>
+      </div>
+      <div class="filter-content">
+<form>
+  <table>
+    <thead>
+      <tr>
+        <th>Pri Detectable Zdist</th>
+        <th>Pri Detectable Scale</th>
+        <th>Sec Detectable Zdist</th>
+        <th>Sec Detectable Scale</th>
+        <th>Intersection Threshold</th>
+        <th>Update Heatmap</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <%= select_tag "priZdistThresh", options_for_select(@workflowObj.zdistThreshs) %>
+        </td>
+        <td>
+          <div class="filter-selection-scroll-container">
+            <% @workflowObj.scales.each do |scale| %>
+              <label>
+                <%= check_box_tag 'priScales', scale, checked = true %>
+                <%= scale %>
+              </label>
+            <% end %>
+          </div>
+        </td>
+        <td>
+          <%= select_tag "secZdistThresh", options_for_select(@workflowObj.zdistThreshs) %>
+        </td>
+        <td>
+          <div class="filter-selection-scroll-container">
+            <% @workflowObj.scales.each do |scale| %>
+              <label>
+                <%= check_box_tag 'secScales', scale, checked = true %>
+                <%= scale %>
+              </label>
+            <% end %>
+          </div>
+        </td>
+        <td>
+          <%= select_tag "intThresh", options_for_select(@workflowObj.intThreshs) %>
+        </td>
+        <td>
+          <div id="heatmap-submit" class="button success">Submit</div>
+          <div id="heatmap-hide-diagonal" class="button success">Hide Diagonal</div>
+        </td>
+      </tr>
+      <tr>
+        <td>Max num of localizations (100%)</td>
+        <td><div id="maxNumOfLocalizations">0</div></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END: Selection -->
+
+<!-- BEGIN: Heatmap -->
+<div class="row">
+  <div class="small-12 columns">
+    <div class="filter-panel">
+      <div class="filter-title clearfix">
+        <div class="text left">Cross-class Confusion</div>
+      </div>
+      <div class="filter-content">
+
+<div id="d3-heatmap-chart"></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END: Heatmap -->
+
+<!-- BEGIN: Selected cell details -->
+<div class="row">
+  <div class="small-12 columns">
+    <div class="filter-panel">
+      <div class="filter-title clearfix">
+        <div class="text left">Selected localizations</div>
+      </div>
+      <div class="filter-content">
+
+<table>
+  <thead>
+    <tr>
+      <th>Pri Detectable</th>
+      <th>Pri Detectable Zdist</th>
+      <th>Pri Detectable Scales</th>
+      <th>Sec Detectable</th>
+      <th>Sec Detectable Zdist</th>
+      <th>Sec Detectable Scales</th>
+      <th>Intersection Thresholds</th>
+      <th># Localizations</th>
+      <th>Remove</th>
+    </tr>
+  </thead>
+  <tbody id="heatmap-cell-selected-details"></tbody>
+</table>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END: Selected cell details -->
+
+<!-- BEGIN: Content -->
+<%= simple_form_for @mining, :url => wizard_path, :method => :put do |f| %>
+  <%= hidden_field_tag 'current_filters', '', {id: 'current_filters'} %>
+  <%= render 'common_buttons', :form_obj => f %>
+<% end %>
+<!-- END: Content -->

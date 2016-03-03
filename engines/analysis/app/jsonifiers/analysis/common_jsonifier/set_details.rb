@@ -13,6 +13,11 @@ module Analysis
         if @mining.type.isSequenceViewer?
           @selectedDetIds = @mining.md_sequence_viewer.detectable_ids
           @smartFilter = {spatial_intersection_thresh: 1.0}
+        elsif @mining.type.isConfusionFinder?
+          ff = @mining.md_confusion_finder.confusion_filters[:filters]
+          @selectedDetIds = ff.map { |f| [f[:pri_det_id], f[:sec_det_id]] }.flatten.uniq.sort
+          th = ff.map { |f| f[:selected_filters][:int_thresh] }.flatten.uniq.min
+          @smartFilter = {spatial_intersection_thresh: th}
         end
       end
 

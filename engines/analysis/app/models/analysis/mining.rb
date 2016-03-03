@@ -38,6 +38,8 @@ module Analysis
     def create_mining_data
       if self.type.isSequenceViewer?
         self.create_md_sequence_viewer
+      elsif self.type.isConfusionFinder?
+        self.create_md_confusion_finder
       end
     end
 
@@ -60,5 +62,6 @@ module Analysis
 
     # data for mining is embedded in one of the sub documents
     embeds_one :md_sequence_viewer, class_name: "Analysis::MdSequenceViewer"
+    embeds_one :md_confusion_finder, class_name: "Analysis::MdConfusionFinder"
   end
 end

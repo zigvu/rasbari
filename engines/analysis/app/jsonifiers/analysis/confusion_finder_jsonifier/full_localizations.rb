@@ -1,26 +1,34 @@
 module Analysis
-  module SequenceViewerJsonifier
+  module ConfusionFinderJsonifier
     class FullLocalizations
 
       def initialize(mining, setId)
         @mining = mining
 
         @chiaModelIdLoc = @mining.chia_model_id_loc
-        chiaModelLoc = Kheer::ChiaModel.find(@chiaModelIdLoc)
-        @detectableIds = chiaModelLoc.detectable_ids
-        @threshold = @mining.md_sequence_viewer.threshold.round(1)
+        @filters = @mining.md_confusion_finder.confusion_filters[:filters]
 
         clipSet = @mining.clip_sets[setId.to_s]
         @clipIds = clipSet.map{ |cs| cs["clip_id"].to_i }
       end
 
-      def generateQuery
-        query = Kheer::Localization
-            .in(clip_id: @clipIds)
-            .where(chia_model_id: @chiaModelIdLoc)
-            .in(detectable_id: @detectableIds)
-            .gte(prob_score: @threshold)
-        query
+      def generateQueries
+        # format [query]
+        queries = []
+        @filters.each do |filter|
+          q = Kheer::Intersection
+              .where(chia_model_id: @chiaModelIdLoc)
+              .in(clip_id: @clipIds)
+              .where(primary_detectable_id: filter[:pri_det_id])
+              .where(secondary_detectable_id: filter[:sec_det_id])
+              .gte(primary_zdist_thresh: filter[:selected_filters][:pri_zdist])
+              .in(primary_scale: filter[:selected_filters][:pri_scales])
+              .gte(secondary_zdist_thresh: filter[:selected_filters][:sec_zdist])
+              .in(secondary_scale: filter[:selected_filters][:sec_scales])
+              .gte(threshold: filter[:selected_filters][:int_thresh])
+          queries << q
+        end
+        queries
       end
 
       def formatted
@@ -30,11 +38,15 @@ module Analysis
         @allFormattedLocs = {}
 
         @allFormattedLocs = {}
-        query = generateQuery()
-        query.each do |loclz|
+        localizationIds = []
+        queries = generateQueries()
+        queries.each do |q|
+          localizationIds += q.pluck(:localization_ids).flatten
+          localizationIds.uniq!
+        end #queries
+        Kheer::Localization.in(id: localizationIds).each do |loclz|
           addLoclzToFormatted(loclz)
-        end #query
-
+        end
         @allFormattedLocs
       end
 

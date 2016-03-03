@@ -29,6 +29,8 @@ module Analysis
       if @mining.state.isBeforeCompleteSetup?
         if @mining.type.isSequenceViewer?
           redirect_to mining_sequence_viewer_workflow_path(Wicked::FIRST_STEP, mining_id: @mining.id)
+        elsif @mining.type.isConfusionFinder?
+          redirect_to mining_confusion_finder_workflow_path(Wicked::FIRST_STEP, mining_id: @mining.id)
         end
       else
         @clipSets = @mining.clip_sets
