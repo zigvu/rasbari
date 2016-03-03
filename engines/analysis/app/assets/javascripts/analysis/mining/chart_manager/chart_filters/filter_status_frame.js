@@ -19,12 +19,14 @@ Mining.ChartManager.ChartFilters.FilterStatusFrame = function(htmlGenerator) {
 
   var divId_filterStatusFrameHeatmapScale = "#filter-status-frame-heatmap-scale";
   var divId_filterStatusFrameLocalizationZDist = "#filter-status-frame-localization-zdist";
+  var divId_filterStatusFrameLocalizationProbScore = "#filter-status-frame-localization-score";
 
   function updateStatusFromFrameSelection(args){
     var heatmap = self.dataManager.getFilter_getFrameFilterState().heatmap;
 
     $(divId_filterStatusFrameHeatmapScale).text(heatmap.scale);
     $(divId_filterStatusFrameLocalizationZDist).text(heatmap.zdist_thresh);
+    $(divId_filterStatusFrameLocalizationProbScore).text(heatmap.prob_score);
   }
 
   this.empty = function(){ };

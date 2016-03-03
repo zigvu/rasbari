@@ -27,7 +27,7 @@ Mining.DataManager.Accessors.FilterAccessor = function() {
     return self.filterStore.heatmap.scale;
   };
   this.cycleZdists = function(){
-    var zdists = self.dataStore.miningData.chiaModels.localization.settings.zdistThresh;
+    var zdists = self.dataStore.miningData.chiaModels.localization.settings.zdist_threshs;
     var curZdist = self.filterStore.heatmap.zdist_thresh;
     if(curZdist === undefined){
       self.filterStore.heatmap.zdist_thresh = zdists[0];
@@ -35,6 +35,18 @@ Mining.DataManager.Accessors.FilterAccessor = function() {
       self.filterStore.heatmap.zdist_thresh = zdists[(_.indexOf(zdists, curZdist) + 1) % zdists.length];
     }
     return self.filterStore.heatmap.zdist_thresh;
+  };
+  this.cycleProbScores = function(){
+    var probScores = self.dataStore.miningData.chiaModels.localization.settings.prob_scores;
+    var curProbScore = self.filterStore.heatmap.prob_score;
+    if(curProbScore === undefined){
+      self.filterStore.heatmap.prob_score = probScores[0];
+    } else {
+      self.filterStore.heatmap.prob_score = probScores[
+        (_.indexOf(probScores, curProbScore) + 1) % probScores.length
+      ];
+    }
+    return self.filterStore.heatmap.prob_score;
   };
 
   this.getFrameFilterState = function(){

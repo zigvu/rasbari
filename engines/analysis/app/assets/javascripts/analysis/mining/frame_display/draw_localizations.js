@@ -28,9 +28,10 @@ Mining.FrameDisplay.DrawLocalizations = function() {
   };
 
   this.drawAllLocalizations = function(clipId, clipFN){
-    // cycle through scales array if all localizations already drawn
+    // cycle through array if all localizations already drawn
     if(allLocalizationDrawn){
-      self.dataManager.getFilter_cycleZdists();
+      // self.dataManager.getFilter_cycleZdists();
+      self.dataManager.getFilter_cycleProbScores();
     }
 
     self.dataManager.getData_allLocalizationsDataPromise(clipId, clipFN)
@@ -38,7 +39,7 @@ Mining.FrameDisplay.DrawLocalizations = function() {
         self.drawBboxes(localizations);
         allLocalizationDrawn = true;
       })
-      .catch(function (errorReason) { self.err(errorReason); }); 
+      .catch(function (errorReason) { self.err(errorReason); });
   };
 
   this.drawBboxes = function(localizations){
@@ -49,7 +50,7 @@ Mining.FrameDisplay.DrawLocalizations = function() {
         bbox.draw(self.ctx, bb, annoDetails.title);
       });
     });
-    localizationDrawn = true;    
+    localizationDrawn = true;
   };
 
   this.clear = function(){

@@ -16,7 +16,8 @@ module Analysis
         detectableIds = @mining.md_sequence_viewer.detectable_ids
 
         @thresholds = []
-        (0..10).map{ |i| (i * 0.1).round(1) }.each do |th|
+        probScoresThreshold = (0..10).map{ |i| (i * 0.1).round(1) }
+        probScoresThreshold.each do |th|
           locs = Kheer::Localization.gte(prob_score: th)
               .where(chia_model_id: @mining.chia_model_id_loc)
               .in(detectable_id: detectableIds)

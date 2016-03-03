@@ -76,6 +76,7 @@ Mining.DataManager.AjaxHandler = function() {
 
     var chiaModelId = self.dataStore.miningData.chiaModels.localization.id;
     var zdistThresh = self.filterStore.heatmap.zdist_thresh;
+    var probScore = self.filterStore.heatmap.prob_score;
 
     var dataURL = self.baseUrl + '/frames/localization_data';
     var dataParam = {
@@ -83,7 +84,8 @@ Mining.DataManager.AjaxHandler = function() {
         chia_model_id: chiaModelId,
         clip_id: clipId,
         clip_fn: clipFN,
-        zdist_thresh: zdistThresh
+        // zdist_thresh: zdistThresh
+        prob_score: probScore
       }
     };
     self.getGETRequestPromise(dataURL, dataParam)

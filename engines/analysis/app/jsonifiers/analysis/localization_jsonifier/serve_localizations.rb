@@ -12,7 +12,8 @@ module Analysis
         query = query.where(chia_model_id: pf.chiaModelId) if pf.chiaModelId != nil
         query = query.where(clip_id: pf.clipId) if pf.clipId != nil
         query = query.where(frame_number: pf.frameNumber) if pf.frameNumber != nil
-        query = query.gte(zdist_thresh: pf.zdistThresh) if pf.zdistThresh != nil
+        # query = query.gte(zdist_thresh: pf.zdistThresh) if pf.zdistThresh != nil
+        query = query.gte(prob_score: pf.probScore) if pf.probScore != nil
         query
       end
 

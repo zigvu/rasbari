@@ -28,7 +28,7 @@ Mining.DataManager.Stores = Mining.DataManager.Stores || {};
 
   where:
     <chiaModel>: {
-      id:, name:, settings: {zdistThresh: [zdistValue, ], scales: [scale, ]}
+      id:, name:, settings: {zdist_threshs: [zdistValue, ], scales: [scale, ], prob_scores: [score, ]}
     }
     <detectables>: [{id:, name:, pretty_name:}, ]
     <clip>: {clip_id:, clip_url:, clip_fn_start:, clip_fn_end:, length:,
@@ -54,7 +54,6 @@ Mining.DataManager.Stores = Mining.DataManager.Stores || {};
       },
     }
 
-  # TODO: NOT REVIEWED BELOW
   clipDetailsMap: {
     sortedClipIds: [],
     clipMap: {:clip_id => <clip_details_from_miningData>, }

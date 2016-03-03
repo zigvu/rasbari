@@ -59,6 +59,7 @@ Mining.DataManager.DataManager = function() {
     // set frame filter states
     self.getFilter_cycleScales();
     self.getFilter_cycleZdists();
+    self.getFilter_cycleProbScores();
   };
 
   // ----------------------------------------------
@@ -149,6 +150,10 @@ Mining.DataManager.DataManager = function() {
     self.filterAccessor.cycleZdists();
     self.eventManager.fireStatusFrameCallback({});
   };
+  this.getFilter_cycleProbScores = function(){
+    self.filterAccessor.cycleProbScores();
+    self.eventManager.fireStatusFrameCallback({});
+  };
 
   this.getFilter_getFrameFilterState = function(){
     return self.filterAccessor.getFrameFilterState();
@@ -215,6 +220,10 @@ Mining.DataManager.DataManager = function() {
 
   function updateZdistThreshSelected(zdistThresh){
     self.filterStore.heatmap.zdist_thresh = zdistThresh;
+  }
+
+  function updateProbScoreSelected(probScore){
+    self.filterStore.heatmap.prob_score = probScore;
   }
 
   //------------------------------------------------

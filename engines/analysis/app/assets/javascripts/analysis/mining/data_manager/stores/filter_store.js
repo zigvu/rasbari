@@ -17,7 +17,7 @@ Mining.DataManager.Stores = Mining.DataManager.Stores || {};
 
   currentAnnotationDetId: integer
 
-  heatmap: {scale:, :detectable_id:, zdist_thresh:}
+  heatmap: {scale:, :detectable_id:, zdist_thresh:, prob_score: }
 
 */
 
@@ -26,11 +26,21 @@ Mining.DataManager.Stores.FilterStore = function() {
 
   // for active filtering
   this.currentAnnotationDetId = undefined;
-  this.heatmap = {scale: undefined, detectable_id: undefined, zdist_thresh: undefined};
+  this.heatmap = {
+    scale: undefined,
+    detectable_id: undefined,
+    zdist_thresh: undefined,
+    prob_score: undefined
+  };
 
   this.reset = function(){
 
     self.currentAnnotationDetId = undefined;
-    self.heatmap = {scale: undefined, detectable_id: undefined, zdist_thresh: undefined};
+    self.heatmap = {
+      scale: undefined,
+      detectable_id: undefined,
+      zdist_thresh: undefined,
+      prob_score: undefined
+    };
   };
 };
