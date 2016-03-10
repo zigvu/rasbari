@@ -80,12 +80,19 @@ Mining.DataManager.Accessors.TimelineChartDataAccessor = function() {
     var color = "rgb(0,0,0)";
 
     // d3 chart data expectations
-    var values = [], score, annos;
+    var values = [], score, annotations;
+    var clipId, clipFN;
     // loop through all counters
     _.each(cm2vf, function(clipIdClipFn, counter){
+      clipId = clipIdClipFn.clip_id;
+      clipFN = clipIdClipFn.clip_fn;
       score = 0;
-      annos = annotationDataAccessor.getAnnotations(clipIdClipFn.clip_id, clipIdClipFn.clip_fn);
-      _.find(annos, function(anno, detectableId){
+      annotations = [];
+      var anno = self.dataStore.dataFullAnnotations;
+      if(anno[clipId] !== undefined && anno[clipId][clipFN] !== undefined){
+        annotations = anno[clipId][clipFN];
+      }
+      _.find(annotations, function(anno, detectableId){
         if(anno.length > 0){ score = 1; return true; }
       });
       values.push({counter: +counter, score: score, det_idx: 0});

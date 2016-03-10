@@ -22,8 +22,8 @@ Mining.FrameDisplay.DrawLocalizations = function() {
 
   var bbox = new Mining.FrameDisplay.Shapes.Bbox();
 
-  this.drawLocalizations = function(clipId, clipFN){
-    var localizations = self.dataManager.getData_localizationsData(clipId, clipFN);
+  this.drawLocalizations = function(){
+    var localizations = self.dataManager.getFilter_getCurrentLocalizations();
     self.drawBboxes(localizations);
   };
 
@@ -33,13 +33,8 @@ Mining.FrameDisplay.DrawLocalizations = function() {
       // self.dataManager.getFilter_cycleZdists();
       self.dataManager.getFilter_cycleProbScores();
     }
-
-    self.dataManager.getData_allLocalizationsDataPromise(clipId, clipFN)
-      .then(function(localizations){
-        self.drawBboxes(localizations);
-        allLocalizationDrawn = true;
-      })
-      .catch(function (errorReason) { self.err(errorReason); });
+    self.drawLocalizations();
+    allLocalizationDrawn = true;
   };
 
   this.drawBboxes = function(localizations){

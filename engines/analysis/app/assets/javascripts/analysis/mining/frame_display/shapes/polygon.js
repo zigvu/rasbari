@@ -17,6 +17,7 @@ Mining.FrameDisplay.Shapes.Polygon = function(chiaModelId, detId, title, fillCol
   var snrPercent;
   var patchArea = 227 * 227; // 256 x 256 patch size but area for SNR smaller
   this.state = 'existing'; // 'deleted', 'new'
+  this.sourceType = 'unknown'; // 'unknown', 'user', 'chiaModel'
 
   // default decorations
   var strokeColor = "rgb(255, 255, 0)";
@@ -44,11 +45,17 @@ Mining.FrameDisplay.Shapes.Polygon = function(chiaModelId, detId, title, fillCol
   this.isNew = function(){ return self.state === 'new'; };
   this.setNew = function(){ self.state = 'new'; };
 
+  this.isSourceUser = function(){ return self.sourceType === 'user'; };
+  this.isSourceChiaModel = function(){ return self.sourceType === 'chiaModel'; };
+  this.setSourceUser = function(){ self.sourceType = 'user'; };
+  this.setSourceType = function(st){ self.sourceType = st; };
+
   this.getPoints = function(){
     if(!self.isClosed()){ return undefined; }
     return {
       chia_model_id: chiaModelId,
       detectable_id: detId,
+      source_type: self.sourceType,
       x0: points[0].getX(), y0: points[0].getY(),
       x1: points[1].getX(), y1: points[1].getY(),
       x2: points[2].getX(), y2: points[2].getY(),
@@ -65,6 +72,8 @@ Mining.FrameDisplay.Shapes.Polygon = function(chiaModelId, detId, title, fillCol
 
   this.draw = function(ctx){
     if(self.isDeleted()){ return; }
+
+    if(self.isSourceChiaModel()){ strokeColor = "rgb(0, 0, 255)"; }
 
     // decoration settings
     var sColor, fColor;
@@ -190,6 +199,7 @@ Mining.FrameDisplay.Shapes.Polygon = function(chiaModelId, detId, title, fillCol
     return Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
   };
 
+  // debug helper
   this.setDecorations = function(sColor, sColorSelected, fColor, fColorSelected){
     strokeColor = sColor;
     strokeColorSelected = sColorSelected;

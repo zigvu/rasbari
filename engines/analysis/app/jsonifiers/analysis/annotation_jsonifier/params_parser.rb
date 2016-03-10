@@ -2,30 +2,45 @@ module Analysis
   module AnnotationJsonifier
     class ParamsParser
       attr_accessor :annotationsDeleted, :annotationsNew
+      attr_accessor :localizationsNew, :localizationsDeleted
 
       def initialize(annotationParams)
         # format of what js gives
         # {
-        # 		{ deleted_polys: {annotationId: poly, } },
-        # 		{ new_polys: {annotationId: poly, } }
+        # 		{ deleted_annos: {annotationId: poly, } },
+        # 		{ new_annos: {annotationId: poly, } }
+        # 		{ deleted_locs: {annotationId: poly, } },
+        # 		{ new_locs: {annotationId: poly, } }
         # }
         # where each poly has:
-        # 			{ clip_id:, chia_model_id:, frame_number:, detectable_id:,
+        # 			{ clip_id:, chia_model_id:, frame_number:, detectable_id:, source_type:,
         # 		     x0:, y0:, x1:, y1:, x2:, y2:, x3:, y3:
         # 			}
 
         @annotationsDeleted = []
         @annotationsNew = []
+        @localizationsNew = []
+        @localizationsDeleted = []
 
         if annotationParams != nil
-          if annotationParams['deleted_polys'] != nil
-            annotationParams['deleted_polys'].each do |aId, a|
+          if annotationParams['deleted_annos'] != nil
+            annotationParams['deleted_annos'].each do |aId, a|
               @annotationsDeleted << formatAnnotation(a)
             end
           end
-          if annotationParams['new_polys'] != nil
-            annotationParams['new_polys'].each do |aId, a|
+          if annotationParams['new_annos'] != nil
+            annotationParams['new_annos'].each do |aId, a|
               @annotationsNew << formatAnnotation(a)
+            end
+          end
+          if annotationParams['deleted_locs'] != nil
+            annotationParams['deleted_locs'].each do |aId, a|
+              @localizationsDeleted << formatAnnotation(a)
+            end
+          end
+          if annotationParams['new_locs'] != nil
+            annotationParams['new_locs'].each do |aId, a|
+              @localizationsNew << formatAnnotation(a)
             end
           end
         end

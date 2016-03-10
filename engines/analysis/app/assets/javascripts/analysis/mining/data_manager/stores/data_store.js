@@ -41,7 +41,7 @@ Mining.DataManager.Stores = Mining.DataManager.Stores || {};
     }
 
   dataFullAnnotations: {:clip_id => {:clip_fn => {:detectable_id => [anno]}}}
-    where anno: {chia_model_id:, x0:, y0:, x1:, y1:, x2:, y2:, x3:, y3}
+    where anno: {chia_model_id:, source_type:, is_new: false, x0:, y0:, x1:, y1:, x2:, y2:, x3:, y3}
 
   colorMap: {:integer => 'rgb', }
 

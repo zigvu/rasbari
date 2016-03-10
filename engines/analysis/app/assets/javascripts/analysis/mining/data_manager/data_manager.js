@@ -73,8 +73,8 @@ Mining.DataManager.DataManager = function() {
     return self.annotationDataAccessor.getDetectables();
   };
 
-  this.getAnno_annotations = function(clipId, clipFN){
-    return self.annotationDataAccessor.getAnnotations(clipId, clipFN);
+  this.setAnno_setCurrentAnnotations = function(clipId, clipFN){
+    self.annotationDataAccessor.setCurrentAnnotations(clipId, clipFN);
   };
 
   this.setAnno_saveAnnotations = function(clipId, clipFN, annotationObjs){
@@ -109,11 +109,11 @@ Mining.DataManager.DataManager = function() {
   // ----------------------------------------------
   // Localization data
 
-  this.getData_localizationsData = function(clipId, clipFN){
-    return self.localizationDataAccessor.getLocalizations(clipId, clipFN);
+  this.setData_setCurrentLocalization = function(clipId, clipFN){
+    self.localizationDataAccessor.setCurrentLocalization(clipId, clipFN);
   };
 
-  this.getData_allLocalizationsDataPromise = function(clipId, clipFN){
+  this.setData_setCurrentAllLocalizationPromise = function(clipId, clipFN){
     var cfn = self.localizationDataAccessor.getTranslatedClipIdClipFN(clipId, clipFN);
     clipId = cfn.clip_id;
     clipFN = cfn.clip_fn;
@@ -157,6 +157,18 @@ Mining.DataManager.DataManager = function() {
 
   this.getFilter_getFrameFilterState = function(){
     return self.filterAccessor.getFrameFilterState();
+  };
+
+  this.getFilter_getCurrentLocalizations = function(){
+    return self.filterAccessor.getCurrentLocalizations();
+  };
+
+  this.getFilter_getCurrentAnnotations = function(){
+    return self.filterAccessor.getCurrentAnnotations();
+  };
+
+  this.setFilter_mergeLocalizationsToAnnotation = function(){
+    self.filterAccessor.mergeLocalizationsToAnnotation();
   };
 
   // ----------------------------------------------

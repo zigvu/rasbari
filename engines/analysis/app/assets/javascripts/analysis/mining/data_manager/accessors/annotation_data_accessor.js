@@ -28,19 +28,21 @@ Mining.DataManager.Accessors.AnnotationDataAccessor = function() {
 
   // ----------------------------------------------
   // annotaitons raw data
-  this.getAnnotations = function(clipId, clipFN){
+  this.setCurrentAnnotations = function(clipId, clipFN){
     var anno = self.dataStore.dataFullAnnotations;
-    if(anno[clipId] === undefined || anno[clipId][clipFN] === undefined){ return []; }
-    return anno[clipId][clipFN];
+    var curAnnos = {};
+    if(anno[clipId] !== undefined && anno[clipId][clipFN] !== undefined){
+      curAnnos = anno[clipId][clipFN];
+    }
+    self.filterStore.currentAnnotations = curAnnos;
   };
 
   this.updateAnnotations = function(clipId, clipFN, annotationObjs){
     // put in clip_id and clip_fn for each object
-    _.each(annotationObjs.deleted_polys, function(ao){
-      _.extend(ao, { clip_id: clipId, clip_fn: clipFN });
-    });
-    _.each(annotationObjs.new_polys, function(ao){
-      _.extend(ao, { clip_id: clipId, clip_fn: clipFN });
+    _.each(annotationObjs, function(objArr, arrKey){
+      _.each(objArr, function(ao){
+        _.extend(ao, { clip_id: clipId, clip_fn: clipFN });
+      });
     });
 
     // update internal data structure
@@ -49,7 +51,7 @@ Mining.DataManager.Accessors.AnnotationDataAccessor = function() {
     if(anno[clipId][clipFN] === undefined){ anno[clipId][clipFN] = {}; }
 
     // update - deleted annotations
-    _.each(annotationObjs.deleted_polys, function(ao){
+    _.each(annotationObjs.deleted_annos, function(ao){
       var idx = -1;
       _.find(anno[clipId][clipFN][ao.detectable_id], function(a, i, l){
         if((a.x0 == ao.x0) && (a.y0 == ao.y0) && (a.x1 == ao.x1) &&
@@ -60,12 +62,24 @@ Mining.DataManager.Accessors.AnnotationDataAccessor = function() {
     });
 
     // update - new annotations
-    _.each(annotationObjs.new_polys, function(ao){
+    _.each(annotationObjs.new_annos, function(ao){
       if(anno[clipId][clipFN][ao.detectable_id] === undefined){
         anno[clipId][clipFN][ao.detectable_id] = [];
       }
       anno[clipId][clipFN][ao.detectable_id].push(ao);
     });
+
+    // update - new localizations as annotations
+    _.each(annotationObjs.new_locs, function(ao){
+      if(anno[clipId][clipFN][ao.detectable_id] === undefined){
+        anno[clipId][clipFN][ao.detectable_id] = [];
+      }
+      anno[clipId][clipFN][ao.detectable_id].push(ao);
+    });
+
+    // delete existing localizations
+    self.dataStore.dataFullLocalizations[clipId][clipFN] = {};
+    self.filterStore.currentLocalizations = {};
     return annotationObjs;
   };
 

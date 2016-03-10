@@ -34,13 +34,20 @@ Mining.FrameDisplay.DrawAnnotations = function() {
   this.endAnnotation = function(){
     self.annotationMode = false;
 
-    var polygonsToSave = self.getPolygonsToSave();
-    if(polygonsToSave.deleted_polys.length > 0 || polygonsToSave.new_polys.length > 0){
-      self.dataManager.setAnno_saveAnnotations(currentClipId, currentClipFN, polygonsToSave);
+    var svPs = self.getPolygonsToSave();
+    // no need to check new locs objects
+    if( svPs.deleted_annos.length > 0 ||
+        svPs.new_annos.length > 0 ||
+        svPs.deleted_locs.length > 0){
+      self.dataManager.setAnno_saveAnnotations(currentClipId, currentClipFN, svPs);
     }
+    self.resetWithoutSave();
+  };
+
+  this.resetWithoutSave = function(){
+    self.annotationMode = false;
     polygons = [];
     polyIdCounter = 0;
-
     self.drawOnce();
   };
 
@@ -48,7 +55,7 @@ Mining.FrameDisplay.DrawAnnotations = function() {
     currentClipId = clipId;
     currentClipFN = clipFN;
 
-    var annotations = self.dataManager.getAnno_annotations(currentClipId, currentClipFN);
+    var annotations = self.dataManager.getFilter_getCurrentAnnotations();
     _.each(annotations, function(anno, detectableId){
       _.each(anno, function(annoCoords){
         self.addPointCoords(annoCoords, detectableId);
@@ -74,15 +81,34 @@ Mining.FrameDisplay.DrawAnnotations = function() {
   this.getselectedPolyId = function(){ return selectedPolyId; };
 
   this.getPolygonsToSave = function(){
-    var deletedPolyObjs = [], newPolyObjs = [];
+    var deletedAnnoObjs = [], newAnnoObjs = [];
+    var deletedLocObjs = [], newLocObjs = [];
 
     _.map(polygons, function(poly){
       if(poly.isClosed()){
-        if(poly.isDeleted()){ deletedPolyObjs.push(poly.getPoints()); }
-        if(poly.isNew()){ newPolyObjs.push(poly.getPoints()); }
+        if(poly.isDeleted()){
+          if(poly.isSourceChiaModel()){
+            deletedLocObjs.push(poly.getPoints());
+          } else if(poly.isSourceUser()) {
+            deletedAnnoObjs.push(poly.getPoints());
+          }
+        }
+        if(poly.isNew()){
+          if(poly.isSourceChiaModel()){
+            newLocObjs.push(poly.getPoints());
+          } else {
+            poly.setSourceUser();
+            newAnnoObjs.push(poly.getPoints());
+          }
+        }
       }
     });
-    return {deleted_polys: deletedPolyObjs, new_polys: newPolyObjs};
+    return {
+      deleted_annos: deletedAnnoObjs,
+      new_annos: newAnnoObjs,
+      deleted_locs: deletedLocObjs,
+      new_locs: newLocObjs
+    };
   };
 
   this.addToPolygons = function(poly){
@@ -99,6 +125,8 @@ Mining.FrameDisplay.DrawAnnotations = function() {
     var annoDetails = self.dataManager.getAnno_anotationDetails(detId);
     var poly = new Mining.FrameDisplay.Shapes.Polygon(
       annoCoords.chia_model_id, annoDetails.id, annoDetails.title, annoDetails.color);
+    poly.setSourceType(annoCoords.source_type);
+    if(annoCoords.is_new){ poly.setNew(); }
     poly.addPoint(p1);
     poly.addPoint(p2);
     poly.addPoint(p3);

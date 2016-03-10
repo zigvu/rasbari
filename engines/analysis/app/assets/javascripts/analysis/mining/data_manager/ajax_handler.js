@@ -95,7 +95,8 @@ Mining.DataManager.AjaxHandler = function() {
           (data.localizations[clipId][clipFN] !== undefined)){
           localizations = data.localizations[clipId][clipFN];
         }
-        requestDefer.resolve(localizations);
+        self.filterStore.currentLocalizations = localizations;
+        requestDefer.resolve();
       })
       .catch(function (errorReason) {
         requestDefer.reject('Mining.DataManager.AjaxHandler ->' + errorReason);

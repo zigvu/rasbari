@@ -74,6 +74,7 @@ Mining.VideoHandler.VideoPlayer = function() {
       // schedule to run again in a short time
       setTimeout(function(){ self.paintUntilPaused(); }, 20);
     } else if(currentPlayState.play_state === 'paused'){
+      self.dataManager.setAnno_setCurrentAnnotations(currentPlayState.clip_id, currentPlayState.clip_fn);
       self.drawAnnotations.startAnnotation(currentPlayState.clip_id, currentPlayState.clip_fn);
       self.eventManager.firePaintFrameCallback(currentPlayState);
     }
@@ -82,8 +83,10 @@ Mining.VideoHandler.VideoPlayer = function() {
   // paint localizations
   this.paintFrameWithLocalization = function(){
     var currentPlayState = self.multiVideoExtractor.paintFrame();
-    self.drawLocalizations.drawLocalizations(currentPlayState.clip_id, currentPlayState.clip_fn);
+    self.dataManager.setData_setCurrentLocalization(currentPlayState.clip_id, currentPlayState.clip_fn);
+    self.drawLocalizations.drawLocalizations();
     // TODO: not working right now
+    // self.dataManager.setAnno_setCurrentAnnotations(currentPlayState.clip_id, currentPlayState.clip_fn);
     // self.drawAnnotations.drawAnnotations(currentPlayState.clip_id, currentPlayState.clip_fn);
     // only clear heatmap here - paint in another function
     self.drawHeatmap.clear();
@@ -99,7 +102,23 @@ Mining.VideoHandler.VideoPlayer = function() {
   this.drawAllLocalizations = function(){
     if(!isVideoPaused){ return; }
     var currentPlayState = self.multiVideoExtractor.getCurrentState();
-    self.drawLocalizations.drawAllLocalizations(currentPlayState.clip_id, currentPlayState.clip_fn);
+    self.dataManager.setData_setCurrentAllLocalizationPromise(
+        currentPlayState.clip_id, currentPlayState.clip_fn)
+      .then(function(){
+        self.drawLocalizations.drawAllLocalizations();
+      })
+      .catch(function (errorReason) { self.err(errorReason); });
+  };
+
+  this.convertLoczsToAnnos = function(){
+    if(!isVideoPaused){ return; }
+    var currentPlayState = self.multiVideoExtractor.getCurrentState();
+
+    self.dataManager.setAnno_setCurrentAnnotations(currentPlayState.clip_id, currentPlayState.clip_fn);
+    self.dataManager.setFilter_mergeLocalizationsToAnnotation();
+    self.drawAnnotations.resetWithoutSave();
+    self.drawLocalizations.drawLocalizations();
+    self.drawAnnotations.startAnnotation(currentPlayState.clip_id, currentPlayState.clip_fn);
   };
 
   //------------------------------------------------

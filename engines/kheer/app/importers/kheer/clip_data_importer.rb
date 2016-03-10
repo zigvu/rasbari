@@ -113,7 +113,7 @@ module Kheer
     def bboxToLoc(fn, detId, bbox)
       # format must match that in Kheer::Localization
       return {
-        ci: @chiaModelId, cl: @clipId, fn: fn, di: detId, ps: bbox[4].to_f,
+        ci: @chiaModelId, cl: @clipId, fn: fn, isa: false, di: detId, ps: bbox[4].to_f,
         zd: bbox[5].to_f, sl: @scale, x: bbox[0].to_i, y: bbox[1].to_i,
         w: bbox[2].to_i - bbox[0].to_i, h: bbox[3].to_i - bbox[1].to_i
       }

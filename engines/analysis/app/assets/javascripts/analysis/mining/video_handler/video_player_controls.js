@@ -165,6 +165,12 @@ Mining.VideoHandler.VideoPlayerControls = function(videoPlayer) {
         e.stopPropagation();
         break;
 
+        case 120: // 'x'
+          videoPlayer.convertLoczsToAnnos();
+          e.preventDefault();
+          e.stopPropagation();
+          break;
+
       default:
         //console.log("Unknown key " + e.which);
     }

@@ -67,6 +67,7 @@ Mining.FrameDisplay.Shapes.Point = function(px, py) {
   this.getX = function(){ return x; };
   this.getY = function(){ return y; };
 
+  // debug helper
   this.setDecorations = function(sColor, sColorSelected, fColor, fColorSelected, pSquareWH){
     strokeColor = sColor;
     strokeColorSelected = sColorSelected;

@@ -84,14 +84,17 @@ Mining.DataManager.Accessors.LocalizationDataAccessor = function() {
     return score;
   };
 
-  this.getLocalizations = function(clipId, clipFN){
+  this.setCurrentLocalization = function(clipId, clipFN){
     var cfn = self.getTranslatedClipIdClipFN(clipId, clipFN);
     clipId = cfn.clip_id;
     clipFN = cfn.clip_fn;
 
+    var curLocs = {};
     var loc = self.dataStore.dataFullLocalizations;
-    if(loc[clipId] === undefined || loc[clipId][clipFN] === undefined){ return []; }
-    return loc[clipId][clipFN];
+    if(loc[clipId] !== undefined && loc[clipId][clipFN] !== undefined){
+      curLocs = loc[clipId][clipFN];
+    }
+    self.filterStore.currentLocalizations = curLocs;
   };
 
   //------------------------------------------------

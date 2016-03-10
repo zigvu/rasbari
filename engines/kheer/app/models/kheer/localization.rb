@@ -9,6 +9,10 @@ module Kheer
     field :cl, as: :clip_id, type: Integer
     field :fn, as: :frame_number, type: Integer
 
+    # if used in annotation - set default value during object creation
+    # re: mongoid behavior: default scope overrides default value setting
+    field :isa, as: :is_annotation, type: Boolean
+
     # scores
     # -------------------------------------------
     field :di, as: :detectable_id, type: Integer
@@ -29,9 +33,12 @@ module Kheer
     index({ clip_id: 1 }, { background: true })
     index({ frame_number: 1 }, { background: true })
 
+    # default scope
+    # -------------------------------------------
+    default_scope ->{ where(isa: false) }
+
     # convenience methods
     # -------------------------------------------
-
     def detectable
       return Detectable.find(self.detectable_id)
     end

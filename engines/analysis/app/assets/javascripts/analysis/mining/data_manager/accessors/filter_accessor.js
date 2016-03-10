@@ -56,6 +56,43 @@ Mining.DataManager.Accessors.FilterAccessor = function() {
       heatmap: self.filterStore.heatmap
     };
   };
+
+  this.getCurrentLocalizations = function(){
+    return self.filterStore.currentLocalizations;
+  };
+
+  this.getCurrentAnnotations = function(){
+    return self.filterStore.currentAnnotations;
+  };
+
+  this.mergeLocalizationsToAnnotation = function(){
+    var mergedAnnos = {};
+    _.each(self.filterStore.currentAnnotations, function(annos, detId){
+      if(mergedAnnos[detId] === undefined){ mergedAnnos[detId] = []; }
+      mergedAnnos[detId] = _.union(mergedAnnos[detId], annos);
+    });
+    _.each(self.filterStore.currentLocalizations, function(loczs, detId){
+      if(mergedAnnos[detId] === undefined){ mergedAnnos[detId] = []; }
+      _.each(loczs, function(locz){
+        mergedAnnos[detId].push(self.localizationToAnnotation(locz));
+      });
+    });
+    self.filterStore.currentLocalizations = {};
+    self.filterStore.currentAnnotations = mergedAnnos;
+  };
+
+  this.localizationToAnnotation = function(loclz){
+    var anno = {};
+    anno.chia_model_id = loclz.chia_model_id;
+    anno.source_type = "chiaModel";
+    anno.x0 = loclz.x;           anno.y0 = loclz.y;
+    anno.x1 = loclz.x + loclz.w; anno.y1 = loclz.y;
+    anno.x2 = loclz.x + loclz.w; anno.y2 = loclz.y + loclz.h;
+    anno.x3 = loclz.x;           anno.y3 = loclz.y + loclz.h;
+    anno.is_new = true;
+    return anno;
+  };
+
   //------------------------------------------------
   // set relations
   this.setFilterStore = function(fs){

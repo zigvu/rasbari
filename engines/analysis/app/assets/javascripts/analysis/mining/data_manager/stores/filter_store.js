@@ -16,9 +16,14 @@ Mining.DataManager.Stores = Mining.DataManager.Stores || {};
   JS style hash implies that (keyname: value) text are used as keys of objects.]
 
   currentAnnotationDetId: integer
+  currentLocalizations: {:detectable_id => [loclz]}
+  where: loclz is as described in data_store
+  currentAnnotations: {:detectable_id => [anno]}
+  where: anno is as described in data_store
 
   heatmap: {scale:, :detectable_id:, zdist_thresh:, prob_score: }
 
+  mergeLoczsToAnnos: boolean
 */
 
 Mining.DataManager.Stores.FilterStore = function() {
@@ -26,6 +31,8 @@ Mining.DataManager.Stores.FilterStore = function() {
 
   // for active filtering
   this.currentAnnotationDetId = undefined;
+  this.currentLocalizations = {};
+  this.currentAnnotations = {};
   this.heatmap = {
     scale: undefined,
     detectable_id: undefined,
@@ -36,6 +43,8 @@ Mining.DataManager.Stores.FilterStore = function() {
   this.reset = function(){
 
     self.currentAnnotationDetId = undefined;
+    self.currentLocalizations = {};
+    self.currentAnnotations = {};
     self.heatmap = {
       scale: undefined,
       detectable_id: undefined,
