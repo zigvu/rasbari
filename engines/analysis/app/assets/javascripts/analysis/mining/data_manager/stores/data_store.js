@@ -28,7 +28,8 @@ Mining.DataManager.Stores = Mining.DataManager.Stores || {};
 
   where:
     <chiaModel>: {
-      id:, name:, settings: {zdist_threshs: [zdistValue, ], scales: [scale, ], prob_scores: [score, ]}
+      id:, name:, version:,
+      settings: {zdist_threshs: [zdistValue, ], scales: [scale, ], prob_scores: [score, ]}
     }
     <detectables>: [{id:, name:, pretty_name:}, ]
     <clip>: {clip_id:, clip_url:, clip_fn_start:, clip_fn_end:, length:,
@@ -58,6 +59,8 @@ Mining.DataManager.Stores = Mining.DataManager.Stores || {};
     sortedClipIds: [],
     clipMap: {:clip_id => <clip_details_from_miningData>, }
   }
+
+  chiaModelVersionMap: {:chia_model_id => <chiaModel>, }
 
   tChartDataLoc: [{name:, color:, values: [{counter: score:}, ]}, ]
   tChartDataAnno: [{name:, color:, values: [{counter: score:}, ]}, ]
@@ -89,6 +92,7 @@ Mining.DataManager.Stores.DataStore = function() {
   this.clipDetailsMap = {
     sortedClipIds: undefined, clipMap: undefined
   };
+  this.chiaModelVersionMap = undefined;
 
   // timeline chart data
   this.tChartData = undefined;
@@ -108,6 +112,7 @@ Mining.DataManager.Stores.DataStore = function() {
     self.clipDetailsMap = {
       sortedClipIds: undefined, clipMap: undefined
     };
+    self.chiaModelVersionMap = undefined;
 
     self.tChartData = undefined;
     self.toCounterMap = undefined;

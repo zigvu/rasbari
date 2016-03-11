@@ -40,6 +40,20 @@ Mining.DataManager.Accessors.LocalizationDataAccessor = function() {
   };
 
   // ----------------------------------------------
+  // chia version mapping
+  this.createChiaModelVersionMap = function(){
+    var chiaModels = self.dataStore.miningData.chiaModels;
+    var chiaMap = {};
+    chiaMap[chiaModels.localization.id] = chiaModels.localization;
+    chiaMap[chiaModels.annotation.id] = chiaModels.annotation;
+    self.dataStore.chiaModelVersionMap = chiaMap;
+  };
+
+  this.getChiaDetails = function(chiaModelId){
+    return self.dataStore.chiaModelVersionMap[chiaModelId];
+  };
+
+  // ----------------------------------------------
   // detectable mapping
   this.getLocalizationDetails = function(detId){
     return {
@@ -76,8 +90,8 @@ Mining.DataManager.Accessors.LocalizationDataAccessor = function() {
     if(loc[clipId] && loc[clipId][clipFN] && loc[clipId][clipFN][detId]) {
       // if even one localization is present, it gets a height
       score = 0.6;
-      var detDetails = self.dataStore.dataFullLocalizations[clipId][clipFN][detId];
-      spInterScore = _.max(detDetails,
+      var bboxes = loc[clipId][clipFN][detId];
+      spInterScore = _.max(bboxes,
         function(dd){ return dd.spatial_intersection; }).spatial_intersection;
       if (spInterScore >= spatIntThresh){ score = 1.0; }
     }
@@ -97,15 +111,6 @@ Mining.DataManager.Accessors.LocalizationDataAccessor = function() {
     self.filterStore.currentLocalizations = curLocs;
   };
 
-  //------------------------------------------------
-  // for heatmap
-
-  this.getCellMap = function(){
-    return self.dataStore.cellMap;
-  };
-  this.getColorMap = function(){
-    return self.dataStore.colorMap;
-  };
   //------------------------------------------------
   // for video status
   this.getVideoState = function(currentPlayState){

@@ -11,7 +11,7 @@ Mining.FrameDisplay.Shapes = Mining.FrameDisplay.Shapes || {};
   annotations.
 */
 
-Mining.FrameDisplay.Shapes.Polygon = function(chiaModelId, detId, title, fillColor) {
+Mining.FrameDisplay.Shapes.Polygon = function(chiaModelId, chiaVersion, detId, title, fillColor) {
   var self = this;
   var selected = false, polyId;
   var snrPercent;
@@ -126,10 +126,10 @@ Mining.FrameDisplay.Shapes.Polygon = function(chiaModelId, detId, title, fillCol
       ctx.fillStyle = "rgb(0, 0, 0)";
       ctx.fillText(title, points[0].getX() + borderOffset, points[0].getY() + borderOffset);
 
-      // text rendering: chiaModelId and snr
+      // text rendering: chiaVersion and snr
       ctx.font = "10px serif";
       ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
-      var snr = chiaModelId + " : " + self.getSNR();
+      var snr = chiaVersion + " : " + self.getSNR();
       ctx.fillRect(points[0].getX() + borderOffset, points[0].getY() + borderOffset + nameHeight, snrWidth, snrHeight);
       ctx.fillStyle = "rgb(0, 0, 0)";
       ctx.fillText(snr, points[0].getX() + borderOffset, points[0].getY() + borderOffset + nameHeight);

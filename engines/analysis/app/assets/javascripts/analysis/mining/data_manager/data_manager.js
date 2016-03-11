@@ -55,6 +55,7 @@ Mining.DataManager.DataManager = function() {
   this.massageMiningData = function(){
     self.annotationDataAccessor.createDetectableDecorations();
     self.localizationDataAccessor.createClipDetailsMap();
+    self.localizationDataAccessor.createChiaModelVersionMap();
 
     // set frame filter states
     self.getFilter_cycleScales();
@@ -127,6 +128,10 @@ Mining.DataManager.DataManager = function() {
 
   this.getData_colorMap = function(){
     return self.dataStore.colorCreator.heatmapColors;
+  };
+
+  this.getData_chiaDetails = function(chiaModelId){
+    return self.localizationDataAccessor.getChiaDetails(chiaModelId);
   };
 
   this.getData_localizationDetails = function(detId){

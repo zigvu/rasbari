@@ -123,8 +123,11 @@ Mining.FrameDisplay.DrawAnnotations = function() {
     var p4 = new Mining.FrameDisplay.Shapes.Point(annoCoords.x3, annoCoords.y3);
 
     var annoDetails = self.dataManager.getAnno_anotationDetails(detId);
+    var chiaDetails = self.dataManager.getData_chiaDetails(annoCoords.chia_model_id);
     var poly = new Mining.FrameDisplay.Shapes.Polygon(
-      annoCoords.chia_model_id, annoDetails.id, annoDetails.title, annoDetails.color);
+      annoCoords.chia_model_id, chiaDetails.version,
+      annoDetails.id, annoDetails.title, annoDetails.color
+    );
     poly.setSourceType(annoCoords.source_type);
     if(annoCoords.is_new){ poly.setNew(); }
     poly.addPoint(p1);

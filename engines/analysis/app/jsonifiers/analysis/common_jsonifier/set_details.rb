@@ -23,7 +23,8 @@ module Analysis
 
       def getChiaModelFormatted(chiaModelId)
         # <chiaModel>: {
-        #   id:, name:, settings: {
+        #   id:, name:, version:,
+        #   settings: {
         #     zdist_threshs: [zdistValue, ],
         #     scales: [scale, ],
         #     prob_scores: [score, ]
@@ -32,7 +33,7 @@ module Analysis
         probScoresThreshold = (0..10).map{ |i| (i * 0.1).round(1) }
         cm = Kheer::ChiaModel.find(chiaModelId)
         return {
-          id: cm.id, name: cm.name,
+          id: cm.id, name: cm.name, version: cm.decorate.version,
           settings: {
             zdist_threshs: [0, 1, 2],
             scales: [1.0],

@@ -42,7 +42,8 @@ Mining.FrameDisplay.DrawLocalizations = function() {
     _.each(localizations, function(locs, detectableId){
       _.each(locs, function(bb){
         var annoDetails = self.dataManager.getData_localizationDetails(detectableId);
-        bbox.draw(self.ctx, bb, annoDetails.title);
+        var chiaDetails = self.dataManager.getData_chiaDetails(bb.chia_model_id);
+        bbox.draw(self.ctx, bb, annoDetails.title, chiaDetails.version);
       });
     });
     localizationDrawn = true;
