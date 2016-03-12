@@ -21,9 +21,9 @@
   <table>
     <thead>
       <tr>
-        <th>Pri Detectable Zdist</th>
+        <th>Pri Detectable Prob</th>
         <th>Pri Detectable Scale</th>
-        <th>Sec Detectable Zdist</th>
+        <th>Sec Detectable Prob</th>
         <th>Sec Detectable Scale</th>
         <th>Intersection Threshold</th>
         <th>Update Heatmap</th>
@@ -32,7 +32,7 @@
     <tbody>
       <tr>
         <td>
-          <%= select_tag "priZdistThresh", options_for_select(@workflowObj.zdistThreshs) %>
+          <%= select_tag "priProbThresh", options_for_select(@workflowObj.probThreshs) %>
         </td>
         <td>
           <div class="filter-selection-scroll-container">
@@ -45,7 +45,7 @@
           </div>
         </td>
         <td>
-          <%= select_tag "secZdistThresh", options_for_select(@workflowObj.zdistThreshs) %>
+          <%= select_tag "secProbThresh", options_for_select(@workflowObj.probThreshs) %>
         </td>
         <td>
           <div class="filter-selection-scroll-container">
@@ -112,10 +112,10 @@
   <thead>
     <tr>
       <th>Pri Detectable</th>
-      <th>Pri Detectable Zdist</th>
+      <th>Pri Detectable Prob</th>
       <th>Pri Detectable Scales</th>
       <th>Sec Detectable</th>
-      <th>Sec Detectable Zdist</th>
+      <th>Sec Detectable Prob</th>
       <th>Sec Detectable Scales</th>
       <th>Intersection Thresholds</th>
       <th># Localizations</th>

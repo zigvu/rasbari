@@ -26,14 +26,14 @@ module Analysis
     # GET api/v1/minings/confusion
     def confusion
       # play nice with float hash keys
-      priZdist = params['current_filters']['pri_zdist'].to_f.round(1)
+      priProb = params['current_filters']['pri_prob'].to_f.round(1)
       priScales = params['current_filters']['pri_scales'].map{ |s| s.to_f.round(1) }
-      secZdist = params['current_filters']['sec_zdist'].to_f.round(1)
+      secProb = params['current_filters']['sec_prob'].to_f.round(1)
       secScales = params['current_filters']['sec_scales'].map{ |s| s.to_f.round(1) }
       intThresh = params['current_filters']['int_thresh'].to_f.round(1)
 
       m = Analysis::ConfusionFinderJsonifier::HeatmapGenerator.new(@mining)
-      m.setConditions(priZdist, priScales, secZdist, secScales, intThresh)
+      m.setConditions(priProb, priScales, secProb, secScales, intThresh)
       render json: m.formatted.to_json
     end
 

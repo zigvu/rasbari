@@ -1,7 +1,7 @@
 module Analysis
   module ConfusionFinderWorkflow
     class SetConfusions
-      attr_reader :zdistThreshs, :scales, :intThreshs
+      attr_reader :probThreshs, :scales, :intThreshs
 
       def initialize(mining)
         @mining = mining
@@ -12,7 +12,7 @@ module Analysis
       end
 
       def serve
-        @zdistThreshs = [0, 1, 2]
+        @probThreshs = (0..10).map{ |i| (i * 0.1).round(1) }
         @scales = [1.0]
         @intThreshs = (0..10).map{ |i| (i * 0.1).round(1) }
       end

@@ -36,3 +36,9 @@
   </tbody>
 </table>
 <!-- END: Mine details -->
+
+<% if @mining.type.isSequenceViewer? %>
+  <%= render 'mine_details_sequence_viewer' %>
+<% elsif @mining.type.isConfusionFinder? %>
+  <%= render 'mine_details_confusion_finder' %>
+<% end %>

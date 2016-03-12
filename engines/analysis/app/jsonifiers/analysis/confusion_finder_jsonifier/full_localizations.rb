@@ -21,9 +21,9 @@ module Analysis
               .in(clip_id: @clipIds)
               .where(primary_detectable_id: filter[:pri_det_id])
               .where(secondary_detectable_id: filter[:sec_det_id])
-              .gte(primary_zdist_thresh: filter[:selected_filters][:pri_zdist])
+              .gte(primary_prob_score: filter[:selected_filters][:pri_prob])
               .in(primary_scale: filter[:selected_filters][:pri_scales])
-              .gte(secondary_zdist_thresh: filter[:selected_filters][:sec_zdist])
+              .gte(secondary_prob_score: filter[:selected_filters][:sec_prob])
               .in(secondary_scale: filter[:selected_filters][:sec_scales])
               .gte(threshold: filter[:selected_filters][:int_thresh])
           queries << q

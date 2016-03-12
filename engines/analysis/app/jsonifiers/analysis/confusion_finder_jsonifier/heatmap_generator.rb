@@ -11,10 +11,10 @@ module Analysis
         @clipIds = @mining.clip_ids
       end
 
-      def setConditions(priZdist, priScales, secZdist, secScales, intThresh)
-        @priZdist = priZdist
+      def setConditions(priProb, priScales, secProb, secScales, intThresh)
+        @priProb = priProb
         @priScales = priScales
-        @secZdist = secZdist
+        @secProb = secProb
         @secScales = secScales
         @intThresh = intThresh
       end
@@ -34,10 +34,10 @@ module Analysis
                 .in(clip_id: @clipIds)
                 .gte(threshold: @intThresh)
                 .where(primary_detectable_id: detRow.id)
-                .gte(primary_zdist_thresh: @priZdist)
+                .gte(primary_prob_score: @priProb)
                 .in(primary_scale: @priScales)
                 .where(secondary_detectable_id: detCol.id)
-                .gte(secondary_zdist_thresh: @secZdist)
+                .gte(secondary_prob_score: @secProb)
                 .in(secondary_scale: @secScales)
                 .count
             # puts "[#{detRow.id}][#{detCol.id}] : #{confCount}" if confCount > 0

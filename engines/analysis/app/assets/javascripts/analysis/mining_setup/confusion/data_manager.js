@@ -18,7 +18,7 @@ MiningSetup.Confusion = MiningSetup.Confusion || {};
   shadowedData: {row: {col: count}, }
   detectableMap: {detectable_id: detectable_name, }
   detectableIds: [:detectable_id, ]
-  currentFilters: {pri_zdist:, pri_scales:, sec_zdist:, sec_scales:, int_thresh: }
+  currentFilters: {pri_prob:, pri_scales:, sec_prob:, sec_scales:, int_thresh: }
   selectedFilters: [{
     pri_det_id:, sec_det_id:, row:, col:,
     number_of_localizations:, selected_filters:currentFilters
@@ -35,10 +35,10 @@ MiningSetup.Confusion.DataManager = function() {
   this.detectableMap = undefined;
   this.detectableIds = undefined;
   this.currentFilters = {
-    pri_zdist: undefined,
+    pri_prob: undefined,
     pri_scales: undefined,
 
-    sec_zdist: undefined,
+    sec_prob: undefined,
     sec_scales: undefined,
 
     int_thresh: undefined
@@ -56,10 +56,10 @@ MiningSetup.Confusion.DataManager = function() {
     self.repaintHeatmap();
   };
 
-  this.updateFilters = function(priZdist, priScales, secZdist, secScales, intThresh){
-    self.currentFilters.pri_zdist = priZdist;
+  this.updateFilters = function(priProb, priScales, secProb, secScales, intThresh){
+    self.currentFilters.pri_prob = priProb;
     self.currentFilters.pri_scales = priScales;
-    self.currentFilters.sec_zdist = secZdist;
+    self.currentFilters.sec_prob = secProb;
     self.currentFilters.sec_scales = secScales;
     self.currentFilters.int_thresh = intThresh;
   };
@@ -180,9 +180,9 @@ MiningSetup.Confusion.DataManager = function() {
       var rowDet = self.getDetectableName(sf.pri_det_id) + " [" + sf.pri_det_id + "]";
       var colDet = self.getDetectableName(sf.sec_det_id) + " [" + sf.sec_det_id + "]";
       var numLocs = sf.number_of_localizations;
-      var rowZd = sf.selected_filters.pri_zdist;
+      var rowZd = sf.selected_filters.pri_prob;
       var rowScl = sf.selected_filters.pri_scales;
-      var colZd = sf.selected_filters.sec_zdist;
+      var colZd = sf.selected_filters.sec_prob;
       var colScl = sf.selected_filters.sec_scales;
       var intThresh = sf.selected_filters.int_thresh;
 
