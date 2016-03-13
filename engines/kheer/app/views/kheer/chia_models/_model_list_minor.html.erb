@@ -10,7 +10,7 @@
   </thead>
 
   <tbody>
-    <% @chia_model.decorate.minorChildren.each do |chia_model| %>
+    <% @chia_model.decorate.minors.each do |chia_model| %>
       <tr>
         <td><%= chia_model.decorate.version %></td>
         <td><%= chia_model.name %></td>

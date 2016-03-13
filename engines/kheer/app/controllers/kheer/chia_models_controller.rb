@@ -15,8 +15,9 @@ module Kheer
     # GET /chia_models/1
     def show
       @curSelDets = Detectable.where(id: @chia_model.detectable_ids)
-      if @curSelDets.count == 0 && @chia_model.decorate.minorParent != nil
-        @curSelDets = Detectable.where(id: @chia_model.decorate.minorParent.detectable_ids)
+      parent = @chia_model.decorate.parent
+      if @curSelDets.count == 0 && parent != nil
+        @curSelDets = Detectable.where(id: parent.detectable_ids)
       end
       @othDets = Detectable.all - @curSelDets
     end
@@ -43,6 +44,7 @@ module Kheer
     # POST /chia_models
     def create
       @chia_model = ChiaModel.new(chia_model_params)
+      @chia_model.mini_id = 0
       if @chia_model.save
         @chia_model.state.setConfiguring
         redirect_to @chia_model, notice: 'Chia model was successfully created.'
