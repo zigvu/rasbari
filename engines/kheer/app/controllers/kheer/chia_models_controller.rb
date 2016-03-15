@@ -4,8 +4,13 @@ module Kheer
   class ChiaModelsController < ApplicationController
     # Same permission model as for detectable
     authorize_actions_for Detectable
+    authority_actions :minis => :read
 
-    before_action :set_chia_model, only: [:show, :edit, :update, :destroy]
+    before_action :set_chia_model, only: [:minis, :show, :edit, :update, :destroy]
+
+    # GET /chia_models/1/minis
+    def minis
+    end
 
     # GET /chia_models
     def index
@@ -20,6 +25,7 @@ module Kheer
         @curSelDets = Detectable.where(id: parent.detectable_ids)
       end
       @othDets = Detectable.all - @curSelDets
+      redirect_to minis_chia_model_path(@chia_model) if @chia_model.decorate.isMini?
     end
 
     # GET /chia_models/new
@@ -56,7 +62,7 @@ module Kheer
     # PATCH/PUT /chia_models/1
     def update
       cmp = chia_model_params
-      cmp['detectable_ids'] = cmp['detectable_ids'].map{|i| i.to_i}.uniq.sort
+      cmp['detectable_ids'] = cmp['detectable_ids'].map{|i| i.to_i}.uniq.sort if cmp['detectable_ids']
       if @chia_model.update(cmp)
         redirect_to @chia_model, notice: 'Chia model was successfully updated.'
       else

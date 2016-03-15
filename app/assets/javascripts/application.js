@@ -22,11 +22,12 @@
 //= require jquery-spinner
 //= require q
 //= require underscore
+//= require kheer/application
 //= require analysis/application
 //= require turbolinks
 //= require_tree .
 
 $(function(){
-	$(document).foundation();
-	$(document).ready(decorateNavigationList);
+  $(document).foundation();
+  $(document).ready(decorateNavigationList);
 });

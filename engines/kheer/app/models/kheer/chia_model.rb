@@ -12,5 +12,18 @@ module Kheer
       Kheer::ChiaModelStates.new(self)
     end
 
+    def self.hierarchy
+      # format
+      # {:major => {:minor => [:mini, ], }, }
+      sels = ActiveSupport::OrderedHash.new
+      ChiaModel.where(minor_id: 0).each do |cmMajor|
+        sels[cmMajor] = ActiveSupport::OrderedHash.new
+        cmMajor.decorate.minors.each do |cmMinor|
+          sels[cmMajor][cmMinor] = cmMinor.decorate.minis
+        end
+      end
+      sels
+    end
+
   end
 end

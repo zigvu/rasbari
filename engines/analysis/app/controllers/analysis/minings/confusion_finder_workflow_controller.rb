@@ -52,8 +52,9 @@ module Analysis
         end
       else
         # re-render the current step
-        flash.now[:alert] = trace
-        render_wizard
+        flash[:alert] = trace
+        jump_to(previous_step)
+        render_wizard @mining
       end
     end
 

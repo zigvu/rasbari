@@ -1,0 +1,8 @@
+<%= render '/kheer/common/chia_model_table', tableClass: "#{radioTagPrefix}_table_major", tableId: "#{radioTagPrefix}_table_major", tableTitle: 'Major Chia Model', radioTagName: "#{radioTagPrefix}_radio_major", chiaModels: chiaModelsHierarchy.keys, selectedChiaModelId: selectedMajorId %>
+
+<% chiaModelsHierarchy.each do |major, minors| %>
+  <%= render '/kheer/common/chia_model_table', tableClass: "#{radioTagPrefix}_table_minor", tableId: "#{radioTagPrefix}_table_minor_#{major.id}", tableTitle: 'Minor Chia Model', radioTagName: "#{radioTagPrefix}_radio_minor", chiaModels: minors.keys, selectedChiaModelId: selectedMinorId %>
+  <% minors.each do |minor, minis| %>
+    <%= render '/kheer/common/chia_model_table', tableClass: "#{radioTagPrefix}_table_mini", tableId: "#{radioTagPrefix}_table_mini_#{minor.id}", tableTitle: 'Mini Chia Model', radioTagName: "chia_model_id_#{radioTagPrefix}", chiaModels: minis, selectedChiaModelId: selectedMiniId %>
+  <% end %>
+<% end %>

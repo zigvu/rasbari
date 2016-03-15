@@ -11,9 +11,13 @@
 <!-- BEGIN: Content -->
 <%= simple_form_for @mining, :url => wizard_path, :method => :put do |f| %>
 
-<%= render 'chia_model_table', tableTitle: 'For Localization', radioTagName: 'chia_model_id_loc', chiaModels: @workflowObj.chiaModels, selectedChiaModelId: @mining.chia_model_id_loc %>
+<h4>For Localization</h4>
 
-<%= render 'chia_model_table', tableTitle: 'For Annotation', radioTagName: 'chia_model_id_anno', chiaModels: @workflowObj.chiaModels, selectedChiaModelId: @mining.chia_model_id_anno %>
+<%= render '/kheer/common/chia_model_selection', radioTagPrefix: 'loc', chiaModelsHierarchy: @workflowObj.chiaModelsHierarchy, selectedMajorId: @workflowObj.selectedMajorLocId, selectedMinorId: @workflowObj.selectedMinorLocId, selectedMiniId: @workflowObj.selectedMiniLocId %>
+
+<h4>For Annotation</h4>
+
+<%= render '/kheer/common/chia_model_selection', radioTagPrefix: 'anno', chiaModelsHierarchy: @workflowObj.chiaModelsHierarchy, selectedMajorId: @workflowObj.selectedMajorAnnoId, selectedMinorId: @workflowObj.selectedMinorAnnoId, selectedMiniId: @workflowObj.selectedMiniAnnoId %>
 
 <%= render 'common_buttons', :form_obj => f %>
 <% end %>

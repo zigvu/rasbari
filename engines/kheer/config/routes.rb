@@ -1,6 +1,9 @@
 Kheer::Engine.routes.draw do
-  resources :chia_models
+  resources :chia_models do
+    member do
+      get 'minis'
+    end
+  end
   resources :detectables
-  # TODO:
-  # root to: "controller#index"
+  root to: "chia_models#index"
 end

@@ -26,12 +26,13 @@ module SampleEngine
         if step == steps.last
           redirect_to parent_path(@parent)
         else
-          render_wizard @capture
+          render_wizard @tracker
         end
       else
         # re-render the current step
-        flash.now[:alert] = trace
-        render_wizard
+        flash[:alert] = trace
+        jump_to(previous_step)
+        render_wizard @tracker
       end
     end
 
