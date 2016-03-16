@@ -171,7 +171,7 @@ class WorkflowCreator
   # Create worfklows
   def createWorkflows
     wf_file_in = "#{@templateFolder}/workflow_step.rb"
-    wf_steps_folder_out = "#{@engineFolder}/workflows/#{@engineName}/#{@trackerName}_workflow"
+    wf_steps_folder_out = "#{@engineFolder}/app/workflows/#{@engineName}/#{@trackerName}_workflow"
     FileUtils.mkdir_p(wf_steps_folder_out)
 
     if !File.exists?(wf_file_in)

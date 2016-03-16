@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160313204801) do
+ActiveRecord::Schema.define(version: 20160316003034) do
 
   create_table "kheer_chia_models", force: :cascade do |t|
     t.string   "name",           limit: 255
@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(version: 20160313204801) do
     t.integer  "major_id",       limit: 4
     t.integer  "minor_id",       limit: 4
     t.text     "detectable_ids", limit: 65535
-    t.string   "zstate",         limit: 255
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.integer  "mini_id",        limit: 4

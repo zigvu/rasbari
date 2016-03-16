@@ -5,5 +5,8 @@ Kheer::Engine.routes.draw do
     end
   end
   resources :detectables
+  resources :iterations, only: [:show] do
+    resources :workflow, only: [:show, :update], controller: 'iterations/workflow'
+  end
   root to: "chia_models#index"
 end

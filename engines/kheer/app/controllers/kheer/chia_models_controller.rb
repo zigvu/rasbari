@@ -19,28 +19,44 @@ module Kheer
 
     # GET /chia_models/1
     def show
-      @curSelDets = Detectable.where(id: @chia_model.detectable_ids)
-      parent = @chia_model.decorate.parent
-      if @curSelDets.count == 0 && parent != nil
-        @curSelDets = Detectable.where(id: parent.detectable_ids)
+      if @chia_model.decorate.isMini?
+        redirect_to minis_chia_model_path(@chia_model.decorate.minorParent)
+      else
+        @curSelDets = Detectable.where(id: @chia_model.detectable_ids)
+        parent = @chia_model.decorate.parent
+        if @curSelDets.count == 0 && parent != nil
+          @curSelDets = Detectable.where(id: parent.detectable_ids)
+        end
+        @othDets = Detectable.all - @curSelDets
       end
-      @othDets = Detectable.all - @curSelDets
-      redirect_to minis_chia_model_path(@chia_model) if @chia_model.decorate.isMini?
     end
 
     # GET /chia_models/new
     def new
       @chia_model = ChiaModel.new
-      if params['major_id']
-        majorId = params['major_id'].to_i
-        minorId = ChiaModel.where(major_id: majorId).pluck(:minor_id).max + 1
+      majorId = ChiaModel.all.pluck(:major_id).max || 0
+      majorId += 1
+      minorId = 0
+      miniId = 0
+
+      majorId = params['major_id'].to_i if params['major_id']
+
+      if params['minor_id']
+        minorId = params['minor_id'].to_i
       else
-        majorId = ChiaModel.all.pluck(:major_id).max || 0
-        majorId += 1
-        minorId = 0
+        minorId = ChiaModel.where(major_id: majorId).pluck(:minor_id).max + 1
       end
+
+      if params['mini_id']
+        miniId = params['mini_id'].to_i
+      else
+        miniId = ChiaModel.where(major_id: majorId)
+            .where(minor_id: minorId).pluck(:mini_id).max + 1
+      end
+
       @chia_model.major_id = majorId
       @chia_model.minor_id = minorId
+      @chia_model.mini_id = miniId
     end
 
     # GET /chia_models/1/edit
@@ -50,10 +66,17 @@ module Kheer
     # POST /chia_models
     def create
       @chia_model = ChiaModel.new(chia_model_params)
-      @chia_model.mini_id = 0
+      if @chia_model.decorate.isMini?
+        @chia_model.detectable_ids = @chia_model.decorate.minorParent.detectable_ids
+      end
       if @chia_model.save
-        @chia_model.state.setConfiguring
-        redirect_to @chia_model, notice: 'Chia model was successfully created.'
+        if @chia_model.decorate.isMini?
+          iteration = Iteration.create(chia_model_id: @chia_model.id)
+          iteration.state.setConfiguring
+          redirect_to iteration_workflow_path(Wicked::FIRST_STEP, iteration_id: iteration.id)
+        else
+          redirect_to @chia_model, notice: 'Chia model was successfully created.'
+        end
       else
         render :new
       end
@@ -85,7 +108,7 @@ module Kheer
       # Only allow a trusted parameter "white list" through.
       def chia_model_params
         params[:chia_model] ||= {detectable_ids: []}
-        params.require(:chia_model).permit(:name, :description, :comment, :major_id, :minor_id, detectable_ids: [])
+        params.require(:chia_model).permit(:name, :description, :comment, :major_id, :minor_id, :mini_id, detectable_ids: [])
       end
   end
 end

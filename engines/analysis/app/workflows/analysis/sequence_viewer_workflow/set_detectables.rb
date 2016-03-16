@@ -14,9 +14,7 @@ module Analysis
       def serve
         chiaModel = Kheer::ChiaModel.find(@mining.chia_model_id_loc)
         @detectables = Kheer::Detectable.where(id: chiaModel.detectable_ids)
-        @selectedDetectableIds = []
-        detIds = @mining.md_sequence_viewer.detectable_ids
-        @selectedDetectableIds = detIds if detIds
+        @selectedDetectableIds = @mining.md_sequence_viewer.detectable_ids || []
       end
 
       def handle(params)

@@ -1,6 +1,7 @@
 module Kheer
   class ChiaModel < ActiveRecord::Base
     serialize :detectable_ids, Array
+    before_destroy :delete_iteration, prepend: true
 
     # Validations
     validates :name, presence: true
@@ -8,8 +9,8 @@ module Kheer
     validates :minor_id, presence: true # When adding a new class to model
     validates :mini_id, presence: true # When iterating on existing minor model
 
-    def state
-      Kheer::ChiaModelStates.new(self)
+    def iteration
+      Iteration.where(chia_model_id: self.id).first
     end
 
     def self.hierarchy
@@ -24,6 +25,11 @@ module Kheer
       end
       sels
     end
+
+    private
+      def delete_iteration
+        iteration.destroy
+      end
 
   end
 end
