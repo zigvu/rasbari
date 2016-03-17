@@ -1,0 +1,27 @@
+<!-- BEGIN: Layout -->
+<%= render :layout => 'outershell' do %>
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="workflow-panel">
+        <div class="workflow-title clearfix">
+          <div class="text left">Select GPU Machine</div>
+        </div>
+        <div class="workflow-content">
+
+<!-- BEGIN: Content -->
+<%= simple_form_for @iteration, :url => wizard_path, :method => :put do |f| %>
+
+<div class="form-inputs">
+  <%= f.input :gpu_machine_id, collection: @workflowObj.gpuMachines, label: "GPU Machine" %>
+</div>
+
+<%= render 'common_buttons', :form_obj => f %>
+<% end %>
+<!-- END: Content -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!-- END: Layout -->

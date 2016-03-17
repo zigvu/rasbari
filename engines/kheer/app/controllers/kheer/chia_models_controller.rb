@@ -44,14 +44,15 @@ module Kheer
       if params['minor_id']
         minorId = params['minor_id'].to_i
       else
-        minorId = ChiaModel.where(major_id: majorId).pluck(:minor_id).max + 1
+        mnrId = ChiaModel.where(major_id: majorId).pluck(:minor_id).max
+        minorId = mnrId + 1 if mnrId
       end
 
       if params['mini_id']
         miniId = params['mini_id'].to_i
       else
-        miniId = ChiaModel.where(major_id: majorId)
-            .where(minor_id: minorId).pluck(:mini_id).max + 1
+        mnId = ChiaModel.where(major_id: majorId).where(minor_id: minorId).pluck(:mini_id).max
+        miniId = mnId + 1 if mnId
       end
 
       @chia_model.major_id = majorId
@@ -73,6 +74,7 @@ module Kheer
         if @chia_model.decorate.isMini?
           iteration = Iteration.create(chia_model_id: @chia_model.id)
           iteration.state.setConfiguring
+          iteration.type.setQuick
           redirect_to iteration_workflow_path(Wicked::FIRST_STEP, iteration_id: iteration.id)
         else
           redirect_to @chia_model, notice: 'Chia model was successfully created.'

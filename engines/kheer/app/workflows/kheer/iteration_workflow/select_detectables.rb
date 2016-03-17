@@ -8,15 +8,20 @@ module Kheer
       end
 
       def canSkip
-        false
+        @iteration.state.isAfterConfiguring?
       end
 
       def serve
-        ancestorChiaModelIds = ChiaModel.where(major_id: @iteration.chia_model.major_id).pluck(:id)
+        currentCm = @iteration.chia_model
+        ancCmIds = ChiaModel.where(major_id: currentCm.major_id).pluck(:id) - [currentCm.id]
         @detectablesAnnoCnts = ActiveSupport::OrderedHash.new
-        Detectable.where(id: @iteration.chia_model.detectable_ids).each do |det|
-          @detectablesAnnoCnts[det] = Annotation.in(chia_model_id: ancestorChiaModelIds)
-            .where(detectable_id: det.id).count
+        Detectable.where(id: currentCm.detectable_ids).each do |det|
+          @detectablesAnnoCnts[det] = {
+            ancestor: Annotation.in(chia_model_id: ancCmIds)
+                .where(detectable_id: det.id).count,
+            current: Annotation.where(chia_model_id: currentCm.id)
+                .where(detectable_id: det.id).count
+          }
         end
         @selectedDetectableIds = @iteration.detectable_ids || []
       end

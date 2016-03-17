@@ -9,6 +9,9 @@ module Kheer
     field :dis, as: :detectable_ids, type: Array
     field :ui, as: :user_id, type: Integer
 
+    field :num, as: :num_iterations, type: Integer
+    field :gid, as: :gpu_machine_id, type: Integer
+
     field :st, as: :zstate, type: String
     field :tp, as: :ztype, type: String
 
@@ -32,6 +35,10 @@ module Kheer
 
     def chia_model
       return ChiaModel.find(self.chia_model_id)
+    end
+
+    def gpuMachine
+      self.gpu_machine_id ? Setting::Machine.find(self.gpu_machine_id) : nil
     end
 
   end

@@ -16,6 +16,12 @@ module Kheer
       when :select_num_iters
         @workflowObj = Kheer::IterationWorkflow::SelectNumIters.new(@iteration)
         @workflowObj.canSkip ? skip_step : @workflowObj.serve
+      when :set_machines
+        @workflowObj = Kheer::IterationWorkflow::SetMachines.new(@iteration)
+        @workflowObj.canSkip ? skip_step : @workflowObj.serve
+      when :ping_nimki
+        @workflowObj = Kheer::IterationWorkflow::PingNimki.new(@iteration)
+        @workflowObj.canSkip ? skip_step : @workflowObj.serve
       end
       render_wizard
     end
@@ -28,7 +34,13 @@ module Kheer
       when :select_detectables
         status, message = Kheer::IterationWorkflow::SelectDetectables.new(@iteration).handle(params)
       when :select_num_iters
-        status, message = Kheer::IterationWorkflow::SelectNumIters.new(@iteration).handle(params)
+        prms = params["iteration"]
+        status, message = Kheer::IterationWorkflow::SelectNumIters.new(@iteration).handle(prms)
+      when :set_machines
+        prms = params["iteration"]
+        status, message = Kheer::IterationWorkflow::SetMachines.new(@iteration).handle(prms)
+      when :ping_nimki
+        status, message = Kheer::IterationWorkflow::PingNimki.new(@iteration).handle(params)
       end
 
       # next step based on current step result
@@ -53,7 +65,8 @@ module Kheer
         @iteration = Iteration.find(params[:iteration_id])
         @chia_model = @iteration.chia_model
 
-        self.steps = [:select_detectables, :select_num_iters]
+        self.steps = [:select_detectables, :select_num_iters,
+          :set_machines, :ping_nimki]
       end
 
       def set_steps_ll

@@ -11,7 +11,29 @@
 <!-- BEGIN: Content -->
 <%= simple_form_for @iteration, :url => wizard_path, :method => :put do |f| %>
 
-<p>TODO: Replace</p>
+<table>
+  <tr>
+    <td width="80%">
+      To use annotations across all chia models uniformly, select "Exhaustive". To give preference to annotations from current chia model, use "Quick".
+    </td>
+    <td>
+      <div class="form-inputs">
+        <%= f.input :ztype, collection: @workflowObj.iterationTypes, label: "Iteration Type" %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Recommended number of iterations: Exhaustive (<%= @workflowObj.exhaustiveNumIter %>), Quick (<%= @workflowObj.quickNumIter %>)
+    </td>
+    <td>
+      <div class="form-inputs">
+        <%= f.input :num_iterations, label: "Num Iterations" %>
+      </div>
+    </td>
+  </tr>
+</table>
+
 
 <%= render 'common_buttons', :form_obj => f %>
 <% end %>

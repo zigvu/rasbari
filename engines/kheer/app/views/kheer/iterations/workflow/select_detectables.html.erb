@@ -11,6 +11,8 @@
 <!-- BEGIN: Content -->
 <%= simple_form_for @iteration, :url => wizard_path, :method => :put do |f| %>
 
+Note: If there are not enough annotations for a particular class that you'd like to improve, <b>STOP</b>. You can browse away from this page and create new annotations. Once done, you can return to this page to check for number of annotation for the class of interest.
+
 <!-- BEGIN: Table -->
 <table>
   <thead>
@@ -19,7 +21,9 @@
       <th>Name</th>
       <th>Pretty Name</th>
       <th>Type</th>
-      <th>Annotation Count</th>
+      <th># Ancestor Annos</th>
+      <th># Current Annos</th>
+      <th># Total Annos</th>
       <th>Select</th>
     </tr>
   </thead>
@@ -31,7 +35,9 @@
           <td><%= detectable.name %></td>
           <td><%= detectable.pretty_name %></td>
           <td><%= detectable.type %></td>
-          <td><%= annoCnts %></td>
+          <td><%= annoCnts[:ancestor] %></td>
+          <td><%= annoCnts[:current] %></td>
+          <td><%= annoCnts[:ancestor] + annoCnts[:current] %></td>
           <% isButChecked = @workflowObj.selectedDetectableIds.include?(detectable.id) %>
           <td><%= check_box_tag 'detectable_ids[]', detectable.id, checked = isButChecked %></td>
         </tr>
