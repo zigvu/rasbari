@@ -19,7 +19,6 @@ module Messaging
         def setClientDetails
           header = Messaging::Messages::Header.dataRequest
           message = Messaging::Messages::Storage::ClientDetails.new(nil)
-          message.type = Messaging::States::Storage::ClientTypes.capture
           message.hostname = @hostname
           responseHeader, responseMessage = call(header, message)
 

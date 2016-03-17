@@ -3,15 +3,11 @@ module Messaging
     module Storage
 
       class ClientDetails < BaseMessage::Common
-        ATTR = ["hostname", "type"]
+        ATTR = ["hostname"]
         zextend BaseMessage, ATTR
 
         def initialize(message = nil)
           super(_category, _name, message)
-        end
-
-        def getStorageClientType
-          Messaging::States::Storage::ClientTypes.new(@type)
         end
 
         private
