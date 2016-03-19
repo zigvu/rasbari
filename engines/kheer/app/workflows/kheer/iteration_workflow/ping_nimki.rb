@@ -14,14 +14,26 @@ module Kheer
       end
 
       def handle(params)
-        status, trace = @iteration.gpuClient.isRemoteAlive?
+        status, trace = @iteration.samosaClient.isRemoteAlive?
+        status, trace = @iteration.storageClient.isRemoteAlive? if status
         if status
-          # set remote capture details
-          status, trace = @iteration.gpuClient.sendModelDetails(@iteration.toMessage)
+          # save data
+          ide = Kheer::IterationDataExporter.new(@iteration)
+          ide.extract
+          status, trace = @iteration.storageClient.saveFile(
+            ide.tarFile, @iteration.buildInputPath
+          )
           if status
-            @iteration.state.setBuilding
+            ide.cleanup
+            # set remote chia details
+            status, trace = @iteration.samosaClient.sendChiaDetails(@iteration.decorate.toMessage)
+            if status
+              @iteration.state.setBuilding
+            else
+              trace = "GPU remote is alive but couldn't set model build details"
+            end
           else
-            trace = "GPU remote is alive but couldn't set model build details"
+            trace = "Could not contact storage server to save model build data"
           end
         end
 

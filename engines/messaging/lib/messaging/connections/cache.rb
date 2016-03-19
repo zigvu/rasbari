@@ -32,6 +32,22 @@ module Messaging
       end # END class Storage
       # --------------------------------------------------------------------------
 
+      # --------------------------------------------------------------------------
+      # Samosa
+      def samosa
+        @samosa ||= Messaging::Connections::RasbariCache::Samosa.new
+      end
+      class Samosa
+        def client(hostname)
+          @clients ||= {}
+          @clients[hostname] ||= Kheer::RasbariClient.new(hostname)
+        end
+        def server(handler)
+          @server ||= Kheer::RasbariServer.new(handler)
+        end
+      end # END class Samosa
+      # --------------------------------------------------------------------------
+
     end # END class RasbariCache
   end
 end

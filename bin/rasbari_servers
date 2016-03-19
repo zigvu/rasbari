@@ -12,6 +12,7 @@ class RasbariServers
 
     # start servers
     startCaptureServer
+    startSamosaServer
 
     # sleep - otherwise this will exit
     loop { sleep 1000 }
@@ -26,6 +27,11 @@ class RasbariServers
   def startCaptureServer
     captureHandler = Video::MainHandler.new
     Messaging.rasbari_cache.video_capture.server(captureHandler)
+  end
+
+  def startSamosaServer
+    samosaHandler = Kheer::MainHandler.new
+    Messaging.rasbari_cache.samosa.server(samosaHandler)
   end
 end
 

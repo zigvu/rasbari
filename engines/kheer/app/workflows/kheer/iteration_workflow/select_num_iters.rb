@@ -9,7 +9,7 @@ module Kheer
       end
 
       def canSkip
-        @iteration.state.isAfterConfiguring?
+        @iteration.state.isAfterConfigured?
       end
 
       def serve

@@ -8,9 +8,11 @@ module Kheer
     field :ci, as: :chia_model_id, type: Integer
     field :dis, as: :detectable_ids, type: Array
     field :ui, as: :user_id, type: Integer
+    field :bfn, as: :build_model_filename, type: String
 
     field :num, as: :num_iterations, type: Integer
     field :gid, as: :gpu_machine_id, type: Integer
+    field :sid, as: :storage_machine_id, type: Integer
 
     field :st, as: :zstate, type: String
     field :tp, as: :ztype, type: String
@@ -37,9 +39,35 @@ module Kheer
       return ChiaModel.find(self.chia_model_id)
     end
 
+    def storageMachine
+      self.storage_machine_id ? Setting::Machine.find(self.storage_machine_id) : nil
+    end
     def gpuMachine
       self.gpu_machine_id ? Setting::Machine.find(self.gpu_machine_id) : nil
     end
 
+    def storageClient
+      raise "No storage machine specified yet" if self.storage_machine_id == nil
+      Messaging.rasbari_cache.storage.client(storageMachine.hostname)
+    end
+    def samosaClient
+      raise "No gpu machine specified yet" if self.gpu_machine_id == nil
+      Messaging.rasbari_cache.samosa.client(gpuMachine.hostname)
+    end
+
+    # TODO: move to storage path generator
+    def path
+      "chia_models/#{self.chia_model_id}"
+    end
+    def modelPath
+      "/data/#{self.storageMachine.hostname}/#{self.path}/#{self.build_model_filename}"
+    end
+    def parentModelPath
+      parentIter = chia_model.decorate.parent.iteration
+      parentIter ? parentIter.modelPath : nil
+    end
+    def buildInputPath
+      "/data/#{self.storageMachine.hostname}/#{self.path}/build_inputs.tar.gz"
+    end
   end
 end

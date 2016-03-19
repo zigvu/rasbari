@@ -72,7 +72,7 @@ module Kheer
       end
       if @chia_model.save
         if @chia_model.decorate.isMini?
-          iteration = Iteration.create(chia_model_id: @chia_model.id)
+          iteration = Iteration.create(chia_model_id: @chia_model.id, user_id: current_user.id)
           iteration.state.setConfiguring
           iteration.type.setQuick
           redirect_to iteration_workflow_path(Wicked::FIRST_STEP, iteration_id: iteration.id)

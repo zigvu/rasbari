@@ -7,7 +7,7 @@ module Video
 
     # TODO: move to storage path generator
     def path
-      "#{self.capture.stream.id}/#{self.capture.id}/#{self.id}"
+      "streams/#{self.capture.stream.id}/#{self.capture.id}/#{self.id}"
     end
     def clipPath
       "/data/#{self.capture.storageMachine.hostname}/#{self.path}/#{self.id}.mp4"

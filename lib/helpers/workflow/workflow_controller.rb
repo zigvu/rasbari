@@ -31,7 +31,7 @@ module SampleEngine
       else
         # re-render the current step
         flash[:alert] = trace
-        jump_to(previous_step)
+        jump_to(step)
         render_wizard @tracker
       end
     end

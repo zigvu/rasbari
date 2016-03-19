@@ -22,6 +22,9 @@ module Kheer
       when :ping_nimki
         @workflowObj = Kheer::IterationWorkflow::PingNimki.new(@iteration)
         @workflowObj.canSkip ? skip_step : @workflowObj.serve
+      when :monitor_progress
+        @workflowObj = Kheer::IterationWorkflow::MonitorProgress.new(@iteration)
+        @workflowObj.canSkip ? skip_step : @workflowObj.serve
       end
       render_wizard
     end
@@ -32,15 +35,17 @@ module Kheer
 
       case step
       when :select_detectables
-        status, message = Kheer::IterationWorkflow::SelectDetectables.new(@iteration).handle(params)
+        status, trace = Kheer::IterationWorkflow::SelectDetectables.new(@iteration).handle(params)
       when :select_num_iters
         prms = params["iteration"]
-        status, message = Kheer::IterationWorkflow::SelectNumIters.new(@iteration).handle(prms)
+        status, trace = Kheer::IterationWorkflow::SelectNumIters.new(@iteration).handle(prms)
       when :set_machines
         prms = params["iteration"]
-        status, message = Kheer::IterationWorkflow::SetMachines.new(@iteration).handle(prms)
+        status, trace = Kheer::IterationWorkflow::SetMachines.new(@iteration).handle(prms)
       when :ping_nimki
-        status, message = Kheer::IterationWorkflow::PingNimki.new(@iteration).handle(params)
+        status, trace = Kheer::IterationWorkflow::PingNimki.new(@iteration).handle(params)
+      when :monitor_progress
+        status, trace = Kheer::IterationWorkflow::MonitorProgress.new(@iteration).handle(params)
       end
 
       # next step based on current step result
@@ -53,7 +58,7 @@ module Kheer
       else
         # re-render the current step
         flash[:alert] = trace
-        jump_to(previous_step)
+        jump_to(step)
         render_wizard @iteration
       end
     end
@@ -66,7 +71,7 @@ module Kheer
         @chia_model = @iteration.chia_model
 
         self.steps = [:select_detectables, :select_num_iters,
-          :set_machines, :ping_nimki]
+          :set_machines, :ping_nimki, :monitor_progress]
       end
 
       def set_steps_ll

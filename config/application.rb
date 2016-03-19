@@ -39,8 +39,8 @@ module Rasbari
     # For some reason, putting messaging engine before others doesn't allow
     # subclassing of messaging classes in other engines
     config.railties_order = [
-      Setting::Engine, Admin::Engine, Video::Engine, Messaging::Engine,
-      Kheer::Engine, Analysis::Engine, :main_app, :all
+      Setting::Engine, Admin::Engine, Video::Engine, Kheer::Engine,
+      Messaging::Engine, Analysis::Engine, :main_app, :all
     ]
     # ZIGVU END: Load order of engines
 

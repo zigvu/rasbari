@@ -2,7 +2,7 @@ module Kheer
   class IterationStates < BaseAr::ArAccessor
 
     def self.states
-      ["configuring", "configured", "building", "finalized"]
+      ["configuring", "configured", "building", "built"]
     end
     zextend BaseState, Kheer::IterationStates.states
 

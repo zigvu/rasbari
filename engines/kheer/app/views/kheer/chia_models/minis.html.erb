@@ -6,6 +6,7 @@
       <th>Version</th>
       <th>Name</th>
       <th># Annotations</th>
+      <th>Build State</th>
       <th>Show | Edit | Destroy</th>
     </tr>
   </thead>
@@ -16,6 +17,7 @@
         <td><%= chia_model.decorate.version %></td>
         <td><%= chia_model.name %></td>
         <td><%= chia_model.decorate.annotationCount %></td>
+        <td><%= chia_model.iteration.state %></td>
         <td>
           <%= link_to 'Show', iteration_workflow_path(Wicked::FIRST_STEP, iteration_id: chia_model.iteration.id) %> |
           <%= link_to 'Edit', edit_chia_model_path(chia_model) %> |

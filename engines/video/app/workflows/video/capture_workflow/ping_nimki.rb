@@ -18,7 +18,7 @@ module Video
         status, trace = @capture.captureClient.isRemoteAlive?
         if status
           # set remote capture details
-          status, trace = @capture.captureClient.sendCaptureDetails(@capture.toMessage)
+          status, trace = @capture.captureClient.sendCaptureDetails(@capture.decorate.toMessage)
           trace = "Capture remote is alive but couldn't set capture details" if !status
         end
 

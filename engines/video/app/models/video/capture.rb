@@ -27,16 +27,6 @@ module Video
       self.stopped_by ? User.find(self.stopped_by) : nil
     end
 
-    def toMessage
-      ar = self.attributes.symbolize_keys.merge({
-        captureId: self.id,
-        captureUrl: self.capture_url,
-        playbackFrameRate: self.playback_frame_rate,
-        storageHostname: self.storageMachine.hostname,
-      })
-      Messaging::Messages::VideoCapture::CaptureDetails.new(ar)
-    end
-
     def isStopped?
       self.stopped_at != nil
     end

@@ -26,6 +26,15 @@ development:
       nimki:
         client: development.storage.nimki.client # hostname will be appended
         server: development.storage.nimki.server # hostname will be appended
+  samosa:
+    exchange: development.samosa
+    routing_keys:
+      rasbari:
+        client: development.samosa.rasbari.client
+        # no need for server
+      nimki:
+        client: development.samosa.nimki.client # hostname will be appended
+        server: development.samosa.nimki.server # hostname will be appended
 
 production:
   <<: *default
