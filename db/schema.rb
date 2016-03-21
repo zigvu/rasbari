@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160316003034) do
+ActiveRecord::Schema.define(version: 20160321205552) do
 
   create_table "kheer_chia_models", force: :cascade do |t|
     t.string   "name",           limit: 255
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 20160316003034) do
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.float    "detection_frame_rate", limit: 24
+    t.string   "name",                 limit: 255
   end
 
   add_index "video_captures", ["capture_machine_id"], name: "index_video_captures_on_capture_machine_id", using: :btree

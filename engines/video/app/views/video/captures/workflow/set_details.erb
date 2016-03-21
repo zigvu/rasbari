@@ -12,6 +12,7 @@
 <%= simple_form_for @capture, :url => wizard_path, :method => :put do |f| %>
 
 <div class="form-inputs">
+  <%= f.input :name %>
   <%= f.input :capture_url %>
   <%= f.input :comment %>
   <%= f.input :width, input_html: {value: f.object.width || '1280'} %>

@@ -20,6 +20,10 @@
       <td><%= @capture.id %></td>
     </tr>
     <tr>
+      <td>Name</td>
+      <td><%= @capture.name %></td>
+    </tr>
+    <tr>
       <td>Storage Machine</td>
       <td><%= link_to "#{@capture.storageMachine.hostname}", setting.machine_path(@capture.storageMachine)  if @capture.storageMachine %></td>
     </tr>

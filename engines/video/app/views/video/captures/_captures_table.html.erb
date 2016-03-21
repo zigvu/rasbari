@@ -5,6 +5,7 @@
   <thead>
     <tr>
       <th>Id</th>
+      <th>Name</th>
       <th>Capture URL</th>
       <th>Started At</th>
       <th>Stopped At</th>
@@ -17,6 +18,7 @@
     <% captures_obj.each do |capture| %>
       <tr class="<%= 'error' if capture.decorate.hasError? %>" >
         <td><%= capture.id %></td>
+        <td><%= capture.name %></td>
         <td><%= capture.capture_url %></td>
         <td><%= capture.started_at %></td>
         <td><%= capture.stopped_at %></td>
