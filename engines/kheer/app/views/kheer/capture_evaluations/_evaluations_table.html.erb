@@ -1,0 +1,30 @@
+<h3><%= evaluations_table_title %></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Stream</th>
+      <th>Capture Comment</th>
+      <th>Chia model</th>
+      <th>Gpu machine</th>
+      <th>State</th>
+      <th>Progress</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% evaluations_obj.each do |capture_evaluation| %>
+      <tr>
+        <td><%= capture_evaluation.capture.stream.name %></td>
+        <td><%= capture_evaluation.capture.comment %></td>
+        <td><%= capture_evaluation.chia_model.name %></td>
+        <td><%= capture_evaluation.gpuMachine.hostname %></td>
+        <td><%= capture_evaluation.state %></td>
+        <td>TODO</td>
+        <td><%= link_to 'Show', capture_evaluation %></td>
+        <td><%= link_to 'Destroy', capture_evaluation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

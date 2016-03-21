@@ -1,4 +1,5 @@
 Kheer::Engine.routes.draw do
+  resources :capture_evaluations, except: [:edit, :update]
   resources :chia_models do
     member do
       get 'minis'

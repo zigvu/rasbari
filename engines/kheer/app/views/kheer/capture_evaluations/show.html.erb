@@ -1,0 +1,28 @@
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Capture</td>
+      <td><%= @capture_evaluation.capture.comment %></td>
+    </tr>
+    <tr>
+      <td>Chia model</td>
+      <td><%= "#{@capture_evaluation.chia_model.name} [#{@capture_evaluation.chia_model.decorate.version}]" %></td>
+    </tr>
+    <tr>
+      <td>Gpu machine</td>
+      <td><%= @capture_evaluation.gpuMachine.hostname %></td>
+    </tr>
+    <tr>
+      <td>State</td>
+      <td><%= @capture_evaluation.state %></td>
+    </tr>
+  </tbody>
+</table>
+
+<%= link_to 'Back', capture_evaluations_path, class: 'button' %>

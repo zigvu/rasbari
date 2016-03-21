@@ -1,0 +1,11 @@
+<!-- BEGIN: Active Evaluations -->
+<%= render partial: 'evaluations_table', locals: {evaluations_table_title: 'Active Evaluations', evaluations_obj: @activeEvaluations} %>
+<!-- END: Active Evaluations -->
+
+<!-- BEGIN: Inactive Evaluations -->
+<%= render partial: 'evaluations_table', locals: {evaluations_table_title: 'Inactive Evaluations', evaluations_obj: @inactiveEvaluations} %>
+<!-- END: Inactive Evaluations -->
+
+<br>
+
+<%= link_to 'New Capture evaluation', new_capture_evaluation_path, class: 'button' %>
