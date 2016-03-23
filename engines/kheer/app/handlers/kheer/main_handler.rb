@@ -18,6 +18,9 @@ module Kheer
         clipDetailsHandler = Kheer::ClipDetailsHandler.new(header, message)
         returnHeader, returnMessage = clipDetailsHandler.handle if clipDetailsHandler.canHandle?
 
+        ceDetailsHandler = Kheer::ClipEvalDetailsHandler.new(header, message)
+        returnHeader, returnMessage = ceDetailsHandler.handle if ceDetailsHandler.canHandle?
+
         chiaDetailsHandler = Kheer::ChiaDetailsHandler.new(header, message)
         returnHeader, returnMessage = chiaDetailsHandler.handle if chiaDetailsHandler.canHandle?
 

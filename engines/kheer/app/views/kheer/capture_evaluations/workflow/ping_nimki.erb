@@ -1,0 +1,62 @@
+<!-- BEGIN: Layout -->
+<%= render :layout => 'outershell' do %>
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="workflow-panel">
+        <div class="workflow-title clearfix">
+          <div class="text left">Ping Machines</div>
+        </div>
+        <div class="workflow-content">
+
+<!-- BEGIN: Content -->
+<%= simple_form_for @capture_evaluation, :url => wizard_path, :method => :put do |f| %>
+
+<p>Note: Ensure that background servers are running in screens:</p>
+<table>
+  <tr><td>
+    [rasbari_machine] cd ~/rasbari
+  </td></tr>
+  <tr><td>
+    [rasbari_machine] ./bin/rasbari_servers run
+  </td></tr>
+  <tr><td></td></tr>
+  <tr><td>
+    [storage_machine] cd ~/nimki/servers/storage
+  </td></tr>
+  <tr><td>
+    [storage_machine] ./storage_server.rb
+  </td></tr>
+  <tr><td></td></tr>
+  <tr><td>
+    [gpu_machine] cd ~/nimki/servers/samosa
+  </td></tr>
+  <tr><td>
+    [gpu_machine] ./samosa_server.rb
+  </td></tr>
+</table>
+<p>Note: The current ping to machines is only valid for a few minutes. Hence, it is expected that once ping is successfull, this workflow is run until model build process has started.</p>
+
+<p>Click next to ping storage and gpu machines. If they do not reply within 30 seconds, ping will fail. If this is the case, please inform administrator.</p>
+
+<p>Note: Currently all evaluation files are stored in <b>/tmp/khajuri</b> folder in the GPU machine. If there is a faster disk (e.g., ephemeral disk in EC2), create symlink to this location prior to clicking next.</p>
+<table>
+  <tr><td>sudo mkdir -p /ephDrv/khajuri</td></tr>
+  <tr><td>cd /ephDrv/khajuri</td></tr>
+  <tr><td>sudo chown .</td></tr>
+  <tr><td>rm -rf /tmp/khajuri</td></tr>
+  <tr><td>ln -sf /ephDrv/khajuri /tmp/khajuri</td></tr>
+  <tr><td>cd /tmp/khajuri</td></tr>
+</table>
+
+<p>TODO: Currently only supports single storage server - if clips/models are stored across multiple storage servers, no failure will be reported in this step.</p>
+
+<%= render 'common_buttons', :form_obj => f %>
+<% end %>
+<!-- END: Content -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!-- END: Layout -->

@@ -12,11 +12,23 @@ module Kheer
       Rails.logger.info("Start RasbariClient for hostname: #{hostname}.#{Process.pid}")
     end
 
-    def getState
-      # prepare packets and send message
-      header = Messaging::Messages::Header.statusRequest
-      message = Messaging::Messages::Samosa::StateQuery.new(nil)
-      rh, rm = call(header, message)
+    # Khajuri related
+    def getKhajuriState
+      rh, rm = stateQuery
+      if rh.isStatusSuccess?
+        return Messaging::States::Samosa::KhajuriStates.new(rm.state)
+      else
+        return Messaging::States::Samosa::KhajuriStates.unknown
+      end
+    end
+
+    def sendKhajuriDetails(khajuriDetailsMessage)
+      return sendData(khajuriDetailsMessage)
+    end
+
+    # Chia related
+    def getChiaState
+      rh, rm = stateQuery
       if rh.isStatusSuccess?
         state = Messaging::States::Samosa::ChiaStates.new(rm.state)
         return state, rm.progress
@@ -25,16 +37,23 @@ module Kheer
       end
     end
 
-    # Model details
     def sendChiaDetails(chiaDetailsMessage)
       return sendData(chiaDetailsMessage)
     end
 
+    # Common
     def sendClipDetails(clipDetailsMessage)
       return sendData(clipDetailsMessage)
     end
 
     private
+      def stateQuery
+        # prepare packets and send message
+        header = Messaging::Messages::Header.statusRequest
+        message = Messaging::Messages::Samosa::StateQuery.new(nil)
+        return call(header, message)
+      end
+
       def sendData(messageData)
         header = Messaging::Messages::Header.dataRequest
         message = messageData

@@ -2,7 +2,7 @@ module Kheer
   class CaptureEvaluationStates < BaseAr::ArAccessor
 
     def self.states
-      ["configuring", "evaluating", "evaluated"]
+      ["configuring", "configured", "evaluating", "evaluated"]
     end
     zextend BaseState, Kheer::CaptureEvaluationStates.states
 

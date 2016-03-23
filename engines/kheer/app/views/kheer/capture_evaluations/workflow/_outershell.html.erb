@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="small-12 columns">
+    <% if @capture_evaluation.capture_id %>
+      <h3>Evaluation workflow for: <%= "#{@capture_evaluation.capture.name}" %></h3>
+    <% else %>
+      <h3>Capture Evaluation workflow: <%= "#{@capture_evaluation.id}" %></h3>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 columns">
+    <%= yield %>
+  </div>
+</div>

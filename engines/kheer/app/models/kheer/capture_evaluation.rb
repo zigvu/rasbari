@@ -46,5 +46,14 @@ module Kheer
       Messaging.rasbari_cache.samosa.client(gpuMachine.hostname)
     end
 
+    # TODO: move to storage path generator
+    def path
+      "evaluations/#{self.chia_model_id}/#{self.capture.stream.id}/#{self.capture_id}"
+    end
+    def testInputPath
+      "/data/#{self.storageMachine.hostname}/#{self.path}/test_input.tar.gz"
+    end
+
+    embeds_many :clip_evaluations, class_name: "Kheer::ClipEvaluation"
   end
 end

@@ -15,13 +15,14 @@
 
   <tbody>
     <% evaluations_obj.each do |capture_evaluation| %>
+      <% isDoneConf = !capture_evaluation.state.isConfiguring? %>
       <tr>
-        <td><%= capture_evaluation.capture.stream.name %></td>
-        <td><%= capture_evaluation.capture.comment %></td>
-        <td><%= capture_evaluation.chia_model.name %></td>
-        <td><%= capture_evaluation.gpuMachine.hostname %></td>
+        <td><%= capture_evaluation.capture.stream.name if isDoneConf %></td>
+        <td><%= capture_evaluation.capture.comment if isDoneConf %></td>
+        <td><%= capture_evaluation.chia_model.name if isDoneConf %></td>
+        <td><%= capture_evaluation.gpuMachine.hostname if isDoneConf %></td>
         <td><%= capture_evaluation.state %></td>
-        <td>TODO</td>
+        <td><%= capture_evaluation.decorate.progress if isDoneConf %></td>
         <td><%= link_to 'Show', capture_evaluation %></td>
         <td><%= link_to 'Destroy', capture_evaluation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

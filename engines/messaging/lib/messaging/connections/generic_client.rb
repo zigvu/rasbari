@@ -1,3 +1,5 @@
+require "thread"
+
 module Messaging
   module Connections
     class GenericClient
@@ -8,7 +10,7 @@ module Messaging
         connection = $bunny_connection || Messaging.connection
 
         @exchangeName = exchangeName
-        @responseRoutingKey = responseRoutingKey
+        @responseRoutingKey = "#{responseRoutingKey}.#{Thread.current.object_id}"
         @machineRoutingKey = machineRoutingKey
         @rpcClient = Messaging::Connections::RpcClient.new(
           connection,

@@ -31,10 +31,37 @@ development:
     routing_keys:
       rasbari:
         client: development.samosa.rasbari.client
-        # no need for server
+        server: development.samosa.rasbari.server
       nimki:
         client: development.samosa.nimki.client # hostname will be appended
         server: development.samosa.nimki.server # hostname will be appended
 
 production:
   <<: *default
+  video_capture:
+    exchange: production.video_capture
+    routing_keys:
+      rasbari:
+        client: production.video_capture.rasbari.client
+        server: production.video_capture.rasbari.server
+      nimki:
+        client: production.video_capture.nimki.client # hostname will be appended
+        server: production.video_capture.nimki.server # hostname will be appended
+  storage:
+    exchange: production.storage
+    routing_keys:
+      rasbari:
+        client: production.storage.rasbari.client
+        # no need for server
+      nimki:
+        client: production.storage.nimki.client # hostname will be appended
+        server: production.storage.nimki.server # hostname will be appended
+  samosa:
+    exchange: production.samosa
+    routing_keys:
+      rasbari:
+        client: production.samosa.rasbari.client
+        server: production.samosa.rasbari.server
+      nimki:
+        client: production.samosa.nimki.client # hostname will be appended
+        server: production.samosa.nimki.server # hostname will be appended

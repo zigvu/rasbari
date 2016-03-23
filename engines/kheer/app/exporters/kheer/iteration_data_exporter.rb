@@ -80,6 +80,8 @@ module Kheer
     end
 
     def saveChiaTrainConfig(extractPath)
+      # should match expection of sample config from:
+      # /home/ubuntu/samosa/chia/bin/zigvu/zigvu_config_train.json
       parentChiaModel = ChiaModel.find(@iteration.chia_model_id).decorate.parent
       iterationType = @iteration.type.isQuick? ? "minor" : "major"
       positiveClasses = []

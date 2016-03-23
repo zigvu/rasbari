@@ -15,28 +15,20 @@ module Kheer
 
     # GET /capture_evaluations/1
     def show
+      if !@capture_evaluation.state.isEvaluated?
+        redirect_to capture_evaluation_workflow_path(
+          Wicked::FIRST_STEP, capture_evaluation_id: @capture_evaluation.id
+        )
+      end
     end
 
     # GET /capture_evaluations/new
     def new
-      @capture_evaluation = CaptureEvaluation.new
-      create_vars_for_new
-    end
-
-    # POST /capture_evaluations
-    def create
-      @capture_evaluation = CaptureEvaluation.new(capture_evaluation_params)
-      @capture_evaluation.chia_model_id = params["chia_model_id_capEvaluation"].to_i
-      @capture_evaluation.user_id = current_user.id
-      status, _ = @capture_evaluation.samosaClient.isRemoteAlive?
-      if status && @capture_evaluation.save
-          @capture_evaluation.state.setConfiguring
-          redirect_to @capture_evaluation, notice: 'Capture evaluation was successfully created.'
-      else
-        create_vars_for_new
-        flash[:error] = 'Could not contact remote GPU machine or failed to save form'
-        render :new
-      end
+      capture_evaluation = CaptureEvaluation.create(user_id: current_user.id)
+      capture_evaluation.state.setConfiguring
+      redirect_to capture_evaluation_workflow_path(
+        Wicked::FIRST_STEP, capture_evaluation_id: capture_evaluation.id
+      )
     end
 
     # DELETE /capture_evaluations/1
@@ -53,24 +45,6 @@ module Kheer
       # Use callbacks to share common setup or constraints between actions.
       def set_capture_evaluation
         @capture_evaluation = CaptureEvaluation.find(params[:id])
-      end
-
-      def create_vars_for_new
-        @captures = []
-        Video::Capture.all.each do |capture|
-          @captures << ["#{capture.stream.name} - #{capture.id} - #{capture.comment}", capture.id]
-        end
-        @gpuMachines = Setting::Machine
-          .where(ztype: Setting::MachineTypes.gpu)
-          .where(zstate: Setting::MachineStates.ready)
-          .pluck(:hostname, :id)
-        @chiaModelsHierarchy = Kheer::ChiaModel.hierarchy
-        @selectedMiniId = @capture_evaluation.chia_model_id
-        if @selectedMiniId
-          selectedMini = Kheer::ChiaModel.find(@selectedMiniId)
-          @selectedMinorId = selectedMini.decorate.minorParent.id
-          @selectedMajorId = selectedMini.decorate.majorParent.id
-        end
       end
 
       # Only allow a trusted parameter "white list" through.

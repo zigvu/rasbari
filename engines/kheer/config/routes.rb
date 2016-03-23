@@ -1,5 +1,7 @@
 Kheer::Engine.routes.draw do
-  resources :capture_evaluations, except: [:edit, :update]
+  resources :capture_evaluations, only: [:index, :show, :new, :destroy] do
+    resources :workflow, only: [:show, :update], controller: 'capture_evaluations/workflow'
+  end
   resources :chia_models do
     member do
       get 'minis'
