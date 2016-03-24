@@ -50,5 +50,3 @@ test:
 production:
   <<: *default
   database: rasbari_production
-  username: rasbari
-  password: <%= ENV['RASBARI_DATABASE_PASSWORD'] %>

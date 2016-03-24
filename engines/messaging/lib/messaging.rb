@@ -1,7 +1,8 @@
 require "logger"
 require "messaging/version"
-# # extra files needed for load order
+# extra files needed for load order
 require "messaging/messages/base_non_persisted"
+require "messaging/messages/base_message"
 
 # load files based on whether it is loaded as Rails engine or not
 if Module.const_defined?('Rails')
