@@ -40,13 +40,14 @@ module Kheer
     # END: dumper sub class definitions
 
     # debug helper
-    attr_accessor :clipData, :locDumper, :interDumper
+    attr_accessor :clipData, :chiaToDet, :locDumper, :interDumper
 
     def initialize(clipFile)
       readClipJson(clipFile)
       @chiaToDet = {}
-      Kheer::ChiaModel.find(@chiaModelId).detectable_ids.each_with_index do |d, idx|
-        @chiaToDet[idx.to_s] = d
+      Kheer::ChiaModel.find(@chiaModelId).iteration.detectable_ids.each_with_index do |d, idx|
+        det = Kheer::Detectable.find(d)
+        @chiaToDet[idx.to_s] = d if !det.type.isAvoid?
       end
       # dumpers
       @locDumper = LocalizationDumper.new

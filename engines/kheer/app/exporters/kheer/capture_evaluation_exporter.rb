@@ -36,7 +36,6 @@ module Kheer
       config = {
         mode: "test",
         chia_model_id: chiaModel.id,
-        gpu_device_id: 0,
         positive_classes: positiveClasses,
         avoid_classes: avoidClasses
       }

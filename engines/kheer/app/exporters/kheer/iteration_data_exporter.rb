@@ -98,7 +98,6 @@ module Kheer
         parent_chia_model_id: parentChiaModel.id,
         iteration_type: iterationType,
         num_caffe_iteration: @iteration.num_iterations,
-        gpu_device_id: 0,
         positive_classes: positiveClasses,
         avoid_classes: avoidClasses
       }

@@ -3,8 +3,9 @@ module Messaging
     module Samosa
 
       class ChiaDetails < BaseMessage::Common
-        ATTR = ["iterationId", "storageHostname", "storageBuildInputPath",
-          "storageModelPath", "storageParentModelPath", "modelBuildPath"]
+        ATTR = ["iterationId", "chiaModelId", "storageHostname",
+          "storageBuildInputPath", "storageModelPath", "storageParentModelPath",
+          "modelBuildPath"]
         zextend BaseMessage, ATTR
 
         def initialize(message = nil)
