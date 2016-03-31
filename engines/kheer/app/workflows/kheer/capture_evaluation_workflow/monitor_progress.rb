@@ -15,12 +15,7 @@ module Kheer
 
       def serve
         if @capture_evaluation.state.isAfterConfigured? && !@capture_evaluation.state.isEvaluated?
-
           @evaluationState = @capture_evaluation.samosaClient.getKhajuriState
-          if @evaluationState.isEvaluated?
-            @capture_evaluation.state.setEvaluated
-            @capture_evaluation.gpuMachine.state.setReady
-          end
         else
           @evaluationState = "Complete"
         end

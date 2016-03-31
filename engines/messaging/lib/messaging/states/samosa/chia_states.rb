@@ -8,7 +8,8 @@ module Messaging
 
       class ChiaStates
         def self.states
-          ["unknown", "ready", "downloading", "extracting", "building", "failed", "built", "stopped"]
+          ["unknown", "ready", "downloading", "extracting", "building",
+            "failed", "built", "uploaded", "stopped"]
         end
         zextend BaseNonPersisted, Messaging::States::Samosa::ChiaStates.states, { prefix: 'state' }
 

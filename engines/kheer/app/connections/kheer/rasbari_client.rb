@@ -14,7 +14,9 @@ module Kheer
 
     # Khajuri related
     def getKhajuriState
-      rh, rm = stateQuery
+      header = Messaging::Messages::Header.statusRequest
+      message = Messaging::Messages::Samosa::KhajuriStateQuery.new(nil)
+      rh, rm = call(header, message)
       if rh.isStatusSuccess?
         return Messaging::States::Samosa::KhajuriStates.new(rm.state)
       else
@@ -28,7 +30,9 @@ module Kheer
 
     # Chia related
     def getChiaState
-      rh, rm = stateQuery
+      header = Messaging::Messages::Header.statusRequest
+      message = Messaging::Messages::Samosa::ChiaStateQuery.new(nil)
+      rh, rm = call(header, message)
       if rh.isStatusSuccess?
         state = Messaging::States::Samosa::ChiaStates.new(rm.state)
         return state, rm.progress
@@ -47,13 +51,6 @@ module Kheer
     end
 
     private
-      def stateQuery
-        # prepare packets and send message
-        header = Messaging::Messages::Header.statusRequest
-        message = Messaging::Messages::Samosa::StateQuery.new(nil)
-        return call(header, message)
-      end
-
       def sendData(messageData)
         header = Messaging::Messages::Header.dataRequest
         message = messageData

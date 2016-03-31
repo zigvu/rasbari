@@ -8,7 +8,7 @@ module Messaging
 
       class ClipEvalStates
         def self.states
-          ["configuring", "downloaded", "evaluated", "failed"]
+          ["configuring", "downloaded", "evaluated", "ingested", "failed"]
         end
         zextend BaseNonPersisted, Messaging::States::Samosa::ClipEvalStates.states, { prefix: 'state' }
 

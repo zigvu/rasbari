@@ -14,10 +14,6 @@ module Kheer
       def serve
         if @iteration.state.isAfterConfigured? && !@iteration.state.isBuilt?
           @buildState, @buildProgress = @iteration.samosaClient.getChiaState
-          if @buildState.isBuilt?
-            @iteration.state.setBuilt
-            @iteration.gpuMachine.state.setReady
-          end
         else
           @buildState = "Complete"
           @buildProgress = "100%"

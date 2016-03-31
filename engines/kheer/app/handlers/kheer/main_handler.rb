@@ -24,6 +24,12 @@ module Kheer
         chiaDetailsHandler = Kheer::ChiaDetailsHandler.new(header, message)
         returnHeader, returnMessage = chiaDetailsHandler.handle if chiaDetailsHandler.canHandle?
 
+        chiaSQHandler = Kheer::ChiaStateQueryHandler.new(header, message)
+        returnHeader, returnMessage = chiaSQHandler.handle if chiaSQHandler.canHandle?
+
+        kjSQHandler = Kheer::KhajuriStateQueryHandler.new(header, message)
+        returnHeader, returnMessage = kjSQHandler.handle if kjSQHandler.canHandle?
+
       rescue Exception => e
         returnHeader = Messaging::Messages::Header.statusFailure
         returnMessage.trace = "Error: #{e.backtrace.first}"

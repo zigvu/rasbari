@@ -5,6 +5,7 @@ module Kheer
     def toMessage
       ar = {
         capEvalId: object.id.to_s,
+        chiaModelId: object.chia_model_id,
         storageHostname: object.storageMachine.hostname,
         storageTestInputPath: object.testInputPath,
         storageModelPath: object.chia_model.iteration.modelPath,

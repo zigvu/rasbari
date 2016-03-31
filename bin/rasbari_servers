@@ -9,15 +9,18 @@ class RasbariServers
 
   def initialize
     $bunny_connection = Messaging.connection
+    @threadObjs = []
 
     # start servers
     startCaptureServer
     startSamosaServer
+    startLocalizationIngester
 
     # sleep - otherwise this will exit
     loop { sleep 1000 }
   rescue SystemExit, Interrupt
     Rails.logger.info("Exiting application")
+    @threadObjs.each{ |t| t.join }
   rescue Exception => e
     STDERR.puts e.message
     STDERR.puts e.backtrace
@@ -32,6 +35,12 @@ class RasbariServers
   def startSamosaServer
     samosaHandler = Kheer::MainHandler.new
     Messaging.rasbari_cache.samosa.server(samosaHandler)
+  end
+
+  def startLocalizationIngester
+    locIngester = Kheer::LocalizationIngester.new
+    locIngester.run
+    @threadObjs << locIngester
   end
 end
 

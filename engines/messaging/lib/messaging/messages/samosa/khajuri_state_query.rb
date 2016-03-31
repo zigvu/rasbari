@@ -2,8 +2,8 @@ module Messaging
   module Messages
     module Samosa
 
-      class StateQuery < BaseMessage::Common
-        ATTR = ["state", "progress"]
+      class KhajuriStateQuery < BaseMessage::Common
+        ATTR = ["capEvalId", "state", "progress"]
         zextend BaseMessage, ATTR
 
         def initialize(message = nil)

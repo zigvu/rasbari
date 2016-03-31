@@ -2,9 +2,8 @@ module Messaging
   module Messages
     module Samosa
 
-      class KhajuriDetails < BaseMessage::Common
-        ATTR = ["capEvalId", "chiaModelId", "storageHostname",
-          "storageTestInputPath", "storageModelPath", "clipIds"]
+      class ChiaStateQuery < BaseMessage::Common
+        ATTR = ["iterationId", "state", "progress"]
         zextend BaseMessage, ATTR
 
         def initialize(message = nil)
