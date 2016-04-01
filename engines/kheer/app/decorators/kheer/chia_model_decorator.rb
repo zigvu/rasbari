@@ -43,6 +43,14 @@ module Kheer
         .where.not(mini_id: 0).order(mini_id: :asc)
     end
 
+    def ancestorIds
+      ancCmIds = []
+      ChiaModel.where(major_id: object.major_id).each do |cm|
+        ancCmIds << cm.id if (cm.minor_id <= object.minor_id && cm.mini_id <= object.mini_id)
+      end
+      ancCmIds - [object.id]
+    end
+
     def version
       "#{object.major_id}.#{object.minor_id}.#{object.mini_id}"
     end

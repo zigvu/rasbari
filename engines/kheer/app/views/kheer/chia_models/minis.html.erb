@@ -19,7 +19,11 @@
         <td><%= chia_model.decorate.annotationCount %></td>
         <td><%= chia_model.iteration.state %></td>
         <td>
-          <%= link_to 'Show', iteration_workflow_path(Wicked::FIRST_STEP, iteration_id: chia_model.iteration.id) %> |
+          <% if chia_model.iteration.state.isBuilt? %>
+            <%= link_to 'Show', iteration_path(chia_model.iteration) %>
+          <% else %>
+            <%= link_to 'Show', iteration_workflow_path(Wicked::FIRST_STEP, iteration_id: chia_model.iteration.id) %>
+          <% end %> |
           <%= link_to 'Edit', edit_chia_model_path(chia_model) %> |
           <%= link_to 'Destroy', chia_model, method: :delete, data: { confirm: 'Are you sure?' } %>
         </td>

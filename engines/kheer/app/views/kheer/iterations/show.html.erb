@@ -1,0 +1,62 @@
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Id</td>
+      <td><%= @iteration.id %></td>
+    </tr>
+    <tr>
+      <td>Chia Model Id</td>
+      <td><%= @iteration.chia_model.decorate.version %></td>
+    </tr>
+    <tr>
+      <td>Chia Model Name</td>
+      <td><%= @iteration.chia_model.name %></td>
+    </tr>
+    <tr>
+      <td>Num Iterations</td>
+      <td><%= @iteration.num_iterations %></td>
+    </tr>
+    <tr>
+      <td>State</td>
+      <td><%= @iteration.state %></td>
+    </tr>
+    <tr>
+      <td>Type</td>
+      <td><%= @iteration.type %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>Detectables</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Pretty Name</th>
+      <th>Type</th>
+      <th># Total Annos</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <% @detAnnoCountMap.each do |detectable, annoCnts| %>
+        <tr>
+          <td><%= detectable.id %></td>
+          <td><%= detectable.name %></td>
+          <td><%= detectable.pretty_name %></td>
+          <td><%= detectable.type %></td>
+          <td><%= annoCnts %></td>
+        </tr>
+      <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back', minis_chia_model_path(@iteration.chia_model.decorate.minorParent), class: 'button' %>

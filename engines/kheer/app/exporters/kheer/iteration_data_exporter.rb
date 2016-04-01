@@ -53,8 +53,9 @@ module Kheer
           a4.group_by{|a5| a5.detectable_id}.each do |detId, a6|
             a6.each do |a7|
               annoCmIds << a7.chia_model_id
-              # if annotation det was not selected for iteration, include it as avoid
-              if @iteration.detectable_ids.include?(detId)
+              # if annotation det was not selected for iteration or user did not
+              # explicitely draw it, include it as avoid
+              if @iteration.detectable_ids.include?(detId) && a7.sourceType.isUser?
                 annoFormatter.addAnnotation(detId, a7)
               else
                 annoFormatter.addAnnotation(avoidDetId, a7)
@@ -84,12 +85,8 @@ module Kheer
       # /home/ubuntu/samosa/chia/bin/zigvu/zigvu_config_train.json
       parentChiaModel = ChiaModel.find(@iteration.chia_model_id).decorate.parent
       iterationType = @iteration.type.isQuick? ? "minor" : "major"
-      positiveClasses = []
-      avoidClasses = []
-      Detectable.where(id: @iteration.detectable_ids).each do |det|
-        # treat both positive and negative classes as non-avoid
-        det.type.isAvoid? ? avoidClasses << det.id.to_s : positiveClasses << det.id.to_s
-      end
+      positiveClasses = @iteration.decorate.chiaToDetMapNonAvoid.values.map{ |d| d.to_s }
+      avoidClasses = @iteration.decorate.chiaToDetMapAvoid.values.map{ |d| d.to_s }
       config = {
         mode: "train",
         output_folder: "/tmp",

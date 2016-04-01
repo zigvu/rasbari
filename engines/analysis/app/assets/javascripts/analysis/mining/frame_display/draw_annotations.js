@@ -149,8 +149,11 @@ Mining.FrameDisplay.DrawAnnotations = function() {
       if(poly === undefined || poly.isClosed()){
         var annoDetails = self.dataManager.getAnno_selectedAnnotationDetails();
         var chiaModelId = self.dataManager.getAnno_chiaModelId();
+        var chiaDetails = self.dataManager.getData_chiaDetails(chiaModelId);
         poly = new Mining.FrameDisplay.Shapes.Polygon(
-          chiaModelId, annoDetails.id, annoDetails.title, annoDetails.color);
+          chiaModelId, chiaDetails.version,
+          annoDetails.id, annoDetails.title, annoDetails.color
+        );
 
         poly.setNew();
         self.addToPolygons(poly);

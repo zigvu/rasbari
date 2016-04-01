@@ -44,11 +44,7 @@ module Kheer
 
     def initialize(clipFile)
       readClipJson(clipFile)
-      @chiaToDet = {}
-      Kheer::ChiaModel.find(@chiaModelId).iteration.detectable_ids.each_with_index do |d, idx|
-        det = Kheer::Detectable.find(d)
-        @chiaToDet[idx.to_s] = d if !det.type.isAvoid?
-      end
+      @chiaToDet = ChiaModel.find(@chiaModelId).iteration.decorate.chiaToDetMapNonAvoid
       # dumpers
       @locDumper = LocalizationDumper.new
       @interDumper = IntersectionDumper.new

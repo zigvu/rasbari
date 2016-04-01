@@ -13,7 +13,7 @@ module Kheer
 
       def serve
         currentCm = @iteration.chia_model
-        ancCmIds = ChiaModel.where(major_id: currentCm.major_id).pluck(:id) - [currentCm.id]
+        ancCmIds = currentCm.decorate.ancestorIds
         @detectablesAnnoCnts = ActiveSupport::OrderedHash.new
         Detectable.where(id: currentCm.detectable_ids).each do |det|
           @detectablesAnnoCnts[det] = {
