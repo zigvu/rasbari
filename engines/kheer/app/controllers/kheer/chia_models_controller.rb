@@ -5,11 +5,23 @@ module Kheer
     # Same permission model as for detectable
     authorize_actions_for Detectable
     authority_actions :minis => :read
+    authority_actions :finalize => :read
 
-    before_action :set_chia_model, only: [:minis, :show, :edit, :update, :destroy]
+    before_action :set_chia_model, only: [
+      :finalize, :minis, :show, :edit, :update, :destroy
+    ]
 
     # GET /chia_models/1/minis
     def minis
+      @canFinalizeModel = @chia_model.decorate.minorParent.iteration.state.isBuilt?
+      lastMini = @chia_model.decorate.minis.last
+      @canStartNewMini = !lastMini || lastMini.iteration.state.isBuilt?
+    end
+
+    # GET /chia_models/1/finalize
+    def finalize
+      @chia_model.iteration.state.setBuilt
+      redirect_to @chia_model.decorate.majorParent, notice: 'Chia model finalized.'
     end
 
     # GET /chia_models
@@ -21,13 +33,17 @@ module Kheer
     def show
       if @chia_model.decorate.isMini?
         redirect_to minis_chia_model_path(@chia_model.decorate.minorParent)
-      else
+      elsif @chia_model.decorate.isMinor?
         @curSelDets = Detectable.where(id: @chia_model.detectable_ids)
         parent = @chia_model.decorate.parent
         if @curSelDets.count == 0 && parent != nil
           @curSelDets = Detectable.where(id: parent.detectable_ids)
         end
         @othDets = Detectable.all - @curSelDets
+        @canUpdateDets = @chia_model.iteration.state.isConfiguring?
+      elsif @chia_model.decorate.isMajor?
+        lastMinor = @chia_model.decorate.minors.last
+        @canStartNewMinor = !lastMinor || lastMinor.iteration.state.isBuilt?
       end
     end
 
@@ -71,10 +87,10 @@ module Kheer
         @chia_model.detectable_ids = @chia_model.decorate.minorParent.detectable_ids
       end
       if @chia_model.save
+        iteration = Iteration.create(chia_model_id: @chia_model.id, user_id: current_user.id)
+        iteration.state.setConfiguring
+        iteration.type.setQuick
         if @chia_model.decorate.isMini?
-          iteration = Iteration.create(chia_model_id: @chia_model.id, user_id: current_user.id)
-          iteration.state.setConfiguring
-          iteration.type.setQuick
           redirect_to iteration_workflow_path(Wicked::FIRST_STEP, iteration_id: iteration.id)
         else
           redirect_to @chia_model, notice: 'Chia model was successfully created.'
@@ -89,6 +105,7 @@ module Kheer
       cmp = chia_model_params
       cmp['detectable_ids'] = cmp['detectable_ids'].map{|i| i.to_i}.uniq.sort if cmp['detectable_ids']
       if @chia_model.update(cmp)
+        @chia_model.iteration.update(detectable_ids: @chia_model.detectable_ids)
         redirect_to @chia_model, notice: 'Chia model was successfully updated.'
       else
         render :edit

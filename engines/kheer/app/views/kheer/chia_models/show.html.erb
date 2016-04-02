@@ -3,7 +3,12 @@
 <% if @chia_model.decorate.isMajor? %>
 
   <%= render 'model_list_minor' %>
-  <%= link_to 'New Minor Chia model', new_chia_model_path(major_id: @chia_model.major_id), class: 'button' %>
+
+  <% if @canStartNewMinor %>
+    <%= link_to 'New Minor Chia model', new_chia_model_path(major_id: @chia_model.major_id), class: 'button' %>
+  <% else %>
+    <p class="button disabled">New Minor Chia model</p>
+  <% end %>
 
 <% else %>
 

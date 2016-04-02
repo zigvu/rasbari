@@ -39,6 +39,25 @@ module Kheer
       return ChiaModel.find(self.chia_model_id)
     end
 
+    def builtParentIteration
+      cmd = chia_model.decorate
+      iter = nil
+      if cmd.isMini?
+        # for mini iteration, parent iteration is that of its parent chia model
+        pIter = cmd.parent.iteration
+        iter = cmd.parent.decorate.isMinor? ? pIter.builtParentIteration : pIter
+      elsif cmd.isMinor?
+        # for minor iteration, parent is any mini child that is built if exists
+        # else, it is its parent
+        lastBm = cmd.builtMinis.last
+        iter = lastBm ? lastBm.iteration : cmd.parent.iteration.builtParentIteration
+      elsif cmd.isMajor?
+        # for major iteration, refer to first model with imagenet parent
+        iter = ChiaModel.find(1).iteration
+      end
+      iter
+    end
+
     def storageMachine
       self.storage_machine_id ? Setting::Machine.find(self.storage_machine_id) : nil
     end
@@ -63,8 +82,7 @@ module Kheer
       "/data/#{self.storageMachine.hostname}/#{self.path}/#{self.build_model_filename}"
     end
     def parentModelPath
-      parentIter = chia_model.decorate.parent.iteration
-      parentIter ? parentIter.modelPath : nil
+      builtParentIteration.modelPath
     end
     def buildInputPath
       "/data/#{self.storageMachine.hostname}/#{self.path}/build_inputs.tar.gz"

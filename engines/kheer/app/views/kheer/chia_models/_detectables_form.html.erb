@@ -46,6 +46,10 @@
     </table>
 
   <div class="form-actions">
-    <%= submit_tag "Submit", class: "button" %>
+    <% if @canUpdateDets %>
+      <%= submit_tag "Submit", class: "button" %>
+    <% else %>
+      <p class="button disabled">Submit</p>
+    <% end %>
   </div>
 <% end %>

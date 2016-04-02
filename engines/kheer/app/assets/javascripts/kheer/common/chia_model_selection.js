@@ -23,4 +23,11 @@ ChiaModel.Selection = function(sel){
     $("." + sel + "_table_mini").hide();
     $("#" + sel + "_table_mini_" + this.value).show();
   });
+
+  // if any of the radio is checked, display
+  var minorChecked = $("input[name=" + sel + "_radio_major]:checked").val();
+  if(minorChecked){ $("#" + sel + "_table_minor_" + minorChecked).show(); }
+
+  var miniChecked = $("input[name=" + sel + "_radio_minor]:checked").val();
+  if(miniChecked){ $("#" + sel + "_table_mini_" + miniChecked).show(); }
 };

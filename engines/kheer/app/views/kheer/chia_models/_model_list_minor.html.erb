@@ -4,6 +4,7 @@
       <th>Version</th>
       <th>Name</th>
       <th># Annotations</th>
+      <th>Build State</th>
       <th># Mini Version | Show</th>
       <th># Detectables | Edit</th>
       <th>Edit | Destroy</th>
@@ -16,6 +17,7 @@
         <td><%= chia_model.decorate.version %></td>
         <td><%= chia_model.name %></td>
         <td><%= chia_model.decorate.annotationCount %></td>
+        <td><%= chia_model.iteration.state %></td>
         <td>
           <%= chia_model.decorate.minis.count %> |
           <%= link_to 'Show',  minis_chia_model_path(chia_model) %>

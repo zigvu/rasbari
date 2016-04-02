@@ -18,6 +18,8 @@ module Kheer
       elsif state.isUploaded?
         iteration.state.setBuilt
         iteration.gpuMachine.state.setReady
+        # set minor parent to configured so that its dets can't be changed anymore
+        iteration.chia_model.decorate.minorParent.iteration.state.setConfigured
       else
         iteration.state.setBuilding
       end

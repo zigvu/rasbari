@@ -5,6 +5,7 @@ Kheer::Engine.routes.draw do
   resources :chia_models do
     member do
       get 'minis'
+      get 'finalize'
     end
   end
   resources :detectables

@@ -42,6 +42,13 @@ module Kheer
         .where(minor_id: object.minor_id)
         .where.not(mini_id: 0).order(mini_id: :asc)
     end
+    def builtMinis
+      bms = []
+      minis.each do |mini|
+        bms << mini if mini.iteration.state.isBuilt?
+      end
+      bms
+    end
 
     def ancestorIds
       ancCmIds = []

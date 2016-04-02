@@ -32,5 +32,15 @@
   </tbody>
 </table>
 
-<%= link_to 'New Mini Chia model', new_chia_model_path(major_id: @chia_model.major_id, minor_id: @chia_model.minor_id), class: 'button' %>
+<% if @canFinalizeModel %>
+  <p class="button disabled">Finalize Minor Model</p>
+<% else %>
+  <% if @canStartNewMini %>
+    <%= link_to 'New Mini Chia model', new_chia_model_path(major_id: @chia_model.major_id, minor_id: @chia_model.minor_id), class: 'button' %>
+    <%= link_to 'Finalize Minor Model', finalize_chia_model_path(@chia_model), class: 'button success' %>
+  <% else %>
+    <p class="button disabled">New Mini Chia model</p>
+  <% end %>
+<% end %>
+
 <%= render 'back_links' %>
