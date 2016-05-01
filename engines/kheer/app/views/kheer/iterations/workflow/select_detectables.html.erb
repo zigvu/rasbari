@@ -24,7 +24,10 @@ Note: If there are not enough annotations for a particular class that you'd like
       <th># Ancestor Annos</th>
       <th># Current Annos</th>
       <th># Total Annos</th>
-      <th>Select</th>
+      <th>
+        <a id="selectAllLink" href="#">All</a> |
+        <a id="selectNoneLink" href="#">None</a>
+      </th>
     </tr>
   </thead>
 
@@ -39,7 +42,7 @@ Note: If there are not enough annotations for a particular class that you'd like
           <td><%= annoCnts[:current] %></td>
           <td><%= annoCnts[:ancestor] + annoCnts[:current] %></td>
           <% isButChecked = @workflowObj.selectedDetectableIds.include?(detectable.id) %>
-          <td><%= check_box_tag 'detectable_ids[]', detectable.id, checked = isButChecked %></td>
+          <td><%= check_box_tag 'detectable_ids[]', detectable.id, checked = isButChecked, class: "selectAllCheckBox" %></td>
         </tr>
       <% end %>
   </tbody>

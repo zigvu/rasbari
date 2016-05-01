@@ -30,4 +30,5 @@
 $(function(){
   $(document).foundation();
   $(document).ready(decorateNavigationList);
+  $(document).ready(activateSelectAllLinks);
 });

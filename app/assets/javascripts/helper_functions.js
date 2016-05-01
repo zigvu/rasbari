@@ -1,37 +1,60 @@
 /*------------------------------------------------
-	Begin: Helper functions
-	------------------------------------------------*/
+  Begin: Helper functions
+  ------------------------------------------------*/
+
+//------------------------------------------------
+/* Select all links for checkboxes */
+// if needed to select all checkboxes, have
+// input:checkbox to have CLASS name `selectAllCheckBox`
+// link for `All`to have ID name `selectAllLink`
+// link for `None`to have ID name `selectNoneLink`
+
+function activateSelectAllLinks(){
+  $("#selectAllLink").click(function(e){
+    e.preventDefault();
+    $("input:checkbox.selectAllCheckBox").each(function(){
+      this.checked = true;
+    });
+  });
+  $("#selectNoneLink").click(function(e){
+    e.preventDefault();
+    $("input:checkbox.selectAllCheckBox").each(function(){
+      this.checked = false;
+    });
+  });
+}
+//------------------------------------------------
 
 
 //------------------------------------------------
 /* Display error and message */
 displayJavascriptError = function(error) {
-	$('#javascript-error').html(
-		'<div data-alert class="alert-box alert">' + 
-			'<div>' + error + '</div>' +
-			'<a href="#" class="close" id="javascript-error-close">&times;</a>' +
-		'</div>'
-	);
+  $('#javascript-error').html(
+    '<div data-alert class="alert-box alert">' +
+      '<div>' + error + '</div>' +
+      '<a href="#" class="close" id="javascript-error-close">&times;</a>' +
+    '</div>'
+  );
 
-	$('#javascript-error-close').click(function(){
-		$('#javascript-error').empty();
-	});
+  $('#javascript-error-close').click(function(){
+    $('#javascript-error').empty();
+  });
 };
 
 displayJavascriptMessage = function(message) {
-	$('#javascript-message').html(
-		'<div data-alert class="alert-box success">' + 
-			'<div>' + message + '</div>' +
-			'<a href="#" class="close" id="javascript-message-close">&times;</a>' +
-		'</div>'
-	);
+  $('#javascript-message').html(
+    '<div data-alert class="alert-box success">' +
+      '<div>' + message + '</div>' +
+      '<a href="#" class="close" id="javascript-message-close">&times;</a>' +
+    '</div>'
+  );
 
-	$('#javascript-message-close').click(function(){
-		$('#javascript-message').empty();
-	});
+  $('#javascript-message-close').click(function(){
+    $('#javascript-message').empty();
+  });
 
-	// hide after 10 seconds
-	Q.delay(10000).then($('#javascript-message-close').click());
+  // hide after 10 seconds
+  Q.delay(10000).then($('#javascript-message-close').click());
 };
 
 //------------------------------------------------
@@ -52,7 +75,7 @@ showSpinner = function() {
   $("#spinner-overlay").show();
   $("#spinner-popup").show();
   $("#spinner-popup").spin("large", "white");
-}
+};
 hideSpinner = function() {
   $("#spinner-overlay").hide();
   $("#spinner-popup").hide();
@@ -70,14 +93,14 @@ $("#wizard-setup-next").click(function(){
 //------------------------------------------------
 /* Decorate top-bar navigation li items with "active" class */
 function decorateNavigationList(){
-	// for each page, we set class to controller name
-	var bodyClass = $('body').attr('class').split(" ");
-	for (var i = 0, l = bodyClass.length; i < l; ++i) {
-		// get the right element - assume id is set for each li
-		var navElem = $("li#" + bodyClass[i]);
-		// set active class
-		$("nav.top-bar").find(navElem).attr('class', 'active');
-	}
+  // for each page, we set class to controller name
+  var bodyClass = $('body').attr('class').split(" ");
+  for (var i = 0, l = bodyClass.length; i < l; ++i) {
+    // get the right element - assume id is set for each li
+    var navElem = $("li#" + bodyClass[i]);
+    // set active class
+    $("nav.top-bar").find(navElem).attr('class', 'active');
+  }
 }
 //------------------------------------------------
 
@@ -85,9 +108,9 @@ function decorateNavigationList(){
 /* Sort objects with IDs */
 function sortById(a, b){
   var aId = a.id;
-  var bId = b.id; 
+  var bId = b.id;
   return ((aId < bId) ? -1 : ((aId > bId) ? 1 : 0));
-};
+}
 //------------------------------------------------
 
 //------------------------------------------------
@@ -95,29 +118,29 @@ function sortById(a, b){
 var timeLogEnabled = true;
 var timeLogs = {};
 function timeLogStart(logId){
-	if (timeLogEnabled){
-		timeLogs[logId] = new Date();
-	}
-};
+  if (timeLogEnabled){
+    timeLogs[logId] = new Date();
+  }
+}
 function timeLogEnd(logId, message){
-	if (timeLogEnabled){
-		console.log("Time: " + message + ": " + ((new Date()).getTime() - timeLogs[logId].getTime())/1000);
-	}
-};
+  if (timeLogEnabled){
+    console.log("Time: " + message + ": " + ((new Date()).getTime() - timeLogs[logId].getTime())/1000);
+  }
+}
 //------------------------------------------------
 
 //------------------------------------------------
 /* Debugging print tool for filters */
 function print_filter(filter){
-	var f=eval(filter);
-	if (typeof(f.length) != "undefined") {} else {}
-		if (typeof(f.top) != "undefined") {
-			f = f.top(Infinity);
-		} else {}
-		if (typeof(f.dimension) != "undefined") {
-			f = f.dimension(function(d) { return "";}).top(Infinity);
-		} else {}
-		console.log(filter+"("+f.length+") = "+JSON.stringify(f).replace("[","[\n\t").replace(/}\,/g,"},\n\t").replace("]","\n]"));
-	}
+  var f=eval(filter);
+  if (typeof(f.length) != "undefined") {} else {}
+    if (typeof(f.top) != "undefined") {
+      f = f.top(Infinity);
+    } else {}
+    if (typeof(f.dimension) != "undefined") {
+      f = f.dimension(function(d) { return "";}).top(Infinity);
+    } else {}
+    console.log(filter+"("+f.length+") = "+JSON.stringify(f).replace("[","[\n\t").replace(/}\,/g,"},\n\t").replace("]","\n]"));
+  }
 //print_filter("brandCrowdingGroup");
-//------------------------------------------------  
+//------------------------------------------------

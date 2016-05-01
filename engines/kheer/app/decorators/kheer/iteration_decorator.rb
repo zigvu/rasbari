@@ -3,9 +3,12 @@ module Kheer
     delegate_all
 
     def toMessage
+      needsTempParent = object.detectable_ids.sort != object.builtParentIteration.detectable_ids.sort
       ar = {
         iterationId: object.id,
         chiaModelId: object.chia_model_id,
+        parentChiaModelId: object.chia_model.decorate.parent.id,
+        needsTempParent: needsTempParent,
         storageHostname: object.storageMachine.hostname,
         storageBuildInputPath: object.buildInputPath,
         storageParentModelPath: object.parentModelPath

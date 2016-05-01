@@ -81,25 +81,39 @@ module Kheer
     end
 
     def saveChiaTrainConfig(extractPath)
+      # for this model
+      chiaModel = ChiaModel.find(@iteration.chia_model_id)
+      config = createTrainConfig(chiaModel)
+      configFile = "#{extractPath}/zigvu_config_train.json"
+      saveFile(config, configFile)
+      # for the parent model, with 0 iteration
+      parentChiaModel = chiaModel.decorate.parent
+      config = createTrainConfig(parentChiaModel, 0)
+      configFile = "#{extractPath}/zigvu_config_train_parent.json"
+      saveFile(config, configFile)
+    end
+
+    def createTrainConfig(chiaModel, numIter = nil)
       # should match expection of sample config from:
       # /home/ubuntu/samosa/chia/bin/zigvu/zigvu_config_train.json
-      parentChiaModel = ChiaModel.find(@iteration.chia_model_id).decorate.parent
-      iterationType = @iteration.type.isQuick? ? "minor" : "major"
-      positiveClasses = @iteration.decorate.chiaToDetMapNonAvoid.values.map{ |d| d.to_s }
-      avoidClasses = @iteration.decorate.chiaToDetMapAvoid.values.map{ |d| d.to_s }
+      iteration = chiaModel.iteration
+      parentChiaModel = chiaModel.decorate.parent
+      iterationType = iteration.type.isQuick? ? "minor" : "major"
+      positiveClasses = iteration.decorate.chiaToDetMapNonAvoid.values.map{ |d| d.to_s }
+      avoidClasses = iteration.decorate.chiaToDetMapAvoid.values.map{ |d| d.to_s }
+      numIter ||= iteration.num_iterations
       config = {
         mode: "train",
         output_folder: "/tmp",
-        iteration_id: @iteration.id.to_s,
-        chia_model_id: @iteration.chia_model_id,
+        iteration_id: iteration.id.to_s,
+        chia_model_id: iteration.chia_model_id,
         parent_chia_model_id: parentChiaModel.id,
         iteration_type: iterationType,
-        num_caffe_iteration: @iteration.num_iterations,
+        num_caffe_iteration: numIter,
         positive_classes: positiveClasses,
         avoid_classes: avoidClasses
       }
-      configFile = "#{extractPath}/zigvu_config_train.json"
-      saveFile(config, configFile)
+      config
     end
 
     def saveFilesToTar(extractPath, tarFile)
