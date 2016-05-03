@@ -17,34 +17,34 @@
     [rasbari_machine] cd ~/rasbari
   </td></tr>
   <tr><td>
-    [rasbari_machine] ./bin/rasbari_servers run
+    [rasbari_machine] RAILS_ENV=<%= Rails.env %> ./bin/rasbari_servers run
   </td></tr>
   <tr><td></td></tr>
   <tr><td>
     [storage_machine] cd ~/nimki/servers/storage
   </td></tr>
   <tr><td>
-    [storage_machine] ./storage_server.rb
+    [storage_machine] RAILS_ENV=<%= Rails.env %> ./storage_server.rb
   </td></tr>
   <tr><td></td></tr>
   <tr><td>
     [gpu_machine] cd ~/nimki/servers/samosa
   </td></tr>
   <tr><td>
-    [gpu_machine] ./samosa_server.rb
+    [gpu_machine] RAILS_ENV=<%= Rails.env %> ./samosa_server.rb
   </td></tr>
 </table>
 <p>Note: The current ping to machines is only valid for a few minutes. Hence, it is expected that once ping is successfull, this workflow is run until model build process has started.</p>
 
 <p>Click next to ping storage and gpu machines. If they do not reply within 30 seconds, ping will fail. If this is the case, please inform administrator.</p>
 
-<p>Note: Currently all evaluation files are stored in <b>/tmp/khajuri</b> folder in the GPU machine. If there is a faster disk (e.g., ephemeral disk in EC2), create symlink to this location prior to clicking next.</p>
+<p>Note: Currently all evaluation files are stored in <b>/tmp/khajuri</b> folder in the GPU machine. If there is a faster disk (e.g., /mnt ephemeral disk in EC2), create symlink to this location prior to clicking next.</p>
 <table>
-  <tr><td>sudo mkdir -p /ephDrv/khajuri</td></tr>
-  <tr><td>cd /ephDrv/khajuri</td></tr>
-  <tr><td>sudo chown .</td></tr>
+  <tr><td>sudo mkdir -p /mnt/khajuri</td></tr>
+  <tr><td>cd /mnt/khajuri</td></tr>
+  <tr><td>sudo chown ubuntu .</td></tr>
   <tr><td>rm -rf /tmp/khajuri</td></tr>
-  <tr><td>ln -sf /ephDrv/khajuri /tmp/khajuri</td></tr>
+  <tr><td>ln -sf /mnt/khajuri /tmp/khajuri</td></tr>
   <tr><td>cd /tmp/khajuri</td></tr>
 </table>
 

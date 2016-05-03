@@ -31,6 +31,7 @@ module Kheer
           CaptureEvaluation.where(zstate: CaptureEvaluationStates.evaluating).each do |capEval|
             # ingest evaluated clips
             capEval.clip_evaluations.where(zstate: ClipEvaluationStates.evaluated).each do |clipEval|
+              Rails.logger.debug("Ingest Clip Id: #{clipEval.clip_id}")
               processedInLoop = true
               cdi = ClipDataImporter.new(clipEval.localizationDataPath)
               cdi.writeData

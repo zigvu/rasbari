@@ -67,8 +67,9 @@ module Kheer
     def readClipJson(clipFile)
       @clipData = JSON.load(File.open(clipFile))
       @clipId = @clipData["meta"]["clip_id"].to_i
-      @chiaModelId = @clipData["meta"]["chia_model_id"].to_i
+      @capEval = CaptureEvaluation.find(@clipData["meta"]["cap_eval_id"])
       @scale = @clipData["meta"]["scale"].to_f
+      @chiaModelId = @capEval.chia_model_id
       @fns = @clipData["data"].keys.map{ |fn| fn.to_i }.sort
     end
 

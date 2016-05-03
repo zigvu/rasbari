@@ -35,7 +35,7 @@ module Kheer
               trace = "GPU remote is alive but couldn't set khajuri details"
             end
           else
-            trace = "Could not contact storage server to save model build data"
+            trace = "Could not contact storage server to save khajuri evaluation data"
           end
         end
 

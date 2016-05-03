@@ -96,19 +96,19 @@ module Kheer
     def createTrainConfig(chiaModel, numIter = nil)
       # should match expection of sample config from:
       # /home/ubuntu/samosa/chia/bin/zigvu/zigvu_config_train.json
-      iteration = chiaModel.iteration
+      iter = chiaModel.iteration
       parentChiaModel = chiaModel.decorate.parent
-      iterationType = iteration.type.isQuick? ? "minor" : "major"
-      positiveClasses = iteration.decorate.chiaToDetMapNonAvoid.values.map{ |d| d.to_s }
-      avoidClasses = iteration.decorate.chiaToDetMapAvoid.values.map{ |d| d.to_s }
-      numIter ||= iteration.num_iterations
+      iterType = iter.type.isQuick? ? "minor" : "major"
+      positiveClasses = iter.decorate.chiaToDetMapNonAvoid.values.map{ |d| d.to_s }
+      avoidClasses = iter.decorate.chiaToDetMapAvoid.values.map{ |d| d.to_s }
+      numIter ||= iter.num_iterations
       config = {
         mode: "train",
         output_folder: "/tmp",
-        iteration_id: iteration.id.to_s,
-        chia_model_id: iteration.chia_model_id,
+        iteration_id: @iteration.id.to_s, # training iteration id is same even for parent
+        chia_model_id: chiaModel.id,
         parent_chia_model_id: parentChiaModel.id,
-        iteration_type: iterationType,
+        iteration_type: iterType,
         num_caffe_iteration: numIter,
         positive_classes: positiveClasses,
         avoid_classes: avoidClasses

@@ -38,6 +38,7 @@ class RasbariServers
   end
 
   def startLocalizationIngester
+    # this object maintains/manages its own thread
     locIngester = Kheer::LocalizationIngester.new
     locIngester.run
     @threadObjs << locIngester
