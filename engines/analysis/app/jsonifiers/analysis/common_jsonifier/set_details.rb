@@ -8,7 +8,10 @@ module Analysis
 
         @chiaModelIdLoc = @mining.chia_model_id_loc
         @chiaModelIdAnno = @mining.chia_model_id_anno
-        @chiaModelAnno = Kheer::ChiaModel.find(@chiaModelIdAnno)
+        # get all children of major parent of both localization and annotations
+        @allChiaModels = Kheer::ChiaModel.where(id: [
+          getSiblingChiaModelIds(@chiaModelIdLoc) + getSiblingChiaModelIds(@chiaModelIdAnno)
+        ].uniq.sort)
 
         if @mining.type.isSequenceViewer?
           @selectedDetIds = @mining.md_sequence_viewer.detectable_ids
@@ -21,7 +24,7 @@ module Analysis
         end
       end
 
-      def getChiaModelFormatted(chiaModelId)
+      def getChiaModelFormatted(chiaModel)
         # <chiaModel>: {
         #   id:, name:, version:,
         #   settings: {
@@ -31,7 +34,7 @@ module Analysis
         #   }
         # }
         probScoresThreshold = (0..10).map{ |i| (i * 0.1).round(1) }
-        cm = Kheer::ChiaModel.find(chiaModelId)
+        cm = chiaModel
         return {
           id: cm.id, name: cm.name, version: cm.decorate.version,
           settings: {
@@ -42,19 +45,32 @@ module Analysis
         }
       end
 
-      def getDetectablesFormattedLoc(chiaModelId)
+      def getSiblingChiaModelIds(chiaModelId)
         chiaModel = Kheer::ChiaModel.find(chiaModelId)
-        detectableIds = chiaModel.detectable_ids
+        Kheer::ChiaModel.where(major_id: chiaModel.major_id).pluck(:id)
+      end
+
+      def getAllChiaModelsFormatted
+        @allChiaModels.map{ |cm| getChiaModelFormatted(cm) }
+      end
+
+      def getAllDetectablesFormatted
+        detectableIds = []
+        @allChiaModels.each do |chiaModel|
+          detectableIds += chiaModel.detectable_ids
+        end
         getDetectablesFormatted(detectableIds)
       end
 
-      def getDetectablesFormattedAnno(chiaModelId)
-        chiaModel = Kheer::ChiaModel.find(chiaModelId)
+      def getDetectableIdsLoc
+        Kheer::ChiaModel.find(@chiaModelIdLoc).detectable_ids
+      end
+
+      def getDetectableIdsAnno
+        chiaModel = Kheer::ChiaModel.find(@chiaModelIdAnno)
         detectableIds = chiaModel.detectable_ids
         selDetIdsForAnno = @selectedDetIds.map{ |dId| dId if detectableIds.include?(dId) } - [nil]
-        locsDets = getDetectablesFormatted(selDetIdsForAnno)
-        locsAnno = getDetectablesFormatted(detectableIds - selDetIdsForAnno)
-        locsDets + locsAnno
+        [selDetIdsForAnno + [detectableIds - selDetIdsForAnno]].flatten
       end
 
       def getDetectablesFormatted(detectableIds)
@@ -90,22 +106,28 @@ module Analysis
       end
 
       def formatted
+        # formatted as according to:
+        # javascripts/analysis/mining/data_manager/stores/data_store.js
         # miningData: {
-        #   chiaModels: {localization: <chiaModel>, annotation:<chiaModel>},
-        #   detectables: {localization: <detectables>, annotation:<detectables>},
+        #   chiaModels: [<chiaModel>, ],
+        #   chiaModelIds: {localization: <chiaModelId>, annotation: <chiaModelId>},
+        #   detectables: [<detectable>, ],
+        #   detectableIds: {localization: [<detectableId>, ], annotation: [<detectableId>, ]},
         #   clips: [<clip>, ],
         #   clipSet: [{clip_id:, other_unused:, }],
-        #   selectedDetIds: [int, ]
+        #   selectedDetIds: [int, ],
         #   smartFilter: {spatial_intersection_thresh:,}
         # }
         return {
-          chiaModels: {
-            localization: getChiaModelFormatted(@chiaModelIdLoc),
-            annotation:  getChiaModelFormatted(@chiaModelIdAnno)
+          chiaModels: getAllChiaModelsFormatted,
+          chiaModelIds: {
+            localization: @chiaModelIdLoc,
+            annotation:  @chiaModelIdAnno
           },
-          detectables: {
-            localization: getDetectablesFormattedLoc(@chiaModelIdLoc),
-            annotation:  getDetectablesFormattedAnno(@chiaModelIdAnno)
+          detectables: getAllDetectablesFormatted,
+          detectableIds: {
+            localization: getDetectableIdsLoc,
+            annotation:  getDetectableIdsAnno
           },
           clips: getClipsFormatted(@clipSet),
           clipSet: @clipSet,

@@ -18,10 +18,12 @@ Mining.DataManager.Stores = Mining.DataManager.Stores || {};
   firstEvaluatedVideoFn: int
 
   miningData: {
-    chiaModels: {localization: <chiaModel>, annotation:<chiaModel>},
-    detectables: {localization: <detectables>, annotation:<detectables>},
+    chiaModels: [<chiaModel>, ],
+    chiaModelIds: {localization: int, annotation: int},
+    detectables: [<detectable>, ],
+    detectableIds: {localization: [int, ], annotation: [int, ]},
     clips: [<clip>, ],
-    clipSet: [{clip_id:}, ],
+    clipSet: [{clip_id:, other_unused:, }],
     selectedDetIds: [int, ],
     smartFilter: {spatial_intersection_thresh:,}
   }
@@ -60,7 +62,7 @@ Mining.DataManager.Stores = Mining.DataManager.Stores || {};
     clipMap: {:clip_id => <clip_details_from_miningData>, }
   }
 
-  chiaModelVersionMap: {:chia_model_id => <chiaModel>, }
+  chiaModelIdMap: {:chia_model_id => <chiaModel>, }
 
   tChartDataLoc: [{name:, color:, values: [{counter: score:}, ]}, ]
   tChartDataAnno: [{name:, color:, values: [{counter: score:}, ]}, ]
@@ -92,7 +94,7 @@ Mining.DataManager.Stores.DataStore = function() {
   this.clipDetailsMap = {
     sortedClipIds: undefined, clipMap: undefined
   };
-  this.chiaModelVersionMap = undefined;
+  this.chiaModelIdMap = undefined;
 
   // timeline chart data
   this.tChartData = undefined;
@@ -112,7 +114,7 @@ Mining.DataManager.Stores.DataStore = function() {
     self.clipDetailsMap = {
       sortedClipIds: undefined, clipMap: undefined
     };
-    self.chiaModelVersionMap = undefined;
+    self.chiaModelIdMap = undefined;
 
     self.tChartData = undefined;
     self.toCounterMap = undefined;

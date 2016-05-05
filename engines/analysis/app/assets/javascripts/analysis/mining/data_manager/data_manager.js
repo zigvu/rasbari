@@ -55,7 +55,7 @@ Mining.DataManager.DataManager = function() {
   this.massageMiningData = function(){
     self.annotationDataAccessor.createDetectableDecorations();
     self.localizationDataAccessor.createClipDetailsMap();
-    self.localizationDataAccessor.createChiaModelVersionMap();
+    self.localizationDataAccessor.createchiaModelIdMap();
 
     // set frame filter states
     self.getFilter_cycleScales();
@@ -71,7 +71,7 @@ Mining.DataManager.DataManager = function() {
   };
 
   this.getAnno_annotationDetectables = function(){
-    return self.annotationDataAccessor.getDetectables();
+    return self.annotationDataAccessor.getAnnotationDetectables();
   };
 
   this.setAnno_setCurrentAnnotations = function(clipId, clipFN){

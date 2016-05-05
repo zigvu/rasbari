@@ -18,6 +18,10 @@
 <table>
   <% dc = @capture_evaluation.decorate %>
   <tr>
+    <td>Total clips</td>
+    <td><%= "#{dc.totalClipsNum}" %></td>
+  </tr>
+  <tr>
     <td>Queued clips</td>
     <td><%= "#{dc.queuedClipsNum} (#{dc.queuedClipsPer}%)" %></td>
   </tr>
@@ -28,6 +32,10 @@
   <tr>
     <td>Evaluated clips</td>
     <td><%= "#{dc.evaluatedClipsNum} (#{dc.evaluatedClipsPer}%)" %></td>
+  </tr>
+  <tr>
+    <td>Failed clips</td>
+    <td><%= "#{dc.failedClipsNum} (#{dc.failedClipsPer}%)" %></td>
   </tr>
 </table>
 

@@ -53,7 +53,7 @@ Mining.DataManager.AjaxHandler = function() {
   };
 
   this.getHeatmapDataPromise = function(clipId, clipFN){
-    var chiaModelId = self.dataStore.miningData.chiaModels.localization.id;
+    var chiaModelId = self.dataStore.miningData.chiaModelIds.localization;
     var detectableId = self.filterStore.heatmap.detectable_id;
     var scale = self.filterStore.heatmap.scale;
 
@@ -74,7 +74,7 @@ Mining.DataManager.AjaxHandler = function() {
   this.getAllLocalizationsPromise = function(clipId, clipFN){
     var requestDefer = Q.defer();
 
-    var chiaModelId = self.dataStore.miningData.chiaModels.localization.id;
+    var chiaModelId = self.dataStore.miningData.chiaModelIds.localization;
     var zdistThresh = self.filterStore.heatmap.zdist_thresh;
     var probScore = self.filterStore.heatmap.prob_score;
 

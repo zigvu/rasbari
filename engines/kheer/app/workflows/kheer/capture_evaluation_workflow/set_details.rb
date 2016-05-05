@@ -9,7 +9,7 @@ module Kheer
       end
 
       def canSkip
-        @capture_evaluation.state.isAfterConfigured?
+        @capture_evaluation.state.isAfterConfiguring?
       end
 
       def serve

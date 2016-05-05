@@ -3,7 +3,16 @@ require_dependency "kheer/application_controller"
 module Kheer
   class CaptureEvaluationsController < ApplicationController
     authorize_actions_for Detectable
-    before_action :set_capture_evaluation, only: [:show, :destroy]
+    authority_actions :rerun => :read
+    before_action :set_capture_evaluation, only: [:rerun, :show, :destroy]
+
+    # GET /capture_evaluations/1/rerun
+    def rerun
+      if @capture_evaluation.decorate.needToRerun?
+        @capture_evaluation.state.setConfigured
+      end
+      redirect_to capture_evaluation_path(@capture_evaluation)
+    end
 
     # GET /capture_evaluations
     def index

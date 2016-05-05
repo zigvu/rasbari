@@ -1,5 +1,8 @@
 Kheer::Engine.routes.draw do
   resources :capture_evaluations, only: [:index, :show, :new, :destroy] do
+    member do
+      get 'rerun'
+    end
     resources :workflow, only: [:show, :update], controller: 'capture_evaluations/workflow'
   end
   resources :chia_models do

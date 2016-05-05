@@ -36,6 +36,7 @@ module Kheer
       config = {
         mode: "test",
         chia_model_id: chiaModel.id,
+        capture_evaluation_id: @capture_evaluation.id,
         positive_classes: positiveClasses,
         avoid_classes: avoidClasses
       }

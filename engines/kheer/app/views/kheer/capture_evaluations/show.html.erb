@@ -26,7 +26,22 @@
       <td>Progress</td>
       <td><%= @capture_evaluation.decorate.progress %></td>
     </tr>
+    <tr>
+      <td># Evaluated Clips</td>
+      <td><%= @capture_evaluation.decorate.evaluatedClipsNum %></td>
+    </tr>
+    <tr>
+      <td># Total Clips</td>
+      <td><%= @capture_evaluation.decorate.totalClipsNum %></td>
+    </tr>
+    <tr>
+      <td># Failed Clips</td>
+      <td><%= @capture_evaluation.decorate.failedClipsNum %></td>
+    </tr>
   </tbody>
 </table>
 
+<% if @capture_evaluation.decorate.needToRerun? %>
+  <%= link_to 'Evaluate Failed Clips', rerun_capture_evaluation_path, class: 'button' %>
+<% end %>
 <%= link_to 'Back', capture_evaluations_path, class: 'button' %>

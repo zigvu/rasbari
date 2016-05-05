@@ -17,7 +17,8 @@ Mining.DataManager.Accessors.FilterAccessor = function() {
   this.dataStore = undefined;
 
   this.cycleScales = function(){
-    var scales = self.dataStore.miningData.chiaModels.localization.settings.scales;
+    var locChiaModelId = self.dataStore.miningData.chiaModelIds.localization;
+    var scales = self.dataStore.chiaModelIdMap[locChiaModelId].settings.scales;
     var curScale = self.filterStore.heatmap.scale;
     if(curScale === undefined){
       self.filterStore.heatmap.scale = scales[0];
@@ -27,7 +28,8 @@ Mining.DataManager.Accessors.FilterAccessor = function() {
     return self.filterStore.heatmap.scale;
   };
   this.cycleZdists = function(){
-    var zdists = self.dataStore.miningData.chiaModels.localization.settings.zdist_threshs;
+    var locChiaModelId = self.dataStore.miningData.chiaModelIds.localization;
+    var zdists = self.dataStore.chiaModelIdMap[locChiaModelId].settings.zdist_threshs;
     var curZdist = self.filterStore.heatmap.zdist_thresh;
     if(curZdist === undefined){
       self.filterStore.heatmap.zdist_thresh = zdists[0];
@@ -37,7 +39,8 @@ Mining.DataManager.Accessors.FilterAccessor = function() {
     return self.filterStore.heatmap.zdist_thresh;
   };
   this.cycleProbScores = function(){
-    var probScores = self.dataStore.miningData.chiaModels.localization.settings.prob_scores;
+    var locChiaModelId = self.dataStore.miningData.chiaModelIds.localization;
+    var probScores = self.dataStore.chiaModelIdMap[locChiaModelId].settings.prob_scores;
     var curProbScore = self.filterStore.heatmap.prob_score;
     if(curProbScore === undefined){
       self.filterStore.heatmap.prob_score = probScores[0];

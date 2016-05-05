@@ -41,16 +41,17 @@ Mining.DataManager.Accessors.LocalizationDataAccessor = function() {
 
   // ----------------------------------------------
   // chia version mapping
-  this.createChiaModelVersionMap = function(){
+  this.createchiaModelIdMap = function(){
     var chiaModels = self.dataStore.miningData.chiaModels;
     var chiaMap = {};
-    chiaMap[chiaModels.localization.id] = chiaModels.localization;
-    chiaMap[chiaModels.annotation.id] = chiaModels.annotation;
-    self.dataStore.chiaModelVersionMap = chiaMap;
+    _.each(chiaModels, function(cm){
+      chiaMap[cm.id] = cm;
+    });
+    self.dataStore.chiaModelIdMap = chiaMap;
   };
 
   this.getChiaDetails = function(chiaModelId){
-    return self.dataStore.chiaModelVersionMap[chiaModelId];
+    return self.dataStore.chiaModelIdMap[chiaModelId];
   };
 
   // ----------------------------------------------

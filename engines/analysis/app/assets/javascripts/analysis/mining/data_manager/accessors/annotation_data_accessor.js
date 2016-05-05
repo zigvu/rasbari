@@ -18,12 +18,27 @@ Mining.DataManager.Accessors.AnnotationDataAccessor = function() {
 
   // ----------------------------------------------
   // chia data
-  this.getDetectables = function(){
-    return self.dataStore.miningData.detectables.annotation;
+  this.getDetectablesById = function(detectableIds){
+    var detectables = self.dataStore.miningData.detectables;
+    var dets = [];
+    // maintain order of detectableIds
+    _.each(detectableIds, function(detId){
+      det = _.find(detectables, function(d){ return d.id == detId; });
+      dets.push(det);
+    });
+    return dets;
+  };
+
+  this.getAnnotationDetectables = function(){
+    return self.getDetectablesById(self.dataStore.miningData.detectableIds.annotation);
+  };
+
+  this.getLocalizationDetectables = function(){
+    return self.getDetectablesById(self.dataStore.miningData.detectableIds.localization);
   };
 
   this.getChiaModelId = function(){
-    return self.dataStore.miningData.chiaModels.annotation.id;
+    return self.dataStore.miningData.chiaModelIds.annotation;
   };
 
   // ----------------------------------------------
@@ -105,7 +120,7 @@ Mining.DataManager.Accessors.AnnotationDataAccessor = function() {
     var decorations = self.dataStore.detectables.decorations;
 
     // provide color to annotation list first
-    _.each(self.dataStore.miningData.detectables.annotation, function(d){
+    _.each(self.getAnnotationDetectables(), function(d){
       var decos = {
         pretty_name: textFormatters.ellipsisForAnnotation(d.pretty_name),
         button_color: colorCreator.getColorButton(),
@@ -119,7 +134,7 @@ Mining.DataManager.Accessors.AnnotationDataAccessor = function() {
     });
 
     // provide color to localization list second
-    _.each(self.dataStore.miningData.detectables.localization, function(d){
+    _.each(self.getLocalizationDetectables(), function(d){
       // skip if already in decoration map
       if(_.has(decorations, d.id)){ return; }
       // else, continue
