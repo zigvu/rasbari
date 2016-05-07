@@ -47,7 +47,8 @@ module Analysis
             clip = Video::Clip.find(clipId)
             locCount = Kheer::Localization.gte(prob_score: threshold)
                 .where(chia_model_id: @mining.chia_model_id_loc)
-                .where(clip_id: clipId).count
+                .where(clip_id: clipId)
+                .in(detectable_id: @mining.md_sequence_viewer.detectable_ids).count
             fnCount = clip.frame_number_end - clip.frame_number_start
 
             clipIdLocCount << {

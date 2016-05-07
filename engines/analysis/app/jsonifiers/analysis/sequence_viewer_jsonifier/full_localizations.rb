@@ -6,8 +6,7 @@ module Analysis
         @mining = mining
 
         @chiaModelIdLoc = @mining.chia_model_id_loc
-        chiaModelLoc = Kheer::ChiaModel.find(@chiaModelIdLoc)
-        @detectableIds = chiaModelLoc.detectable_ids
+        @detectableIds = @mining.md_sequence_viewer.detectable_ids
         @threshold = @mining.md_sequence_viewer.threshold.round(1)
 
         clipSet = @mining.clip_sets[setId.to_s]
