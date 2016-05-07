@@ -14,10 +14,10 @@ module Analysis
       def serve
         threshold = @mining.md_sequence_viewer.threshold
         detectableIds = @mining.md_sequence_viewer.detectable_ids
+        chiaModel = Kheer::ChiaModel.find(@mining.chia_model_id_loc)
 
         @thresholds = []
-        probScoresThreshold = (0..10).map{ |i| (i * 0.1).round(1) }
-        probScoresThreshold.each do |th|
+        chiaModel.probThreshs.each do |th|
           locs = Kheer::Localization.gte(prob_score: th)
               .where(chia_model_id: @mining.chia_model_id_loc)
               .in(detectable_id: detectableIds)

@@ -26,6 +26,16 @@ module Kheer
       sels
     end
 
+    def intThreshs
+      (0..10).map{ |i| (i * 0.1).round(1) }
+    end
+    def probThreshs
+      (0..10).map{ |i| (i * 0.1).round(1) }
+    end
+    def scales
+      [1.0]
+    end
+
     private
       def delete_iteration
         iteration.destroy

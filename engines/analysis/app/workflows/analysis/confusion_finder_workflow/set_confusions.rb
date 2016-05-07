@@ -12,9 +12,11 @@ module Analysis
       end
 
       def serve
-        @probThreshs = (0..10).map{ |i| (i * 0.1).round(1) }
-        @scales = [1.0]
-        @intThreshs = (0..10).map{ |i| (i * 0.1).round(1) }
+        chiaModel = Kheer::ChiaModel.find(@mining.chia_model_id_loc)
+
+        @probThreshs = chiaModel.probThreshs
+        @scales = chiaModel.scales
+        @intThreshs = chiaModel.intThreshs
       end
 
       def handle(params)

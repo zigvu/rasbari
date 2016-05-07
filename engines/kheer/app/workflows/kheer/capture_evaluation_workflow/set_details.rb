@@ -27,14 +27,21 @@ module Kheer
       end
 
       def handle(params)
+        status = true
         trace = "Done"
         captureId = params["capture_evaluation"]["capture_id"].to_i
         chiaModelId = params["chia_model_id_capEvaluation"].to_i
-        status = @capture_evaluation.update({
-          capture_id: captureId,
-          chia_model_id: chiaModelId
-        })
-        if status
+        existingCapture = Kheer::CaptureEvaluation.where(
+          capture_id: captureId, chia_model_id: chiaModelId
+        ).first
+
+        if existingCapture
+          status = false
+          trace = "CaptureEvaluation #{existingCapture.id} exists for capture id #{captureId} and chia model id #{chiaModelId}"
+        else
+          @capture_evaluation.update({
+            capture_id: captureId, chia_model_id: chiaModelId
+          })
           @capture_evaluation.clip_evaluations.destroy_all
           @capture_evaluation.capture.clips.each do |clip|
             @capture_evaluation.clip_evaluations.create({

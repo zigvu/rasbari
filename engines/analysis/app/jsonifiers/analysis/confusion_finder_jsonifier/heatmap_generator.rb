@@ -11,35 +11,49 @@ module Analysis
         @clipIds = @mining.clip_ids
       end
 
-      def setConditions(priProb, priScales, secProb, secScales, intThresh)
-        @priProb = priProb
+      def setConditions(priProbs, priScales, secProbs, secScales, intThresh)
+        @priProbs = priProbs
         @priScales = priScales
-        @secProb = secProb
+        @secProbs = secProbs
         @secScales = secScales
         @intThresh = intThresh
       end
 
       def formatted
+        detectables = Kheer::Detectable.where(id: @detectableIds)
+
+        # aggregate all count data
+        counts = {}
+        detectables.each do |pdi|
+          counts[pdi.id] = {}
+          detectables.each do |sdi|
+            counts[pdi.id][sdi.id] = 0
+          end
+        end
+        Kheer::ClipIntersectionSummary
+          .where(chia_model_id: @chiaModelIdLoc)
+          .in(clip_id: @clipIds)
+          .gte(threshold: @intThresh)
+          .in(primary_prob_score: @priProbs)
+          .in(primary_scale: @priScales)
+          .in(secondary_prob_score: @secProbs)
+          .in(secondary_scale: @secScales).each do |cis|
+          cis.confusion_counts.each do |pdi, pdiX|
+            pdiX.each do |sdi, count|
+              counts[pdi.to_i][sdi.to_i] += count
+            end
+          end
+        end
+
         # format:
         # {intersections: , detectable_map:}
         # where intersections:
         # [{name:, row:, col:, value: count:}, ]
         intersections = []
         maxConfCount = 1
-        detectables = Kheer::Detectable.where(id: @detectableIds)
         detectables.each_with_index do |detRow, rowIdx|
           detectables.each_with_index do |detCol, colIdx|
-            confCount = Kheer::Intersection
-                .where(chia_model_id: @chiaModelIdLoc)
-                .in(clip_id: @clipIds)
-                .gte(threshold: @intThresh)
-                .where(primary_detectable_id: detRow.id)
-                .gte(primary_prob_score: @priProb)
-                .in(primary_scale: @priScales)
-                .where(secondary_detectable_id: detCol.id)
-                .gte(secondary_prob_score: @secProb)
-                .in(secondary_scale: @secScales)
-                .count
+            confCount = counts[detRow.id][detCol.id]
             # puts "[#{detRow.id}][#{detCol.id}] : #{confCount}" if confCount > 0
             intersections << {
               name: "#{detRow.pretty_name} [#{detRow.id}] :: #{detCol.pretty_name} [#{detCol.id}]",

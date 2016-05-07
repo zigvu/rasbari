@@ -53,19 +53,23 @@ $(".analysis_minings_confusion_finder_workflow_show").ready(function() {
 
 
   function populateFilters(){
-    var priProb = parseFloat($("#priProbThresh").val());
+    var priProbs = $('input[name="priProbThreshs"]:checked').map(function() {
+      return parseFloat(this.value);
+    }).get();
     var priScales = $('input[name="priScales"]:checked').map(function() {
       return parseFloat(this.value);
     }).get();
 
-    var secProb = parseFloat($("#secProbThresh").val());
+    var secProbs = $('input[name="secProbThreshs"]:checked').map(function() {
+      return parseFloat(this.value);
+    }).get();
     var secScales = $('input[name="secScales"]:checked').map(function() {
       return parseFloat(this.value);
     }).get();
 
     var intThresh = parseFloat($("#intThresh").val());
 
-    dataManager.updateFilters(priProb, priScales, secProb, secScales, intThresh);
+    dataManager.updateFilters(priProbs, priScales, secProbs, secScales, intThresh);
   }
 
   function enableButtons(){

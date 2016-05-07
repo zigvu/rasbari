@@ -33,14 +33,13 @@ module Analysis
         #     prob_scores: [score, ]
         #   }
         # }
-        probScoresThreshold = (0..10).map{ |i| (i * 0.1).round(1) }
         cm = chiaModel
         return {
           id: cm.id, name: cm.name, version: cm.decorate.version,
           settings: {
             zdist_threshs: [0, 1, 2],
-            scales: [1.0],
-            prob_scores: probScoresThreshold,
+            scales: cm.scales,
+            prob_scores: cm.probThreshs,
           }
         }
       end

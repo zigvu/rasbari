@@ -48,6 +48,7 @@ module Kheer
       # dumpers
       @locDumper = LocalizationDumper.new
       @interDumper = IntersectionDumper.new
+      @clipInterAggr = Kheer::ClipIntersectionSummaryAggregator.new(@chiaModelId)
     end
 
     def writeData
@@ -62,6 +63,7 @@ module Kheer
       @interDumper.updateTracker(insertResult)
       raise RuntimeError("Did not get all ids for localization") if not @interDumper.canFlush?
       @interDumper.finalize
+      @clipInterAggr.finalize(@clipId)
     end
 
     def readClipJson(clipFile)
@@ -96,6 +98,7 @@ module Kheer
               interItem = locsToInter(th, @locDumper.items[loc1ItemIdx], @locDumper.items[loc2ItemIdx])
               interItemIdx = @interDumper.add(interItem)
               @interDumper.tracker[interItemIdx] = [loc1ItemIdx, loc2ItemIdx]
+              @clipInterAggr.addInter(interItem)
             end
           end
         end
@@ -120,13 +123,25 @@ module Kheer
     def locsToInter(threshold, loc1, loc2)
       loc1 = OpenStruct.new(loc1)
       loc2 = OpenStruct.new(loc2)
+      # round up values
+      th = roundup(threshold, 1)
+      pps = roundup(loc1.ps, 1)
+      psl = roundup(loc1.sl, 1)
+      sps = roundup(loc2.ps, 1)
+      ssl = roundup(loc2.sl, 1)
+
       # format must match that in Kheer::Intersection
       return {
-        ci: loc1.ci, cl: loc1.cl, fn: loc1.fn, th: threshold,
-        pdi: loc1.di, pps: loc1.ps, pzd: loc1.zd, psl: loc1.sl,
-        sdi: loc2.di, sps: loc2.ps, szd: loc2.zd, ssl: loc2.sl,
+        ci: loc1.ci, cl: loc1.cl, fn: loc1.fn, th: th,
+        pdi: loc1.di, pps: pps, pzd: loc1.zd, psl: psl,
+        sdi: loc2.di, sps: sps, szd: loc2.zd, ssl: ssl,
         localization_ids: [] # need to update this once we get mongo ids
       }
+    end
+
+    def roundup(num, exp = 0)
+      multiplier = 10 ** exp
+      ((num * multiplier).ceil).to_f/multiplier.to_f
     end
 
   end

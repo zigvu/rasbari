@@ -32,7 +32,14 @@
     <tbody>
       <tr>
         <td>
-          <%= select_tag "priProbThresh", options_for_select(@workflowObj.probThreshs) %>
+          <div class="filter-selection-scroll-container">
+            <% @workflowObj.probThreshs.each do |probThresh| %>
+              <label>
+                <%= check_box_tag 'priProbThreshs', probThresh, checked = true %>
+                <%= probThresh %>
+              </label>
+            <% end %>
+          </div>
         </td>
         <td>
           <div class="filter-selection-scroll-container">
@@ -45,7 +52,14 @@
           </div>
         </td>
         <td>
-          <%= select_tag "secProbThresh", options_for_select(@workflowObj.probThreshs) %>
+          <div class="filter-selection-scroll-container">
+            <% @workflowObj.probThreshs.each do |secProbThresh| %>
+              <label>
+                <%= check_box_tag 'secProbThreshs', secProbThresh, checked = true %>
+                <%= secProbThresh %>
+              </label>
+            <% end %>
+          </div>
         </td>
         <td>
           <div class="filter-selection-scroll-container">
@@ -112,10 +126,10 @@
   <thead>
     <tr>
       <th>Pri Detectable</th>
-      <th>Pri Detectable Prob</th>
+      <th>Pri Detectable Probs</th>
       <th>Pri Detectable Scales</th>
       <th>Sec Detectable</th>
-      <th>Sec Detectable Prob</th>
+      <th>Sec Detectable Probs</th>
       <th>Sec Detectable Scales</th>
       <th>Intersection Thresholds</th>
       <th># Localizations</th>

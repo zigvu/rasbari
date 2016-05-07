@@ -48,17 +48,16 @@ module Analysis
           @mining.clip_ids.sort.each do |clipId|
             locCount = 0
             filters.each do |filter|
-              locCount += Kheer::Intersection
-                  .where(chia_model_id: @chiaModelIdLoc)
-                  .where(clip_id: clipId)
-                  .where(primary_detectable_id: filter[:pri_det_id])
-                  .where(secondary_detectable_id: filter[:sec_det_id])
-                  .gte(primary_prob_score: filter[:selected_filters][:pri_prob])
-                  .in(primary_scale: filter[:selected_filters][:pri_scales])
-                  .gte(secondary_prob_score: filter[:selected_filters][:sec_prob])
-                  .in(secondary_scale: filter[:selected_filters][:sec_scales])
-                  .gte(threshold: filter[:selected_filters][:int_thresh])
-                  .count
+              Kheer::ClipIntersectionSummary
+                .where(chia_model_id: @chiaModelIdLoc)
+                .where(clip_id: clipId)
+                .gte(threshold: filter[:selected_filters][:int_thresh])
+                .in(primary_prob_score: filter[:selected_filters][:pri_probs])
+                .in(primary_scale: filter[:selected_filters][:pri_scales])
+                .in(secondary_prob_score: filter[:selected_filters][:sec_probs])
+                .in(secondary_scale: filter[:selected_filters][:sec_scales]).each do |cis|
+                  locCount += cis.confusion_counts[filter[:pri_det_id].to_s][filter[:sec_det_id].to_s]
+              end
             end
 
             next if locCount <= 0
