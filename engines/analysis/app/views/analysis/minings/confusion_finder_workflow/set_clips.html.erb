@@ -11,34 +11,12 @@
 <!-- BEGIN: Content -->
 <%= simple_form_for @mining, :url => wizard_path, :method => :put do |f| %>
 
-# TODO: change once we have better way of handling continuous run clips
+<p>TODO: change once we have better way of handling continuous run clips.</p>
 
-<!-- BEGIN: Table -->
-<table>
-  <thead>
-    <tr>
-      <th>Stream Id</th>
-      <th>Name</th>
-      <th>Base URL</th>
-      <th># Clips</th>
-      <th>Select</th>
-    </tr>
-  </thead>
+<%= f.select :capture_ids, options_for_select(@workflowObj.formattedCaptures.map{ |c| [c[:captureName], c[:captureId], c[:isSelected] ? {'data-section' => c[:streamName], 'data-index' => c[:idx], 'selected' => 'selected'} : {'data-section' => c[:streamName], 'data-index' => c[:idx]}] }), {:multiple => true}, id: "channel_selection", name: "capture_ids[]" %>
 
-  <tbody>
-      <% @workflowObj.streams.each do |stream| %>
-        <tr>
-          <td><%= stream.id %></td>
-          <td><%= stream.name %></td>
-          <td><%= stream.base_url %></td>
-          <td><%= stream.clips.count %></td>
-          <% isButChecked = @workflowObj.selectedStreamIds.include?(stream.id) %>
-          <td><%= check_box_tag 'stream_ids[]', stream.id, checked = isButChecked %></td>
-        </tr>
-      <% end %>
-  </tbody>
-</table>
-<!-- END: Table -->
+<p></p>
+
 
 <%= render 'common_buttons', :form_obj => f %>
 <% end %>

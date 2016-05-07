@@ -19,7 +19,7 @@ module Analysis
     field :cia, as: :chia_model_id_anno, type: Integer
     field :cls, as: :clip_ids, type: Array
     # TODO: change once we have better way of handling continuous run clips
-    field :sds, as: :stream_ids, type: Array
+    field :cds, as: :capture_ids, type: Array
     # format
     # {setId: [{clip_id:, loc_count:, fn_count:}, ]}
     field :cs, as: :clip_sets, type: Hash

@@ -20,6 +20,7 @@
 //= require crossfilter
 //= require jquery-readyselector
 //= require jquery-spinner
+//= require jquery.tree-multiselect
 //= require q
 //= require underscore
 //= require kheer/application
