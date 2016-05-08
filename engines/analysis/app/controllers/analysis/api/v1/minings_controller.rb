@@ -47,6 +47,8 @@ module Analysis
           @mTypeModule = Analysis::SequenceViewerJsonifier
         elsif @mining.type.isConfusionFinder?
           @mTypeModule = Analysis::ConfusionFinderJsonifier
+        elsif @mining.type.isDetFinder?
+          @mTypeModule = Analysis::DetFinderJsonifier
         end
       end
 

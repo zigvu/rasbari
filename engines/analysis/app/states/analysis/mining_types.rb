@@ -2,7 +2,7 @@ module Analysis
   class MiningTypes < BaseAr::ArAccessor
 
     def self.types
-      ["sequenceViewer", "confusionFinder"]
+      ["sequenceViewer", "confusionFinder", "detFinder"]
     end
     zextend BaseType, Analysis::MiningTypes.types
 

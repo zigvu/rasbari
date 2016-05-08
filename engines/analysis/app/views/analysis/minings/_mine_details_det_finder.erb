@@ -1,0 +1,21 @@
+<!-- BEGIN: Mine sequence_viewer -->
+<table>
+  <thead>
+    <tr>
+      <td>Detectable Id</td>
+      <td>Detectable Name</td>
+      <td>Prob Threshold</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @mining.md_det_finder.score_filters.each do |di, ps| %>
+      <% det = Kheer::Detectable.where(id: di).first %>
+      <tr>
+        <td><%= det.id %></td>
+        <td><%= det.name %></td>
+        <td><%= ps %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<!-- END: Mine sequence_viewer -->

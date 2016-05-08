@@ -1,0 +1,49 @@
+<!-- BEGIN: Layout -->
+<%= render :layout => 'outershell' do %>
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="workflow-panel">
+        <div class="workflow-title clearfix">
+          <div class="text left">Select Detectables</div>
+        </div>
+        <div class="workflow-content">
+
+<!-- BEGIN: Content -->
+<%= simple_form_for @mining, :url => wizard_path, :method => :put do |f| %>
+
+<!-- BEGIN: Table -->
+<table>
+  <thead>
+    <tr>
+      <th>Det Id</th>
+      <th>Det Name</th>
+      <th>Select Prob [Loc Count]</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @workflowObj.detDetails.each do |dd| %>
+      <tr>
+        <td><%= dd[:detId] %></td>
+        <td><%= dd[:detName] %></td>
+        <td>
+          <%= select_tag "det_ids[#{dd[:detId]}]", options_for_select(dd[:probCounts], dd[:selProb]) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<!-- END: Table -->
+
+<%= render 'common_buttons', :form_obj => f %>
+
+<% end %>
+<!-- END: Content -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!-- END: Layout -->

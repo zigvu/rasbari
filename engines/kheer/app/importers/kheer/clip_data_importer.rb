@@ -49,6 +49,7 @@ module Kheer
       @locDumper = LocalizationDumper.new
       @interDumper = IntersectionDumper.new
       @clipInterAggr = Kheer::ClipIntersectionSummaryAggregator.new(@chiaModelId)
+      @clipLocAggr = Kheer::ClipLocalizationSummaryAggregator.new(@chiaModelId)
     end
 
     def writeData
@@ -64,6 +65,7 @@ module Kheer
       raise RuntimeError("Did not get all ids for localization") if not @interDumper.canFlush?
       @interDumper.finalize
       @clipInterAggr.finalize(@clipId)
+      @clipLocAggr.finalize(@clipId)
     end
 
     def readClipJson(clipFile)
@@ -83,8 +85,10 @@ module Kheer
       thresh = clipData["data"][fn.to_s]["thresh"]
       @chiaToDet.each do |cls1Idx, detId|
         nmsBoxes[cls1Idx].each do |bbox1Idx, bbox|
+          loc = bboxToLoc(fn, detId, bbox)
           fnTrack[cls1Idx] ||= {}
-          fnTrack[cls1Idx][bbox1Idx] = @locDumper.add(bboxToLoc(fn, detId, bbox))
+          fnTrack[cls1Idx][bbox1Idx] = @locDumper.add(loc)
+          @clipLocAggr.addLoc(loc)
         end
       end
       # bbox2Idx of cls2Idx confuses with bbox1Idx of cls1Idx

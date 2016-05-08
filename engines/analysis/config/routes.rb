@@ -7,6 +7,7 @@ Analysis::Engine.routes.draw do
 
     resources :sequence_viewer_workflow, only: [:show, :update], controller: 'minings/sequence_viewer_workflow'
     resources :confusion_finder_workflow, only: [:show, :update], controller: 'minings/confusion_finder_workflow'
+    resources :det_finder_workflow, only: [:show, :update], controller: 'minings/det_finder_workflow'
 
   end
 

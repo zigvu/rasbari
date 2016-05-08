@@ -21,6 +21,9 @@ module Analysis
           @selectedDetIds = ff.map { |f| [f[:pri_det_id], f[:sec_det_id]] }.flatten.uniq.sort
           th = ff.map { |f| f[:selected_filters][:int_thresh] }.flatten.uniq.min
           @smartFilter = {spatial_intersection_thresh: th}
+        elsif @mining.type.isDetFinder?
+            @selectedDetIds = @mining.md_det_finder.score_filters.keys.map{ |k| k.to_i }
+            @smartFilter = {spatial_intersection_thresh: 1.0}
         end
       end
 

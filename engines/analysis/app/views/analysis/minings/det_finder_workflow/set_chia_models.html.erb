@@ -1,0 +1,31 @@
+<!-- BEGIN: Layout -->
+<%= render :layout => 'outershell' do %>
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="workflow-panel">
+        <div class="workflow-title clearfix">
+          <div class="text left">Set Chia Models</div>
+        </div>
+        <div class="workflow-content">
+
+<!-- BEGIN: Content -->
+<%= simple_form_for @mining, :url => wizard_path, :method => :put do |f| %>
+
+<h4>For Localization</h4>
+
+<%= render '/kheer/common/chia_model_selection', radioTagPrefix: 'loc', chiaModelsHierarchy: @workflowObj.chiaModelsHierarchy, selectedMajorId: @workflowObj.selectedMajorLocId, selectedMinorId: @workflowObj.selectedMinorLocId, selectedMiniId: @workflowObj.selectedMiniLocId %>
+
+<h4>For Annotation</h4>
+
+<%= render '/kheer/common/chia_model_selection', radioTagPrefix: 'anno', chiaModelsHierarchy: @workflowObj.chiaModelsHierarchy, selectedMajorId: @workflowObj.selectedMajorAnnoId, selectedMinorId: @workflowObj.selectedMinorAnnoId, selectedMiniId: @workflowObj.selectedMiniAnnoId %>
+
+<%= render 'common_buttons', :form_obj => f %>
+<% end %>
+<!-- END: Content -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!-- END: Layout -->
