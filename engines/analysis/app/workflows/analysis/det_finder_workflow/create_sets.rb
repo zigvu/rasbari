@@ -61,7 +61,7 @@ module Analysis
           @mining.clip_ids.sort.each do |clipId|
             locCount = counts[clipId]
 
-            next if locCount <= 0
+            next if !locCount || locCount <= 0
             clip = Video::Clip.find(clipId)
             fnCount = clip.frame_number_end - clip.frame_number_start
 

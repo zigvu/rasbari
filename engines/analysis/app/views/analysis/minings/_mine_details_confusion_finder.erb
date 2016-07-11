@@ -16,10 +16,10 @@
     <% @mining.md_confusion_finder.confusion_filters[:filters].each do |f| %>
       <tr>
         <td><%= "#{Kheer::Detectable.find(f[:pri_det_id]).pretty_name} [#{f[:pri_det_id]}]" %></td>
-        <td><%= f[:selected_filters][:pri_prob] %></td>
+        <td><%= f[:selected_filters][:pri_probs] %></td>
         <td><%= f[:selected_filters][:pri_scales] %></td>
         <td><%= "#{Kheer::Detectable.find(f[:sec_det_id]).pretty_name} [#{f[:sec_det_id]}]" %></td>
-        <td><%= f[:selected_filters][:sec_prob] %></td>
+        <td><%= f[:selected_filters][:sec_probs] %></td>
         <td><%= f[:selected_filters][:sec_scales] %></td>
         <td><%= f[:selected_filters][:int_thresh] %></td>
         <td><%= f[:number_of_localizations] %></td>

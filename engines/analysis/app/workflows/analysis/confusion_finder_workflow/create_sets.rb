@@ -7,6 +7,7 @@ module Analysis
         @mining = mining
         @chiaModelIdLoc = @mining.chia_model_id_loc
         @clipSetSize = 5
+        @clipIds = @mining.clip_ids.sort
       end
 
       def canSkip
@@ -40,27 +41,32 @@ module Analysis
         end
 
         def getClipIdLocCount
-          clipIdLocCount = []
           filters = @mining.md_confusion_finder.confusion_filters[:filters]
 
           # format:
-          # [{:clip_id, :loc_count, fn_count:}, ]
-          @mining.clip_ids.sort.each do |clipId|
-            locCount = 0
-            filters.each do |filter|
-              Kheer::ClipIntersectionSummary
-                .where(chia_model_id: @chiaModelIdLoc)
-                .where(clip_id: clipId)
-                .gte(threshold: filter[:selected_filters][:int_thresh])
-                .in(primary_prob_score: filter[:selected_filters][:pri_probs])
-                .in(primary_scale: filter[:selected_filters][:pri_scales])
-                .in(secondary_prob_score: filter[:selected_filters][:sec_probs])
-                .in(secondary_scale: filter[:selected_filters][:sec_scales]).each do |cis|
-                  locCount += cis.confusion_counts[filter[:pri_det_id].to_s][filter[:sec_det_id].to_s]
-              end
+          # {clip_id: count}
+          locCounts = {}
+          filters.each do |filter|
+            Kheer::ClipIntersectionSummary
+              .where(chia_model_id: @chiaModelIdLoc)
+              .in(clip_id: @clipIds)
+              .gte(threshold: filter[:selected_filters][:int_thresh])
+              .in(primary_prob_score: filter[:selected_filters][:pri_probs])
+              .in(primary_scale: filter[:selected_filters][:pri_scales])
+              .in(secondary_prob_score: filter[:selected_filters][:sec_probs])
+              .in(secondary_scale: filter[:selected_filters][:sec_scales]).each do |cis|
+                locCounts[cis.clip_id] ||= 0
+                locCounts[cis.clip_id] += cis.confusion_counts[filter[:pri_det_id].to_s][filter[:sec_det_id].to_s]
             end
+          end
 
-            next if locCount <= 0
+          # format:
+          # [{:clip_id, :loc_count, fn_count:}, ]
+          clipIdLocCount = []
+          @clipIds.each do |clipId|
+            locCount = locCounts[clipId]
+
+            next if !locCount || locCount <= 0
             clip = Video::Clip.find(clipId)
             fnCount = clip.frame_number_end - clip.frame_number_start
 
