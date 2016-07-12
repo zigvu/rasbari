@@ -26,6 +26,20 @@ module Kheer
       sels
     end
 
+    def self.fromVersion(version)
+      cm = nil
+      ver = version.split(".").map{ |v| v.to_i }
+      if ver.count == 1
+        cm = ChiaModel.where(major_id: ver[0]).first
+      elsif ver.count == 2
+        cm = ChiaModel.where(major_id: ver[0], minor_id: ver[1]).first
+      elsif ver.count == 3
+        cm = ChiaModel.where(major_id: ver[0], minor_id: ver[1], mini_id: ver[2]).first
+      end
+      raise "Couldn't find chia model for version #{version}" if cm == nil
+      cm
+    end
+
     def intThreshs
       (0..10).map{ |i| (i * 0.1).round(1) }
     end

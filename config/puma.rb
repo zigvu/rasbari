@@ -81,9 +81,6 @@ threads Integer(ENV['PUMA_MIN_THREADS']  || 1), Integer(ENV['PUMA_MAX_THREADS'] 
 # bind 'unix:///var/run/puma.sock?umask=0111'
 # bind 'ssl://127.0.0.1:9292?key=path_to_key&cert=path_to_cert'
 bind 'unix:///home/ubuntu/rasbari/tmp/sockets/puma.sock'
-if ENV['RAILS_ENV'] != 'production'
-  bind 'tcp://0.0.0.0:3000'
-end
 
 # Instead of "bind 'ssl://127.0.0.1:9292?key=path_to_key&cert=path_to_cert'" you
 # can also use the "ssl_bind" option.
