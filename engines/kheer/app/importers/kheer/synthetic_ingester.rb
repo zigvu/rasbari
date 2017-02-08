@@ -37,7 +37,7 @@ module Kheer
         clipNum = File.basename(clip, ".*").to_i
         found = false
         annos.each do |anno|
-          if File.basename(clip, ".*").to_i == clipNum
+          if File.basename(anno, ".*").to_i == clipNum
             @clipsAnnosFile << [clip, anno]
             found = true
             break
