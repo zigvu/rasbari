@@ -33,6 +33,8 @@ module Analysis
           redirect_to mining_confusion_finder_workflow_path(Wicked::FIRST_STEP, mining_id: @mining.id)
         elsif @mining.type.isDetFinder?
           redirect_to mining_det_finder_workflow_path(Wicked::FIRST_STEP, mining_id: @mining.id)
+        elsif @mining.type.isClusterFinder?
+          redirect_to mining_cluster_finder_workflow_path(Wicked::FIRST_STEP, mining_id: @mining.id)
         end
       else
         @clipSets = @mining.clip_sets

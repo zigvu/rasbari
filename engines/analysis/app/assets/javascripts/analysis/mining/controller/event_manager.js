@@ -34,6 +34,10 @@ Mining.Controller.EventManager = function() {
   this.addUpdateAnnoChartCallback = function(callback){ updateAnnoChartCallback.add(callback); };
   this.fireUpdateAnnoChartCallback = function(args){ updateAnnoChartCallback.fire(args); };
 
+  this.updateClusterChartCallback = $.Callbacks("unique");
+  this.addUpdateClusterChartCallback = function(callback) { updateClusterChartCallback.add(callback); }
+  this.fireUpdateClusterChartCallback = function(args) { updateClusterChartCallback.fire(args); }
+
   //------------------------------------------------
 
 

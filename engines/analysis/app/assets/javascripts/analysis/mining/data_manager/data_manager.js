@@ -46,11 +46,21 @@ Mining.DataManager.DataManager = function() {
     .setFilterStore(self.filterStore)
     .setDataStore(self.dataStore);
 
+
+  this.clusterChartDataAccessor = new Mining.DataManager.Accessors.ClusterChartDataAccessor();
+  self.clusterChartDataAccessor
+    .setFilterStore(self.filterStore)
+    .setDataStore(self.dataStore);
+
   // ----------------------------------------------
   // Mining data
   this.getMiningDataPromise = function(miningId, setId){
     return self.ajaxHandler.getMiningDataPromise(miningId, setId);
   };
+
+  this.getClusterDataPromise = function() {
+    return self.ajaxHandler.getClusterDataPromise();
+  }
 
   this.massageMiningData = function(){
     self.annotationDataAccessor.createDetectableDecorations();
@@ -62,6 +72,7 @@ Mining.DataManager.DataManager = function() {
     self.getFilter_cycleZdists();
     self.getFilter_cycleProbScores();
   };
+
 
   // ----------------------------------------------
   // Annotation data

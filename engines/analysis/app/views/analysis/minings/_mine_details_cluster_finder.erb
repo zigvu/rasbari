@@ -1,0 +1,20 @@
+<!-- BEGIN: Mine sequence_viewer -->
+<table>
+  <thead>
+    <tr>
+      <td>Detectable Id</td>
+      <td>Detectable Name</td>
+      <td>Prob Threshold</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% Kheer::Detectable.where(id: @mining.md_sequence_viewer.detectable_ids).each do |det| %>
+      <tr>
+        <td><%= det.id %></td>
+        <td><%= det.name %></td>
+        <td><%= @mining.md_sequence_viewer.threshold %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<!-- END: Mine sequence_viewer -->

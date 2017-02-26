@@ -45,6 +45,11 @@ Mining.DataManager.AjaxHandler = function() {
     return requestDefer.promise;
   };
 
+  this.getClusterDataPromise = function() {
+      var dataURL = self.baseUrl + '/random_data/get_data';
+      return self.getGETRequestPromise(dataURL);
+  };
+
   this.getAnnotationSavePromise = function(annotationsData){
     var dataURL = self.baseUrl + '/frames/update_annotations';
     var dataParam = {annotations: annotationsData};

@@ -26,6 +26,7 @@
 //= require kheer/application
 //= require analysis/application
 //= require turbolinks
+//= require lasso
 //= require_tree .
 
 $(function(){
