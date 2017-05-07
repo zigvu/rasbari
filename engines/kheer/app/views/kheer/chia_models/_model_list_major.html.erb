@@ -17,7 +17,7 @@
         <td><%= chia_model.decorate.annotationCount %></td>
         <td>
           <%= chia_model.decorate.minors.count %> |
-          <%= link_to 'Show', chia_model %>
+          <%= link_to_if( chia_model.decorate.annotationCount > 0, 'Show', chia_model )%>
         </td>
         <td>
           <%= link_to 'Edit', edit_chia_model_path(chia_model) %> |
