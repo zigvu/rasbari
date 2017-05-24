@@ -31,15 +31,16 @@ namespace :backupdatabases do
   task import_databases: :environment do
     sqlFile = ENV['mysql_file']
     mongoFolder = ENV['mongo_folder']
-    if (sqlFile == nil) or (mongoFolder == nil)
-      puts "Usage: rake backupdatabases:import_databases mysql_file=<mysql.dump> mongo_folder=<folder>"
+    mysqlPassword = ENV['mysql_password']
+    if (sqlFile == nil) or (mongoFolder == nil) or (mysqlPassword == nil)
+      puts "Usage: rake backupdatabases:import_databases mysql_file=<mysql.dump> mongo_folder=<folder> mysql_password=<password>"
     else
       raise "Cannot import to a production database. Bailing out..." if Rails.env == 'production'
 
       puts "Start importing mysql"
       sqlDbConf = Rails.configuration.database_configuration[Rails.env]
       system "rake db:drop && rake db:create"
-      system "mysql -u #{sqlDbConf['username']} #{sqlDbConf['database']} < #{sqlFile}"
+      system "mysql -u #{sqlDbConf['username']} -p#{mysqlPassword} #{sqlDbConf['database']} < #{sqlFile}"
       system "rake db:migrate"
       puts "Finish importing mysql"
 
