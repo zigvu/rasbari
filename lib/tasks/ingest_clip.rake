@@ -104,7 +104,7 @@ namespace :ingest_clip do
   def generateClips(tmp_folder)
     cmd_gen_clip = "ffmpeg -loglevel error   -i #{@clip_file} -c:v libx264 -pix_fmt yuv420p " \
                    "-crf 20 -preset veryfast -f segment -segment_time 60 -reset_timestamps 1 " \
-                   "-strict -2 #{tmp_folder}/%04d.mp4"
+                   "-strict -2 -r  25 #{tmp_folder}/%04d.mp4"
 
     puts cmd_gen_clip
 
